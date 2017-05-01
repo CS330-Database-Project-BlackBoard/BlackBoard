@@ -25,60 +25,29 @@
 
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-default top-navbar" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="bb-index.html">BlackBoard</a>
-            </div>
-
-            <ul class="nav navbar-top-links navbar-right">
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <!-- <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i> -->
-                        <span> umit.kas &nbsp<i class="fa fa-caret-down"></i></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-        </nav>
+       <%@ include file="bb-head.jsp" %>
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers/"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 
@@ -107,7 +76,7 @@
                                 <h3><%= dashboard.getManagerCount() %></h3>
                             </div>
                             <div class="panel-footer back-footer-dgray">
-                                <a class="white-link" href="bb-user-management.html"> Blackboard Managers</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/managers"> Blackboard Managers</a>
                             </div>
                         </div>
                     </div>
@@ -118,7 +87,7 @@
                                 <h3><%= dashboard.getCourseCount() %></h3>
                             </div>
                             <div class="panel-footer back-footer-dblue">
-                                <a class="white-link" href="bb-course-management.html">Courses</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/courses">Courses</a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +98,7 @@
                                 <h3><%= dashboard.getLecturerCount() %></h3>
                             </div>
                             <div class="panel-footer back-footer-dred">
-                                <a class="white-link" href="bb-lecturer-management.html">Lecturers</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/lecturers/">Lecturers</a>
 
 
                             </div>
@@ -143,7 +112,7 @@
                                 <h3><%= dashboard.getStudentCount() %> </h3>
                             </div>
                             <div class="panel-footer back-footer-dbrown">
-                                <a class="white-link" href="bb-student-management.html">Students</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/students/departments">Students</a>
 
 
                             </div>

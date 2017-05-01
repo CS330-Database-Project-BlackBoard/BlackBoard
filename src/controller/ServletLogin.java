@@ -52,7 +52,7 @@ public class ServletLogin extends HttpServlet{
 			
 		}
 		
-		resp.sendRedirect("/");
+		resp.sendRedirect("login");
 	}
 
 }

@@ -44,6 +44,9 @@ public class User {
 	public void printUser() {
 		System.out.println(getName() + " " + getSurname() + " " + getRole());
 	}
+	public String getNaneSurname() {
+		return this.getName() + " " + this.getSurname();
+	}
 	
 	
 }

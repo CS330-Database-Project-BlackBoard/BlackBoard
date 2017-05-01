@@ -23,7 +23,7 @@ public class UserDaoImpl extends Database implements UserDao{
 	@Override
 	public boolean signIn(String email, String password) {
 		if (this.user == null) {
-			String query = "SELECT SchoolID, Name, Surname, Role from User WHERE Email=? AND Password=?;";
+			String query = "SELECT SchoolID, Name, Surname, Role from User WHERE Email=? AND Password=? AND visible = true;";
 			Connection connection = null;
 			
 			try {
@@ -67,29 +67,7 @@ public class UserDaoImpl extends Database implements UserDao{
 	}
 	
 	
-	private static String md5(String input) {
-		
-		String md5 = null;
-		
-		if(null == input) return null;
-		
-		try {
-			
-		//Create MessageDigest object for MD5
-		MessageDigest digest = MessageDigest.getInstance("MD5");
-		
-		//Update input string in message digest
-		digest.update(input.getBytes(), 0, input.length());
 
-		//Converts message digest value in base 16 (hex) 
-		md5 = new BigInteger(1, digest.digest()).toString(32);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-		return md5;
-	}
 }
 
 	

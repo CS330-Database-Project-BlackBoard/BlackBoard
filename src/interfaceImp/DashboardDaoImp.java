@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.Database;
-import enums.Role;
+import enums.AppRole;
 import interfaces.DashboardDao;
 import pojos.Anouncment;
 import pojos.Dashboard;
@@ -17,7 +17,6 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 
 	@Override
 	public Dashboard getDashboard(User user) {
-
 		Connection connection = null;
 		Dashboard dashboard = null;
 		PreparedStatement sqlStatement = null;
@@ -34,23 +33,25 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 		try {
 			connection = super.getConnection();
 			sqlStatement = connection.prepareStatement(managerSql);
-			sqlStatement.setInt(1, Role.SUPER_ADMIN);
-			sqlStatement.setInt(2, Role.ADMIN);
+			sqlStatement.setInt(1, AppRole.SUPER_ADMIN);
+			sqlStatement.setInt(2, AppRole.ADMIN);
 			resultSet = sqlStatement.executeQuery();
+			
 			if (resultSet.next()) {
 				manager = resultSet.getInt("Count");
 			}
 			
 			sqlStatement = connection.prepareStatement(lecturerAndStudentSql);
-			sqlStatement.setInt(1, Role.LECTURER);
+			sqlStatement.setInt(1, AppRole.LECTURER);
 			resultSet = sqlStatement.executeQuery();
+			
 			if (resultSet.next()) {
 				lecturer = resultSet.getInt("Count");
 				
 			}
 			
 			sqlStatement = connection.prepareStatement(lecturerAndStudentSql);
-			sqlStatement.setInt(1,Role.STUDENT);
+			sqlStatement.setInt(1,AppRole.STUDENT);
 			resultSet = sqlStatement.executeQuery();
 			if (resultSet.next()) {
 				student = resultSet.getInt("Count");
@@ -61,6 +62,7 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 			sqlStatement.setString(1,"Spring");
 			sqlStatement.setInt(2, 2017);
 			resultSet = sqlStatement.executeQuery();
+			
 			if (resultSet.next()) {
 				course = resultSet.getInt("Count");
 				

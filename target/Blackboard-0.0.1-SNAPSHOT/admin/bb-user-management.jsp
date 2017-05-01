@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+<%@page import="pojos.Role"%>
+<%@page import="pojos.Manager"%>
+<%@page import="java.util.ArrayList"%>
+<% ArrayList<Manager> managers = (ArrayList<Manager>) session.getAttribute("managers"); %>
+<% ArrayList<Role> roles = (ArrayList<Role>) session.getAttribute("roles"); %>
+
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -6,74 +13,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackboard - Dashboard</title>
     <!-- Bootstrap Styles-->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
+     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/custom-styles.css">
+    
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
 
     <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <link href="../assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
-    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-default top-navbar" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="bb-index.html">BlackBoard</a>
-            </div>
+              <%@ include file="bb-head.jsp" %>
 
-            <ul class="nav navbar-top-links navbar-right">
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <!-- <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i> -->
-                        <span> umit.kas &nbsp<i class="fa fa-caret-down"></i></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-        </nav>
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
+        		<ul class="nav" id="main-menu">
                     <li>
-                        <a  href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a class="active-menu"  href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers/"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 
@@ -112,30 +90,23 @@
                                 <table class="table table-responsive">
                                     <thead >
                                         <th class="text-center">E-Mail</th>
-                                        <th class="text-center">Username</th>
                                         <th class="text-center">Name</th>
                                         <th  class="text-center">Surname</th>
                                         <th class="text-center">Authorization</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
+                                    	<% for(Manager manager : managers){ %>
                                         <tr class="text-center">
-                                            <td>umit.kas@std.antalya.edu.tr</td>
-                                            <td>umit.kas</td>
-                                            <td>Umit</td>
-                                            <td>Kas</td>
-                                            <td>Super Admin</td>
+                                            <td><%= manager.getEmail() %></td>
+                                            <td><%= manager.getName() %></td>
+                                            <td><%= manager.getSurname() %></td>
+                                            <td><%= manager.getRoleDescription() %></td>
                                             <td><a href="#"><i class="fa fa-gear fa-2x"></i></a></td>
                                         </tr>
 
-                                        <tr class="text-center">
-                                            <td>mehmet.arici@std.antalya.edu.tr</td>
-                                            <td>mehmet.arici</td>
-                                            <td>Mehmet</td>
-                                            <td>Arici</td>
-                                            <td>Super Admin</td>
-                                            <td><a href="#"><i class="fa fa-gear fa-2x"></i></a></td>
-                                        </tr>
+                                   		<% } %>
+                                    	
                                     </tbody>
 
                                 </table>
@@ -153,88 +124,93 @@
     <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
+	    <div id="new-manager" class="modal fade" tabindex="-1" role="dialog">
+	      <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title">New Blackboard Manager</h4>
+	          </div>
+	        <form action="" method="post">
+	          
+	          <div class="modal-body">
+	              <div class="row">
+	                  <div class="col-md-8">
+	                      <div class="form-group">
+	                          <input type="text" class="form-control" name="email" value="" placeholder="E-Mail">
+	                      </div>
+	                  </div>
+	                  <div class="col-md-4">
+	                      <div class="form-group">
+	                          <input type="text" class="form-control" name="schoolID" value="" placeholder="School ID">
+	                      </div>
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6">
+	                      <div class="form-group">
+	                          <input type="text" class="form-control" name="name" value="" placeholder="Name">
+	                      </div>
+	                  </div>
+	
+	                  <div class="col-md-6">
+	                      <div class="form-group">
+	                          <input type="text" class="form-control" name="surname" value="" placeholder="Surname">
+	                      </div>
+	                  </div>
+	              </div>
+	
+	              <div class="row">
+	                  <div class="col-md-8">
+	                      <div class="form-group">
+	                          <input type="text" id="password" class="form-control" name="password" value="" placeholder="Password" readonly>
+	                      </div>
+	                  </div>
+	
+	                  <div class="col-md-4">
+	                      <div class="form-group">
+	                          <button id="generate-password" type="button" class="btn btn-warning" name="button">Generate Password</button>
+	                      </div>
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6">
+	                      <div class="form-group">
+	                          <div class="form-group">
+	                              <label>Authorization</label>
+	                              <select name="role" class="form-control">
+	                              		<% for(Role role: roles){%>
+	                                  		<option value="<%= role.getLevel()%>"><%= role.getDescription() %></option>
+	                                  <%} %>
+	                              </select>
+	                          </div>
+	                      </div>
+	                  </div>
+	          	 </div>
+	          </div>
+	          	
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	            <button type="submit" class="btn btn-primary">Save</button>
+	          </div>
+			</form>
+	        </div><!-- /.modal-content -->
+	      </div><!-- /.modal-dialog -->
+	    </div><!-- /.modal -->
+	  </div>
 
-    <div id="new-manager" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">New Blackboard Manager</h4>
-          </div>
-          <div class="modal-body">
-              <div class="row">
-                  <div class="col-md-8">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="email" value="" placeholder="E-Mail">
-                      </div>
-                  </div>
-                  <div class="col-md-4">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="username " value="" placeholder="Username" readonly>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="name" value="" placeholder="Name">
-                      </div>
-                  </div>
 
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="surname" value="" placeholder="Surname">
-                      </div>
-                  </div>
-              </div>
-
-              <div class="row">
-                  <div class="col-md-8">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="password" value="" placeholder="Password" readonly>
-                      </div>
-                  </div>
-
-                  <div class="col-md-4">
-                      <div class="form-group">
-                          <button type="button" class="btn btn-warning" name="button">Generate Password</button>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <div class="form-group">
-                              <label>Authorization</label>
-                              <select class="form-control">
-                                  <option>Super Admin</option>
-                                  <option>Admin</option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="../assets/js/jquery-1.10.2.js"></script>
     <!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="../assets/js/jquery.metisMenu.js"></script>
     <!-- Morris Chart Js -->
-    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
+    <script src="../assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="../assets/js/morris/morris.js"></script>
     <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script>
-
-
+    <script src="../assets/js/custom-scripts.js"></script>
+	<script src="../assets/js/blackboard.js"></script>
 </body>
 
 </html>
