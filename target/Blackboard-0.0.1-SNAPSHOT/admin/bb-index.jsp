@@ -4,7 +4,7 @@
 <%@page import="pojos.Dashboard"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<% Dashboard dashboard = (Dashboard) session.getAttribute("dashboard"); %>>
+<% Dashboard dashboard = (Dashboard) session.getAttribute("dashboard"); %>
 
 <head>
     <meta charset="utf-8" />

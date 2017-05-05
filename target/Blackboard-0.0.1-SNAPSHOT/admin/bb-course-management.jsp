@@ -1,3 +1,8 @@
+
+<%@page import="pojos.Course"%>
+<%@page import="pojos.CourseDashboard"%>
+<% CourseDashboard courseDashboard = (CourseDashboard) session.getAttribute("courseDashboard"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -5,15 +10,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackboard - Dashboard</title>
-    <!-- Bootstrap Styles-->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
+     <!-- Bootstrap Styles-->
+     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/custom-styles.css">
+    
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
 
     <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
     <!-- Custom Styles-->
-    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
@@ -26,26 +31,25 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <li>
-                        <a href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                     <li>
+                        <a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a   href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers/"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
-                </ul>
 
             </div>
 
@@ -71,7 +75,7 @@
                                 <div class="panel panel-primary text-center no-boder bg-color-dblue">
                                     <div class="panel-body">
                                         <i class="fa fa-book fa-5x"></i>
-                                        54
+                                        <%= courseDashboard.getActiveCourseCount() %>
                                     </div>
                                     <div class="panel-footer back-footer-dblue">
                                         Active Courses
@@ -82,7 +86,8 @@
                                 <div class="panel panel-primary text-center no-boder bg-color-dred">
                                     <div class="panel-body">
                                         <i class="fa fa-history fa-5x"></i>
-                                        132
+                                        <%= courseDashboard.getInactiveCourseCount() %>
+
                                     </div>
                                     <div class="panel-footer back-footer-dred">
                                         Inactive Courses
@@ -111,35 +116,24 @@
                             <thead>
                                 <th class="text-center">Course Id</th>
                                 <th class="text-center">Course Title</th>
+                                <th class="text-center">Lecture</th>
                                 <th class="text-center">Lecturer</th>
                                 <th class="text-center"></th>
                             </thead>
                             <tbody>
+                            	<% for(Course course : courseDashboard.getCourses()){ %>
+                            	
                                 <tr class="text-center">
-                                    <td>CS330</td>
-                                    <td>Database Management</td>
-                                    <td>Joseph Ledet</td>
+                                    <td><%= course.getCode() %></td>
+                                    <td><%= course.getName() %></td>
+                                    <td><%= course.getLectureName() %></td>
+                                    <td><%= course.getLecturerInf() %></td>
                                     <td>
                                         <button type="button" class="btn btn-success" name="button">Manage</button>
                                     </td>
                                 </tr>
-
-                                <tr class="text-center">
-                                    <td>CS101</td>
-                                    <td>Intr. Programing</td>
-                                    <td>Hilal Kazan</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success" name="button">Manage</button>
-                                    </td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>CS306</td>
-                                    <td>Formanl Languages and Automata</td>
-                                    <td>Cesim Ertem</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success" name="button">Manage</button>
-                                    </td>
-                                </tr>
+								<% } %>
+                                
                             </tbody>
                         </table>
                     </div>

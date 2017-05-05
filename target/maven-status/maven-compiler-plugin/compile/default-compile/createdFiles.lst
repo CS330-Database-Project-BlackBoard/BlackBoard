@@ -1,4 +1,4 @@
 enums/AppRole.class
-controller/ServletIndex.class
 pojos/Role.class
+controller/ServletIndex.class
 security/AppSecurity.class
