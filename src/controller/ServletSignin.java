@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import interfaceImp.UserDaoImpl;
 import pojos.User;
 
-@WebServlet(name="ServletLogin", urlPatterns={"/login"})
-public class ServletLogin extends HttpServlet{
+@WebServlet(name="ServletLogin", urlPatterns={"/signin"})
+public class ServletSignin extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

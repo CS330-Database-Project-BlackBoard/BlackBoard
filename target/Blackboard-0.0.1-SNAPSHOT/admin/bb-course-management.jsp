@@ -11,8 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackboard - Dashboard</title>
      <!-- Bootstrap Styles-->
+       <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     
      <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/custom-styles.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+	
     
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
 
@@ -153,10 +157,17 @@
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="course-code" value="" placeholder="Course Code" id="search-course-code">
+                          	   <div class="">
+                              		<input type="text" class="form-control capital" name="course-code" value="" placeholder="Code" id="search-course-code">
+                          		</div>
                           </div>
                       </div>
-                      <div class="col-md-9">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <input type="text" class="form-control capital" name="course-lecture" value="" placeholder="Lecture">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
                           <div class="form-group">
                               <input type="text" class="form-control" name="course-name " value="" placeholder="Course Name" id="search-course-name" readonly>
                           </div>
@@ -165,9 +176,14 @@
                   <div class="row">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="lecturer" value="" placeholder="Lecturer id="search-lecturer"">
+                              <input type="text" class="form-control capital" name="lecturer" value="" placeholder="Lecturer" id="search-lecturer">
                           </div>
                       </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <input type="text" class="form-control capital" name="lecturer-email" value="" placeholder="Lecturer E-MAIL" id="search-lecturer-email">
+                          </div>
+                     </div>
                   </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -181,16 +197,16 @@
 
     <!-- JS Scripts-->
     <!-- jQuery Js -->
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
     <script src="../assets/js/blackboard.js"></script>
     <!-- Bootstrap Js -->
-    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="../assets/js/jquery.metisMenu.js"></script>
     <!-- Morris Chart Js -->
     <!-- Custom Js -->
-    <script src="../assets/js/custom-scripts.js"></script>
 
 
 </body>

@@ -32,7 +32,6 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 				String surname = resultSet.getString("Surname");
 				String email = resultSet.getString("Email");
 				int role = resultSet.getInt("Role");
-				String roleDescription = resultSet.getString("Description");
 				
 				lecturer = new Lecturer(schoolID, email, name, surname, role);
 				lecturers.add(lecturer);
@@ -133,7 +132,7 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 				 + "FROM User u "
 				 + "WHERE u.Role = " + AppRole.LECTURER + " "
 				 + "AND u.visible = true "
-				 + "AND u.Name LIKE '%" + name + "%'";
+				 + "AND concat(u.Name, '', u.Surname) LIKE '%" + name + "%';";
 	
 		return this.getLecturers(query);
 	

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SignInController;
+import controller.SigninController;
 import interfaceImp.CourseDashboardDaoImp;
 import pojos.CourseDashboard;
 import pojos.User;
@@ -33,10 +33,9 @@ public class ServletCourseManagement extends HttpServlet{
 			e.printStackTrace();
 		}
 		finally {
-			if(user != null){
-				SignInController.isSignedIn(user, resp);
-				
-			}
+			if(!SigninController.adminRequired(user, req, resp)) {
+				return;
+			}		
 		}
 		
 		CourseDashboardDaoImp courseDashboardDaoImp = new CourseDashboardDaoImp();
@@ -47,6 +46,11 @@ public class ServletCourseManagement extends HttpServlet{
 		
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-management.jsp");
 		requestDispatcher.forward(req, resp);
+		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 	}
 

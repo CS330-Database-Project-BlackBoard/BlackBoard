@@ -10,22 +10,43 @@ $("#generate-password").click(function(){
 });
 
 
-$('#search-course-code').keyup(function () {
-	var keys = [];
-	var values = [];
-	var searchData = $('#search-course-code').val();
-	console.log(searchData);
-	$.post("search/course", {"course-code": searchData},
-		function(result){
-			console.log(result);
-			for(code in result){
-				keys.push(code);
-				values.push(result[code]);
-			}
-		});
-	$('#search-course-code').autocomplete({
-		source: keys
-	});
+$('#search-course-code').keypress(function (e) {
+	if(e.which == 13){
+		var searchData = $('#search-course-code').val();
+		console.log(searchData);
+		$.post("search/course", {"course-code": searchData},
+			function(result){
+				console.log(result);
+				for(key in result){
+					$('#search-course-name').val(result[key]);
+					$('#search-course-code').val(key);
+
+					break;
+				}
+			});
+
+	}
 	
+});
+
+
+
+
+
+$('#search-lecturer').keypress(function (e) {
 	
+	if(e.which == 13){
+		var searchData = $('#search-lecturer').val();
+		console.log(searchData);
+		$.post("search/lecturer", {"lecturer": searchData},
+			function(result){
+				console.log(result);
+				for(key in result){
+					$('#search-lecturer-email').val(key)
+					$('#search-lecturer').val(result[key])
+					break;
+				}
+			});
+	}
+
 });

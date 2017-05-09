@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import controller.SignInController;
+import controller.SigninController;
 import interfaceImp.ManagerDaoImp;
 import pojos.Manager;
 import pojos.User;
@@ -31,10 +31,9 @@ public class ServletManagerManagement extends HttpServlet{
 			e.printStackTrace();
 		}
 		finally {
-			if(user != null){
-				SignInController.isSignedIn(user, resp);
-				
-			}
+			if(!SigninController.adminRequired(user, req, resp)) {
+				return;
+			}		
 		}
 		
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();
@@ -58,10 +57,9 @@ public class ServletManagerManagement extends HttpServlet{
 			e.printStackTrace();
 		}
 		finally {
-			if(user != null){
-				SignInController.isSignedIn(user, resp);
-				
-			}
+			if(!SigninController.adminRequired(user, req, resp)) {
+				return;
+			}	
 		}
 		
 		int schoolID = Integer.parseInt(req.getParameter("schoolID"));

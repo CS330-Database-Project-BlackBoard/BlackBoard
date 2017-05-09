@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,27 +11,26 @@ import javax.servlet.http.HttpSession;
 
 import pojos.User;
 
+@WebServlet(name="ServletSignout", urlPatterns= {"/signout"})
+public class ServletSignout extends HttpServlet{
 
-@WebServlet(name="ServletIndex", urlPatterns= {"/"})
-public class ServletIndex extends HttpServlet {
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = null;
+		
 		HttpSession session = req.getSession();
+		User user = null;
 		
 		try {
 			user = (User) session.getAttribute("user");
-			
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		finally {
-			SigninController.isSignedIn(user,req, resp);
+		
+		if (user != null) {
+			session.setAttribute("user", null);
+			resp.sendRedirect("signin");
 		}
 		
-		SigninController.redirectToUserByRole(user, resp);
-		
-	
 	}
 }

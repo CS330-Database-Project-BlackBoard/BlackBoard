@@ -14,22 +14,21 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import controller.SigninController;
-import interfaceImp.CourseDaoImp;
-import pojos.Course;
-import pojos.CourseDashboard;
+import interfaceImp.LecturerDaoImp;
+import pojos.Lecturer;
 import pojos.User;
 
-@WebServlet(name="ServletSearchCourse", urlPatterns= {"/admin/search/course"})
-public class ServletSearchCourse extends HttpServlet{
+@WebServlet(name="ServletSearchLecturer", urlPatterns= {"/admin/search/lecturer"})
+public class ServletSearchLecturer extends HttpServlet{
 	
 	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		
 		User user = null;
 		HttpSession session = req.getSession();
-		CourseDashboard courseDashboard = null;
 		
 		try {
 			user = (User) session.getAttribute("user");
@@ -43,20 +42,19 @@ public class ServletSearchCourse extends HttpServlet{
 			}		
 		}
 		
+		String lecturerName = (String) req.getParameter("lecturer");
+		LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
 		
-		String courseCode = (String) req.getParameter("course-code");
-		
-		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		ArrayList<Lecturer> lecturers = lecturerDaoImp.getLecturersByName(lecturerName);
 		
 		
-		ArrayList<Course> courses = courseDaoImp.getCoursesByCodeUsingLike(courseCode);
 		JSONObject response = new JSONObject();
 		
-		System.out.println(courseCode);
-		System.out.println(courses.size());
+		System.out.println(lecturerName);
+		System.out.println(lecturers.size());
 		
-		for (Course course : courses) {
-			response.put(course.getCode(), course.getName());
+		for (Lecturer lecturer : lecturers) {
+			response.put(lecturer.getEmail(), lecturer.getNaneSurname());
 		}
 		
 		resp.setContentType("application/json");
@@ -72,5 +70,4 @@ public class ServletSearchCourse extends HttpServlet{
 		
 		
 	}
-
 }
