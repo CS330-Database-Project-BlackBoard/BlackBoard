@@ -8,3 +8,24 @@ $("#generate-password").click(function(){
     }
 	$("#password").val(pass);
 });
+
+
+$('#search-course-code').keyup(function () {
+	var keys = [];
+	var values = [];
+	var searchData = $('#search-course-code').val();
+	console.log(searchData);
+	$.post("search/course", {"course-code": searchData},
+		function(result){
+			console.log(result);
+			for(code in result){
+				keys.push(code);
+				values.push(result[code]);
+			}
+		});
+	$('#search-course-code').autocomplete({
+		source: keys
+	});
+	
+	
+});

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import enums.AppRole;
 import pojos.User;
 
 public class SignInController {
@@ -34,6 +35,14 @@ public class SignInController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		
+	}
+	
+	
+	public static void adminRequired(User user, HttpServletResponse resp) {
+		if(user.getRole() != AppRole.SUPER_ADMIN  || user.getRole() != AppRole.ADMIN) {
+			redirectToUserByRole(user, resp);
 		}
 		
 	}

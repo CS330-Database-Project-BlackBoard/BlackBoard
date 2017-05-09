@@ -73,5 +73,14 @@ public class Course {
 		return String.format("%s %s", this.lecturerName, this.lecturerSurname);
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		Course course = (Course) obj;
+		if(this.getCourseID() == course.getCourseID()) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 }

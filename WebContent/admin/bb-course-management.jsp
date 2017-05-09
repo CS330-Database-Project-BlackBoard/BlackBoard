@@ -18,7 +18,6 @@
 
     <!-- Morris Chart Styles-->
     <!-- Custom Styles-->
-    <link href="../assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
@@ -154,19 +153,19 @@
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="course-code" value="" placeholder="Course Code">
+                              <input type="text" class="form-control" name="course-code" value="" placeholder="Course Code" id="search-course-code">
                           </div>
                       </div>
                       <div class="col-md-9">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="course-name " value="" placeholder="Course Name" readonly>
+                              <input type="text" class="form-control" name="course-name " value="" placeholder="Course Name" id="search-course-name" readonly>
                           </div>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="lecturer" value="" placeholder="Lecturer">
+                              <input type="text" class="form-control" name="lecturer" value="" placeholder="Lecturer id="search-lecturer"">
                           </div>
                       </div>
                   </div>
@@ -182,16 +181,16 @@
 
     <!-- JS Scripts-->
     <!-- jQuery Js -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="../assets/js/blackboard.js"></script>
     <!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
+    <script src="../assets/js/jquery.metisMenu.js"></script>
     <!-- Morris Chart Js -->
-    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
     <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script>
+    <script src="../assets/js/custom-scripts.js"></script>
 
 
 </body>
