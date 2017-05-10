@@ -25,6 +25,7 @@ interfaceImp/LecturerDaoImp.class
 controller/ServletSignout.class
 security/AppSecurity.class
 pojos/Manager.class
+pojos/SimpleCourse.class
 interfaces/ManagerDao.class
 controller/SigninController.class
 interfaces/LecturerDao.class

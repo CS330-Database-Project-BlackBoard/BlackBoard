@@ -30,6 +30,9 @@ public class SigninController {
 			case 1:
 				resp.sendRedirect("admin/dashboard");
 				break;
+			case 2:
+				resp.sendRedirect("admin/dashboard");
+				break;
 
 			default:
 				break;
@@ -52,7 +55,6 @@ public class SigninController {
 			else {
 				
 				resp.sendRedirect(req.getContextPath() + "/signin");
-				System.out.println("signin");
 				return false;
 			}
 			

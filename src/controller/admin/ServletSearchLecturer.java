@@ -50,8 +50,6 @@ public class ServletSearchLecturer extends HttpServlet{
 		
 		JSONObject response = new JSONObject();
 		
-		System.out.println(lecturerName);
-		System.out.println(lecturers.size());
 		
 		for (Lecturer lecturer : lecturers) {
 			response.put(lecturer.getEmail(), lecturer.getNaneSurname());

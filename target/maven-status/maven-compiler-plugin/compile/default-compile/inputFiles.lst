@@ -7,8 +7,10 @@
 /home/farisi/workspace/Blackboard/src/interfaces/DashboardDao.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDashboardDaoImp.java
 /home/farisi/workspace/Blackboard/src/pojos/Dashboard.java
+/home/farisi/workspace/Blackboard/src/controller/SigninController.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/ManagerDaoImp.java
 /home/farisi/workspace/Blackboard/src/enums/AppRole.java
+/home/farisi/workspace/Blackboard/src/pojos/SimpleCourse.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/UserDaoImpl.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletAdminDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletManagerManagement.java
@@ -26,7 +28,6 @@
 /home/farisi/workspace/Blackboard/src/pojos/CourseDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/DashboardDaoImp.java
-/home/farisi/workspace/Blackboard/src/controller/SignInController.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/LecturerDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaces/ManagerDao.java
 /home/farisi/workspace/Blackboard/src/pojos/Role.java

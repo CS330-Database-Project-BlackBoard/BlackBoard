@@ -117,7 +117,7 @@
                     <div class="panel-body">
                         <table class="table table-responsive">
                             <thead>
-                                <th class="text-center">Course Id</th>
+                                <th class="text-center">Course Code</th>
                                 <th class="text-center">Course Title</th>
                                 <th class="text-center">Lecture</th>
                                 <th class="text-center">Lecturer</th>
@@ -145,7 +145,8 @@
 
             </div><!-- /. PAGE INNER  -->
         </div><!-- /. WRAPPER  -->
-
+	<form action="" method="post" id="new-course">
+		
         <div id="new-manager" class="modal fade" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -169,7 +170,7 @@
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <input type="text" class="form-control" name="course-name " value="" placeholder="Course Name" id="search-course-name" readonly>
+                              <input type="text" class="form-control" name="course-name" value="" placeholder="Course Name" id="search-course-name" readonly>
                           </div>
                       </div>
                   </div>
@@ -187,14 +188,14 @@
                   </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-primary" id="save-course">Save</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </div>
 
-
+	</form>>
     <!-- JS Scripts-->
     <!-- jQuery Js -->
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>

@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.omg.CORBA.StringHolder;
+
 import database.Database;
 import interfaces.CourseDao;
 import pojos.Course;
+import pojos.SimpleCourse;
 
 public class CourseDaoImp extends Database implements CourseDao {
 	
@@ -91,6 +94,54 @@ public class CourseDaoImp extends Database implements CourseDao {
 				String lectureName = resultSet.getString("LectureName");
 				
 				course = new Course(courseID, departmentID, code, name, semesterID, visible, lecturerID, lecturerName, lecturerSurname, lectureID, lectureName);
+				courses.add(course);
+				
+			}
+			
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		
+		return courses;
+		
+	}
+	
+	
+	private ArrayList<SimpleCourse> getSimpleCourses(String query){
+		ArrayList<SimpleCourse> courses = new ArrayList<>();
+
+		
+		SimpleCourse course = null;
+		
+		Connection connection = null;
+		
+		
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			ResultSet resultSet = sqlStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int courseID = resultSet.getInt("CourseID");
+				String code = resultSet.getString("Code");
+				String name = resultSet.getString("Name");
+
+				
+				course = new SimpleCourse(courseID, code, name);
 				courses.add(course);
 				
 			}
@@ -227,16 +278,57 @@ public class CourseDaoImp extends Database implements CourseDao {
 	}
 
 	@Override
-	public ArrayList<Course> getCoursesByCodeUsingLike(String courseCode) {
-		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cs.LectureID = l.LectureID "
-				 + "AND c.Visible = true "
+	public ArrayList<SimpleCourse> getCoursesByCodeUsingLike(String courseCode) {
+		String query = "SELECT DISTINCT c.* "
+				 + "FROM Course c "
+				 + "WHERE "
+				 + "c.Visible = true "
 				 + "AND c.Code LIKE  '%" + courseCode + "%';";
-		return this.getCourses(query);
+		return this.getSimpleCourses(query);
+	}
+
+	@Override
+	public boolean addNewCourse(String code, String lecture, String lecturerEmail) {
+		
+		boolean added = false;
+		Connection connection = null;
+		
+		
+		try {
+			connection = super.getConnection();
+			connection.
+			String query = "SET @CourseID = (SELECT CourseID FROM Course WHERE Code = ?); " 
+						 + "INSERT INTO Lecture(CourseID, Name) VALUES ( @CourseID, ?); " 
+						 + "SET @LectureID = (SELECT LAST_INSERT_ID()); "
+						 + "SET @SchoolID = (SELECT SchoolID FROM User WHERE Email = ?); "
+						 + "INSERT INTO CourseOfLecturer(LectureID, SchoolID) VALUES (@LectureID, @SchoolID);";
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setString(1, code);
+			sqlStatement.setString(2, lecture);
+			sqlStatement.setString(3, lecturerEmail);
+			sqlStatement.execute;
+			
+			added = true;
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
+		return added;
 	}
 	
 	

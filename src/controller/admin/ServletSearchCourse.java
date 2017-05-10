@@ -17,6 +17,7 @@ import controller.SigninController;
 import interfaceImp.CourseDaoImp;
 import pojos.Course;
 import pojos.CourseDashboard;
+import pojos.SimpleCourse;
 import pojos.User;
 
 @WebServlet(name="ServletSearchCourse", urlPatterns= {"/admin/search/course"})
@@ -49,13 +50,11 @@ public class ServletSearchCourse extends HttpServlet{
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
 		
 		
-		ArrayList<Course> courses = courseDaoImp.getCoursesByCodeUsingLike(courseCode);
+		ArrayList<SimpleCourse> courses = courseDaoImp.getCoursesByCodeUsingLike(courseCode);
 		JSONObject response = new JSONObject();
 		
-		System.out.println(courseCode);
-		System.out.println(courses.size());
 		
-		for (Course course : courses) {
+		for (SimpleCourse course : courses) {
 			response.put(course.getCode(), course.getName());
 		}
 		

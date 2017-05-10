@@ -3,6 +3,7 @@ package interfaces;
 import java.util.ArrayList;
 
 import pojos.Course;
+import pojos.SimpleCourse;
 
 public interface CourseDao {
 	
@@ -24,5 +25,7 @@ public interface CourseDao {
 	
 	public ArrayList<Course> getCoursesByCode(String courseCode);
 
-	public ArrayList<Course> getCoursesByCodeUsingLike(String courseCode);
+	public ArrayList<SimpleCourse> getCoursesByCodeUsingLike(String courseCode);
+	
+	public boolean addNewCourse(String code, String lecture, String lecturerEmail);
 }

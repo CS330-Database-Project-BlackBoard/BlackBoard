@@ -50,3 +50,9 @@ $('#search-lecturer').keypress(function (e) {
 	}
 
 });
+
+
+
+$("#save-course").click(function(){
+	$("#new-course").submit();
+})
