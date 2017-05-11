@@ -10,20 +10,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackboard - Dashboard</title>
-     <!-- Bootstrap Styles-->
-       <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-     
-     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/custom-styles.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-	
-    
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
+	<%@include file="style.jsp" %>
 
-    <!-- Morris Chart Styles-->
-    <!-- Custom Styles-->
-    <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 
 <body>
@@ -117,7 +105,7 @@
                     <div class="panel-body">
                         <table class="table table-responsive">
                             <thead>
-                                <th class="text-center">Course Id</th>
+                                <th class="text-center">Course Code</th>
                                 <th class="text-center">Course Title</th>
                                 <th class="text-center">Lecture</th>
                                 <th class="text-center">Lecturer</th>
@@ -196,20 +184,9 @@
     </div>
 
 	</form>>
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
+	
 
-    <script src="../assets/js/blackboard.js"></script>
-    <!-- Bootstrap Js -->
-    <!-- Metis Menu Js -->
-    <script src="../assets/js/jquery.metisMenu.js"></script>
-    <!-- Morris Chart Js -->
-    <!-- Custom Js -->
-
-
+	<%@include file="script.jsp" %>
 </body>
 
 </html>

@@ -11,6 +11,7 @@ interfaceImp/DashboardDaoImp.class
 pojos/Role.class
 pojos/User.class
 interfaceImp/UserDaoImpl.class
+pojos/CourseOfLecturer.class
 interfaces/CourseDashboardDao.class
 pojos/CourseDashboard.class
 pojos/Dashboard.class

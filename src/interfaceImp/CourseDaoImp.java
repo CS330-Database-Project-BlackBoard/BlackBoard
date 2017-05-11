@@ -296,7 +296,6 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		try {
 			connection = super.getConnection();
-			connection.
 			String query = "SET @CourseID = (SELECT CourseID FROM Course WHERE Code = ?); " 
 						 + "INSERT INTO Lecture(CourseID, Name) VALUES ( @CourseID, ?); " 
 						 + "SET @LectureID = (SELECT LAST_INSERT_ID()); "
@@ -307,7 +306,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 			sqlStatement.setString(1, code);
 			sqlStatement.setString(2, lecture);
 			sqlStatement.setString(3, lecturerEmail);
-			sqlStatement.execute;
+			sqlStatement.executeQuery();
 			
 			added = true;
 			

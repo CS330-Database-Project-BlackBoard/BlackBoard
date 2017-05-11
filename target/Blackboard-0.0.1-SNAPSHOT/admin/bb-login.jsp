@@ -3,9 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./assets/css/custom-styles.css">
-	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">   
+		<%@include file="style.jsp" %>
     </head>
     <body>
         <form class="" action="" method="post">
@@ -31,7 +29,7 @@
         </form>
 
     </body>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
+    	<%@include file="script.jsp" %>
+    
 
 </html>
