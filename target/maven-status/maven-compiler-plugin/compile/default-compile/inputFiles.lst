@@ -14,6 +14,7 @@
 /home/farisi/workspace/Blackboard/src/interfaceImp/UserDaoImpl.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletAdminDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletManagerManagement.java
+/home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturer.java
 /home/farisi/workspace/Blackboard/src/interfaces/LecturerDao.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseOfLecturer.java
 /home/farisi/workspace/Blackboard/src/security/AppSecurity.java
@@ -29,6 +30,7 @@
 /home/farisi/workspace/Blackboard/src/pojos/CourseDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/DashboardDaoImp.java
+/home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/LecturerDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaces/ManagerDao.java
 /home/farisi/workspace/Blackboard/src/pojos/Role.java

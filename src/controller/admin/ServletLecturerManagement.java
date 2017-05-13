@@ -1,0 +1,53 @@
+package controller.admin;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import controller.SigninController;
+import interfaceImp.LecturerDaoImp;
+import pojos.Lecturer;
+import pojos.User;
+
+
+@WebServlet(name="ServletLecturerManagement", urlPatterns= {"/admin/lecturers"})
+public class ServletLecturerManagement extends HttpServlet {
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		User user = null;
+		
+		try {
+			user = (User) session.getAttribute("user");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (!SigninController.adminRequired(user, req, resp)) {
+				return;
+			}
+		}
+		
+		LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
+		
+		ArrayList<Lecturer> lecturers = lecturerDaoImp.getAllLecturers();
+		
+		
+		session.setAttribute("lecturers", lecturers);
+		
+		 	
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-lecturer-management.jsp");
+		requestDispatcher.forward(req, resp);
+		
+	}
+
+}

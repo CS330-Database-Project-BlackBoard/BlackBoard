@@ -184,11 +184,13 @@ public class CourseDaoImp extends Database implements CourseDao {
 	public ArrayList<Course> getCoursesByLecturerID(int schoolID) {
 		
 		String query = "SELECT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cl.SchoolID = " + schoolID;
+				+ "FROM Course c, User u, CourseOfLecturer cl, Lecture l " 
+				+ "WHERE c.CourseID =  l.CourseID "  
+				+ "AND l.LectureID = cl.LectureID " 
+				+ "AND u.SchoolID = cl.SchoolID "  
+				+ "AND u.Role = 3 " 
+				+ "AND cl.SchoolID = " + schoolID +  " "  
+				+ "AND cl.Visible = true;";
 		
 		return this.getCourses(query);
 	}

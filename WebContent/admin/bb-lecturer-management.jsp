@@ -1,3 +1,8 @@
+
+<%@page import="pojos.Lecturer"%>
+<%@page import="java.util.ArrayList"%>
+<% ArrayList<Lecturer> lecturers = (ArrayList<Lecturer>) session.getAttribute("lecturers"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -17,24 +22,24 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <li>
-                        <a href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+         			 <li>
+                        <a  href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="active-menu" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="active-menu" class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 
@@ -55,11 +60,7 @@
                 </div>
                 <!-- /. ROW  -->
 
-                <div class="row bottom-space">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-success" name="button"><span class="glyphicon glyphicon-plus"></span> Add Lecturer</button>
-                    </div>
-                </div>
+    
 
                 <div class="row">
                     <div class="col-md-12">
@@ -87,36 +88,20 @@
                                   <thead>
                                       <th class="text-center">Lecturer ID</th>
                                       <th class="text-center">Lecturer Name</th>
-                                      <th class="text-center">Lecturer Department</th>
+                                      <th class="text-center">Lecturer Email</th>
                                       <th></th>
                                   </thead>
                                   <tbody>
+                                  <%for(Lecturer lecturer: lecturers){ %>
                                       <tr class="text-center">
-                                          <td>21000231</td>
-                                          <td>Hilal Kazan</td>
-                                          <td>College of Engineering</td>
+                                          <td><%= lecturer.getSchoolID() %></td>
+                                          <td><%= lecturer.getNameSurname()%></td>
+                                          <td><%= lecturer.getEmail() %></td>
                                           <td>
-                                              <a href="bb-lecturer-management-course-list.html"><i class="fa fa-chevron-right"></i></a>
+                                              <a href="${pageContext.request.contextPath}/admin/lecturer/<%= lecturer.getSchoolID() %>"><i class="fa fa-chevron-right"></i></a>
                                           </td>
                                       </tr>
-
-                                      <tr class="text-center">
-                                          <td>12300231</td>
-                                          <td>Mustafa Ilker Beyaz</td>
-                                          <td>College of Engineering</td>
-                                          <td>
-                                              <a href="bb-lecturer-management-course-list.html"><i class="fa fa-chevron-right"></i></a>
-                                          </td>
-                                      </tr>
-
-                                      <tr class="text-center">
-                                          <td>53123321</td>
-                                          <td>Sevgi Sengul</td>
-                                          <td>College of Engineering</td>
-                                          <td>
-                                              <a href="bb-lecturer-management-course-list.html"><i class="fa fa-chevron-right"></i></a>
-                                          </td>
-                                      </tr>
+                                      <% } %>
                                   </tbody>
                               </table>
                           </div>
@@ -125,7 +110,7 @@
                 </div>
             </div>
         </div>
-    <!-- /. WRAPPER  -->
+    </div>
     
     <%@include file="script.jsp" %>
 

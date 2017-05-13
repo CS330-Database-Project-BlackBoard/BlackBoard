@@ -18,12 +18,14 @@ pojos/Dashboard.class
 interfaceImp/AnouncmentDaoImp.class
 pojos/Course.class
 pojos/Anouncment.class
+controller/admin/ServletLecturer.class
 interfaces/UserDao.class
 interfaceImp/CourseDaoImp.class
 interfaces/CourseDao.class
 controller/ServletIndex.class
 interfaceImp/LecturerDaoImp.class
 controller/ServletSignout.class
+controller/admin/ServletLecturerManagement.class
 security/AppSecurity.class
 pojos/Manager.class
 pojos/SimpleCourse.class

@@ -2,6 +2,7 @@ package interfaces;
 
 import java.util.ArrayList;
 
+import pojos.CourseOfLecturer;
 import pojos.Lecturer;
 
 public interface LecturerDao {
@@ -13,6 +14,7 @@ public interface LecturerDao {
 	
 	public ArrayList<Lecturer> getLecturersByName(String name);
 	
+	public ArrayList<CourseOfLecturer> getCoursesOfLecturer(Lecturer lecturer);
 	
 
 }

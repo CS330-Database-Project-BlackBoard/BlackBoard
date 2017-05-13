@@ -36,7 +36,7 @@
                     </li>
 
                     <li>
-                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers/"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>

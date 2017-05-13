@@ -52,7 +52,7 @@ public class ServletSearchLecturer extends HttpServlet{
 		
 		
 		for (Lecturer lecturer : lecturers) {
-			response.put(lecturer.getEmail(), lecturer.getNaneSurname());
+			response.put(lecturer.getEmail(), lecturer.getNameSurname());
 		}
 		
 		resp.setContentType("application/json");
