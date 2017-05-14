@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-    <!-- /. WRAPPER  -->
+    </div>
     
     <%@include file="script.jsp" %>
 

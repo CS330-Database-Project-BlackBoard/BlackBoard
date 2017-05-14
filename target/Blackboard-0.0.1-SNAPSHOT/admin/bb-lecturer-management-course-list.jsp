@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackboard - Dashboard</title>
 
-		<%@include file="style.jsp" %>
+	<%@include file="style.jsp" %>
 	
 </head>
 
@@ -50,6 +50,7 @@
             </div>
 
         </nav>
+        
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
@@ -105,7 +106,8 @@
             </div>
         </div>
 
-
+	 </div>
+	
 		<%@include file="script.jsp" %>
 	
 
