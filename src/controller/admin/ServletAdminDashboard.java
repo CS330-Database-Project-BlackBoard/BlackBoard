@@ -26,6 +26,7 @@ public class ServletAdminDashboard extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = req.getSession();
+
 		User user = null;
 		
 		try {
@@ -46,8 +47,12 @@ public class ServletAdminDashboard extends HttpServlet{
 		session.setAttribute("dashboard", dashboard);
 		
 		
+		
+		session.setAttribute("lastPath", req.getRequestURI());
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-index.jsp");
 		dispatcher.forward(req, resp);
+		
 	}
 
 }

@@ -91,7 +91,7 @@
                                                 <a href="#" class="table-col-space-right">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
-                                                <a href="${pageContext.request.contextPath}/admin/lecturer/<%= lecturer.getSchoolID() %>/course/<%= course.getCourseID() %>/lecture/<%= course.getLectureID()%>">
+                                                <a href="${pageContext.request.contextPath}/admin/lecture/<%= course.getLectureID()%>/dashboard">
                                                     <i class="glyphicon glyphicon-chevron-right"></i>
                                                 </a>
                                             </td>

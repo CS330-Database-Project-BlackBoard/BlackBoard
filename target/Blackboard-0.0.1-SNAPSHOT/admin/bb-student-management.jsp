@@ -17,23 +17,23 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a  href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a  href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a  class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 

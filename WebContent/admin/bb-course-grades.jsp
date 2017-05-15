@@ -1,3 +1,8 @@
+<%@page import="pojos.SimpleGrade"%>
+<%@page import="pojos.LectureDetail"%>
+
+<% LectureDetail lectureDetail = (LectureDetail) session.getAttribute("lectureDetail"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -17,24 +22,24 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <li>
-                        <a href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                 	<li>
+                        <a  href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="active-menu" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a  class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 
@@ -49,7 +54,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Database Systems Course
+                            <%= lectureDetail.getCourse().getName() %> #<%= lectureDetail.getCourse().getLectureName() %>
                         </h1>
                     </div>
                 </div>
@@ -67,43 +72,32 @@
                     <div class="col-md-12 col-xs-12 col-sm-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Database Systems Course Grades
+                            <%= lectureDetail.getCourse().getName() %> Grades
                             </div>
                             <div class="panel-body">
                                 <table class="table table-responsive">
                                     <thead>
-                                        <th class="text-center">Anouncment Date</th>
                                         <th class="text-center">Grade Name</th>
                                         <th class="text-center">Average</th>
                                         <th class="text-center">Affect %</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
-                                        <tr class="text-center">
-                                            <td>23/04/2017</td>
-                                            <td>Quiz 2</td>
-                                            <td>37.6</td>
-                                            <td>15</td>
-                                            <td>
-                                                <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a href="bb-course-grade-student-list.html"><i class="fa fa-eye"></i></a>
-                                            </td>
-                                        </tr>
+                                    
+										<% for(SimpleGrade grade: lectureDetail.getGrades()){ %>
 
                                         <tr class="text-center">
-                                            <td>15/04/2017</td>
-                                            <td>Quiz 1</td>
-                                            <td>67.1</td>
-                                            <td>15</td>
+                                            <td><%= grade.getName() %></td>
+                                            <td><%= grade.getAverage() %></td>
+                                            <td><%= grade.getAffect() %></td>
                                             <td>
                                                 <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                                <a href="bb-course-grade-student-list.html"><i class="fa fa-eye"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
+		                             <% } %>
                                     </tbody>
                                 </table>
                             </div>

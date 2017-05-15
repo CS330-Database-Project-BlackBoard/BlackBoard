@@ -29,6 +29,7 @@ public class ServletSearchLecturer extends HttpServlet{
 		
 		User user = null;
 		HttpSession session = req.getSession();
+
 		
 		try {
 			user = (User) session.getAttribute("user");

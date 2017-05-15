@@ -26,6 +26,7 @@ public class ServletCourseManagement extends HttpServlet{
 		
 		User user = null;
 		HttpSession session = req.getSession();
+
 		CourseDashboard courseDashboard = null;
 		
 		try {
@@ -44,7 +45,7 @@ public class ServletCourseManagement extends HttpServlet{
 		
 		session.setAttribute("courseDashboard", courseDashboard);
 		
-		
+		session.setAttribute("lastPath", req.getRequestURI());
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-management.jsp");
 		requestDispatcher.forward(req, resp);
 		

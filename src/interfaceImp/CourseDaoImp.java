@@ -10,8 +10,12 @@ import org.omg.CORBA.StringHolder;
 
 import database.Database;
 import interfaces.CourseDao;
+import pojos.Anouncment;
 import pojos.Course;
+import pojos.LectureDetail;
+import pojos.LectureDashboard;
 import pojos.SimpleCourse;
+import pojos.SimpleGrade;
 
 public class CourseDaoImp extends Database implements CourseDao {
 	
@@ -197,7 +201,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 
 	@Override
 	public Course getCourseByCourseID(int courseID) {
-		String query = "SELECT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
+		String query = "SELECT c.*, u.schoolID, u.Name AS LecturerName, u.Surn-+ame AS LecturerSurname, l.LectureID, l.Name AS LectureName "
 				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l "
 				 + "WHERE cl.LectureID = l.LectureID "
 				 + "AND l.CourseID = c.CourseID "
@@ -331,10 +335,123 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return added;
 	}
-	
-	
-	
 
+	@Override
+	public LectureDashboard getLectureDashboard(int lectureID) {
+		
+		LectureDashboard lectureDashboard = null;
+		Connection connection = null;
+		Course course = null;
+		
+		try {
+			connection = super.getConnection();
+			String query = "SELECT " 
+					+ "l.LectureID," 
+					+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID) AS EnrolledStudentCount, " 
+					+ "(SELECT COUNT(*) FROM GradeOfCourse WHERE LectureID = l.LectureID) AS GradeCount " 
+					+ "FROM Lecture l " 
+					+ "WHERE l.LectureID = ? "
+					+ "AND l.Visible = true;";
+			
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
+			ResultSet resultSet = sqlStatement.executeQuery();
+			if (resultSet.next()) {
+				
+				int enrolledStudentCount = resultSet.getInt("EnrolledStudentCount");
+				int gradeCount = resultSet.getInt("GradeCount");
+				
+				AnouncmentDaoImp anouncmentDaoImp = new AnouncmentDaoImp();
+				ArrayList<Anouncment> anouncments = anouncmentDaoImp.getAnouncmentsByLecture(lectureID);
+				course = this.getCourseByLectureID(lectureID);
+				
+				lectureDashboard = new LectureDashboard(course, lectureID, anouncments, enrolledStudentCount, gradeCount);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return lectureDashboard;
+	
+	}
+
+	
+	
+	@Override
+	public ArrayList<SimpleGrade> getLectureGrades(int lectureID) {
+		ArrayList<SimpleGrade> grades = new ArrayList<>();
+		SimpleGrade grade = null;
+		
+		Connection connection = null;
+		
+		
+		try {
+			connection = super.getConnection();
+			String query = "SELECT gc.*, (SELECT AVG(Grade) FROM GradeOfStudent WHERE CourseGradeID = gc.GradeID) AS Average "
+					+ "FROM GradeOfCourse gc " 
+					+ "WHERE gc.LectureID = ?;";
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);		
+			ResultSet resultSet = sqlStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				int gradeID = resultSet.getInt("GradeID");
+				int affect = resultSet.getInt("Affect");
+				String name = resultSet.getString("Name");
+				float average = resultSet.getFloat("Average");
+				grade = new SimpleGrade(lectureID, gradeID, name, affect, average);
+				grades.add(grade);
+				
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return grades;
+	}
+
+	@Override
+	public LectureDetail getLectureDetail(int lectureID) {
+		
+		LectureDetail gradeDashboard = null;
+		
+		Course course = this.getCourseByLectureID(lectureID);
+		ArrayList<SimpleGrade> grades = this.getLectureGrades(lectureID);
+		gradeDashboard = new LectureDetail(course, grades, null);
+		
+		return gradeDashboard;
+	}
+	
+	
+	
+	
 	
 	
 }

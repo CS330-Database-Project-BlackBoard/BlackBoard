@@ -24,7 +24,7 @@ public class ServletManagerManagement extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		User user = null;
 		HttpSession session = req.getSession();
-		
+
 		try {
 			user = (User) session.getAttribute("user");
 		} catch (Exception e) {
@@ -42,6 +42,8 @@ public class ServletManagerManagement extends HttpServlet{
 		session.setAttribute("managers", managers);
 		session.setAttribute("roles", managerDaoImp.getAdminRoles());
 		
+		resp.sendRedirect((String)session.getAttribute("lastPath"));
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-user-management.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -81,6 +83,7 @@ public class ServletManagerManagement extends HttpServlet{
 			message = "Manager is not created";
 		}
 		session.setAttribute("manager.message", message);
+		
 		
 		resp.sendRedirect(req.getContextPath() + "/admin/managers");
 		

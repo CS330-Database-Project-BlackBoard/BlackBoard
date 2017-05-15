@@ -24,6 +24,7 @@ public class ServletLecturerManagement extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
+
 		User user = null;
 		
 		try {
@@ -44,7 +45,8 @@ public class ServletLecturerManagement extends HttpServlet {
 		
 		session.setAttribute("lecturers", lecturers);
 		
-		 	
+		session.setAttribute("lastPath", req.getRequestURI());
+
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-lecturer-management.jsp");
 		requestDispatcher.forward(req, resp);
 		

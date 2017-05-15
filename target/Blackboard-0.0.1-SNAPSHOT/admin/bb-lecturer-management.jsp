@@ -98,7 +98,7 @@
                                           <td><%= lecturer.getNameSurname()%></td>
                                           <td><%= lecturer.getEmail() %></td>
                                           <td>
-                                              <a href="${pageContext.request.contextPath}/admin/lecturer/<%= lecturer.getSchoolID() %>"><i class="fa fa-chevron-right"></i></a>
+                                              <a href="${pageContext.request.contextPath}/admin/lecturer/<%= lecturer.getSchoolID()%>/courses"><i class="fa fa-chevron-right"></i></a>
                                           </td>
                                       </tr>
                                       <% } %>

@@ -1,7 +1,9 @@
 /home/farisi/workspace/Blackboard/src/controller/ServletSignout.java
 /home/farisi/workspace/Blackboard/src/interfaces/UserDao.java
+/home/farisi/workspace/Blackboard/src/pojos/SimpleGrade.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDaoImp.java
 /home/farisi/workspace/Blackboard/src/database/Database.java
+/home/farisi/workspace/Blackboard/src/pojos/GradeDashboard.java
 /home/farisi/workspace/Blackboard/src/interfaces/AnouncmentDao.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletSearchCourse.java
 /home/farisi/workspace/Blackboard/src/interfaces/DashboardDao.java
@@ -14,10 +16,11 @@
 /home/farisi/workspace/Blackboard/src/interfaceImp/UserDaoImpl.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletAdminDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletManagerManagement.java
-/home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturer.java
 /home/farisi/workspace/Blackboard/src/interfaces/LecturerDao.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseOfLecturer.java
 /home/farisi/workspace/Blackboard/src/security/AppSecurity.java
+/home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerCourses.java
+/home/farisi/workspace/Blackboard/src/pojos/LectureDashboard.java
 /home/farisi/workspace/Blackboard/src/pojos/Manager.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/AnouncmentDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/ServletIndex.java
@@ -27,11 +30,14 @@
 /home/farisi/workspace/Blackboard/src/controller/ServletSignin.java
 /home/farisi/workspace/Blackboard/src/pojos/Course.java
 /home/farisi/workspace/Blackboard/src/pojos/Anouncment.java
+/home/farisi/workspace/Blackboard/src/pojos/Student.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java
+/home/farisi/workspace/Blackboard/src/enums/AppPath.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/DashboardDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/LecturerDaoImp.java
+/home/farisi/workspace/Blackboard/src/controller/admin/ServletLectureManagement.java
 /home/farisi/workspace/Blackboard/src/interfaces/ManagerDao.java
 /home/farisi/workspace/Blackboard/src/pojos/Role.java
 /home/farisi/workspace/Blackboard/src/pojos/User.java

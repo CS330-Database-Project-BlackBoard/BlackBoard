@@ -81,7 +81,7 @@ public class AnouncmentDaoImp extends Database implements AnouncmentDao {
 		Anouncment anouncment;
 		ArrayList<Anouncment> anouncments = new ArrayList<>();	
 		Connection connection = null;
-		String query = "SELECT * FROM Anouncment WHERE WHERE PostedTO = ?)";
+		String query = "SELECT * FROM Anouncment WHERE PostedTO = ?;";
 		
 		try {
 			connection = super.getConnection();

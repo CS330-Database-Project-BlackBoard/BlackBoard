@@ -30,6 +30,7 @@ public class ServletSearchCourse extends HttpServlet{
 		
 		User user = null;
 		HttpSession session = req.getSession();
+
 		CourseDashboard courseDashboard = null;
 		
 		try {

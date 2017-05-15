@@ -120,7 +120,9 @@
                                     <td><%= course.getLectureName() %></td>
                                     <td><%= course.getLecturerInf() %></td>
                                     <td>
-                                        <button type="button" class="btn btn-success" name="button">Manage</button>
+                                        <a href="${pageContext.request.contextPath}/admin/lecture/<%= course.getLectureID()%>/dashboard">
+                                        	<button type="button" class="btn btn-success" name="button">Manage</button>
+                                        </a>
                                     </td>
                                 </tr>
 								<% } %>

@@ -6,3 +6,11 @@
 .capital{
 	text-transform: uppercase;
 }
+
+body {
+    overflow-x: hidden;
+}
+
+.head-right{
+	padding-right: 9px;
+}

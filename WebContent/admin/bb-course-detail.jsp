@@ -1,3 +1,8 @@
+
+<%@page import="pojos.Anouncment"%>
+<%@page import="pojos.LectureDashboard"%>
+<% LectureDashboard lectureDashboard = (LectureDashboard) session.getAttribute("lectureDashboard"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -19,23 +24,23 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a  href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a  class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
 
@@ -50,7 +55,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Database Management Course Detail
+                            <%= lectureDashboard.getCourse().getName() %> Course Detail
                         </h1>
                     </div>
                 </div>
@@ -63,10 +68,10 @@
                                 <div class="panel panel-primary text-center no-boder bg-color-dgray">
                                     <div class="panel-body">
                                         <i class="fa fa-pencil-square-o fa-5x"></i>
-                                        <h3>2</h3>
+                                        <h3><%= lectureDashboard.getGradeCount() %></h3>
                                     </div>
                                     <div class="panel-footer back-footer-dgray">
-                                        <a class="white-link" href="bb-course-grades.html"> Grades</a>
+                                        <a class="white-link" href="${pageContext.request.contextPath}/admin/lecture/<%=lectureDashboard.getLectureID()%>/grades"> Grades</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +79,10 @@
                                 <div class="panel panel-primary text-center no-boder bg-color-dblue">
                                     <div class="panel-body">
                                         <i class="fa fa-mortar-board fa-5x"></i>
-                                        <h3>54</h3>
+                                        <h3><%= lectureDashboard.getEnrolledStudentCount() %></h3>
                                     </div>
                                     <div class="panel-footer back-footer-dblue">
-                                        <a class="white-link" href="bb-course-students.html">Students</a>
+                                        <a class="white-link" href="${pageContext.request.contextPath}/admin/lecture/<%=lectureDashboard.getLectureID()%>/studens">Students</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,18 +99,12 @@
                           </div>
                           <div class="panel-body">
                             <div class="list-group">
-                                <a href="course-anouncement.html" class="list-group-item">Midterm Date
+                            <%for(Anouncment anouncment: lectureDashboard.getAnouncments()){ %>
+                            
+                                <a href="${pageContext.request.contextPath}/admin/anouncment/<%=anouncment.getAnouncmentID() %>" class="list-group-item"><%= anouncment.getTitle() %>
                                     <span class="badge">yesterday</span>
                                 </a>
-                                <a href="course-anouncement.html" class="list-group-item">Lecture 8
-                                    <span class="badge">yesterday</span>
-                                </a>
-                                <a href="course-anouncement.html" class="list-group-item">Assignment 2
-                                    <span class="badge">3 days ago</span>
-                                </a>
-                                <a href="course-anouncement.html" class="list-group-item">Lecture 7
-                                    <span class="badge">8 days ago</span>
-                                </a>
+                                <%} %>
                             </div>
                           </div>
 

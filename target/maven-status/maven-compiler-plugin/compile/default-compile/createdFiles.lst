@@ -18,7 +18,6 @@ pojos/Dashboard.class
 interfaceImp/AnouncmentDaoImp.class
 pojos/Course.class
 pojos/Anouncment.class
-controller/admin/ServletLecturer.class
 interfaces/UserDao.class
 interfaceImp/CourseDaoImp.class
 interfaces/CourseDao.class
