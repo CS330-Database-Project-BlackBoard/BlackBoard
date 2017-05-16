@@ -1,7 +1,7 @@
 <%@page import="pojos.SimpleGrade"%>
 <%@page import="pojos.LectureDetail"%>
 
-<% GradeDashboard gradeDashboard = (GradeDashboard) session.getAttribute("gradeDashboard"); %>
+<% LectureDetail lectureDetail = (LectureDetail) session.getAttribute("lectureDetail"); %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,7 +32,7 @@
                         <a class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/students/departments"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            <%= gradeDashboard.getCourse().getName() %> #<%= gradeDashboard.getCourse().getLectureName() %>
+                            <%= lectureDetail.getCourse().getName() %> #<%= lectureDetail.getCourse().getLectureName() %>
                         </h1>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                            <%= gradeDashboard.getCourse().getName() %> Grades
+                            <%= lectureDetail.getCourse().getName() %> Grades
                             </div>
                             <div class="panel-body">
                                 <table class="table table-responsive">
@@ -84,7 +84,7 @@
                                     </thead>
                                     <tbody>
                                     
-										<% for(SimpleGrade grade: gradeDashboard.getGrades()){ %>
+										<% for(SimpleGrade grade: lectureDetail.getGrades()){ %>
 
                                         <tr class="text-center">
                                             <td><%= grade.getName() %></td>

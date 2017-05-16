@@ -41,8 +41,8 @@ public class ServletManagerManagement extends HttpServlet{
 		ArrayList<Manager> managers = managerDaoImp.getAllManagers();
 		session.setAttribute("managers", managers);
 		session.setAttribute("roles", managerDaoImp.getAdminRoles());
-		
-		resp.sendRedirect((String)session.getAttribute("lastPath"));
+
+		session.setAttribute("lastPath", req.getRequestURI());
 
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-user-management.jsp");
 		dispatcher.forward(req, resp);

@@ -8,8 +8,9 @@ import pojos.StudentGrade;
 
 
 public interface StudentDao {
-	
-	
+
+	public ArrayList<Student> getAllStudents();
+
 	public ArrayList<SimpleCourse> getStudentGrades(int schoolID); 
 	
 	

@@ -3,8 +3,8 @@ controller/ServletSignin.class
 controller/admin/ServletSearchLecturer.class
 interfaces/AnouncmentDao.class
 interfaces/DashboardDao.class
-database/Database.class
 controller/admin/ServletAdminDashboard.class
+database/Database.class
 pojos/Lecturer.class
 controller/admin/ServletManagerManagement.class
 interfaceImp/DashboardDaoImp.class
