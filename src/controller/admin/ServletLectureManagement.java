@@ -38,7 +38,7 @@ public class ServletLectureManagement  extends HttpServlet{
 			String pathInfo = req.getPathInfo();
 			String[] path = req.getPathInfo().split("/");
 			int lectureID = Integer.parseInt(path[1]);
-			
+			System.out.println(pathInfo);
 			session.setAttribute("lectureID", lectureID);
 			
 			if (pathInfo.contains(AppPath.GRADES)) {
@@ -65,6 +65,7 @@ public class ServletLectureManagement  extends HttpServlet{
 
 					RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-students.jsp");
 					requestDispatcher.forward(req, resp);
+					return;
 			}
 			else {
 				
