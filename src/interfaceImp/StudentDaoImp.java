@@ -36,12 +36,19 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		Connection connection = null;
 		Student student = null;
-		String query = "";
+		String query = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, AVG(0.01 * goc.Affect * gos.Grade) AS Average " 
+				+ "FROM GradeOfCourse goc, GradeOfStudent gos, User u "
+				+ "WHERE "
+				+ "goc.LectureID = ? "  
+				+ "AND gos.CourseGradeID = goc.GradeID " 
+				+ "AND u.SchoolID = gos.StudentID " 
+				+ "GROUP BY gos.StudentID";
 		
 		
 		try {
 			connection = super.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
 			ResultSet resultSet = sqlStatement.executeQuery();
 			
 			while(resultSet.next()){

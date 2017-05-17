@@ -20,7 +20,6 @@
 /home/farisi/workspace/Blackboard/src/interfaces/StudentDao.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseOfLecturer.java
 /home/farisi/workspace/Blackboard/src/security/AppSecurity.java
-/home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerCourses.java
 /home/farisi/workspace/Blackboard/src/pojos/LectureDashboard.java
 /home/farisi/workspace/Blackboard/src/pojos/Manager.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/AnouncmentDaoImp.java

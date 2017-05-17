@@ -1,6 +1,7 @@
 package controller.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import controller.SigninController;
 import enums.AppPath;
 import interfaceImp.CourseDaoImp;
+import interfaceImp.StudentDaoImp;
 import pojos.LectureDetail;
+import pojos.Student;
 import pojos.LectureDashboard;
 
 
@@ -36,12 +39,14 @@ public class ServletLectureManagement  extends HttpServlet{
 			String[] path = req.getPathInfo().split("/");
 			int lectureID = Integer.parseInt(path[1]);
 			
+			session.setAttribute("lectureID", lectureID);
+			
 			if (pathInfo.contains(AppPath.GRADES)) {
 				
 				CourseDaoImp courseDaoImp = new CourseDaoImp();
 				LectureDetail courseGradeDetail = courseDaoImp.getLectureDetail(lectureID);
 
-				session.setAttribute("lectureDetail", courseGradeDetail);
+				session.setAttribute("lectureCourseGradeDetail", courseGradeDetail);
 				session.setAttribute("lastPath", req.getRequestURI());
 				
 				
@@ -52,6 +57,14 @@ public class ServletLectureManagement  extends HttpServlet{
 			}
 			else if(pathInfo.contains(AppPath.STUDENTS)) {
 				
+					StudentDaoImp studentDaoImp = new StudentDaoImp();
+					ArrayList<Student> lectureStudents = studentDaoImp.getStudentsByLectureID(lectureID);
+					
+					session.setAttribute("lectureStudents", lectureStudents);
+					session.setAttribute("lastPath", req.getRequestURI());
+
+					RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-students.jsp");
+					requestDispatcher.forward(req, resp);
 			}
 			else {
 				

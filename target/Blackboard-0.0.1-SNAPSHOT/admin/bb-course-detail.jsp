@@ -82,7 +82,7 @@
                                         <h3><%= lectureDashboard.getEnrolledStudentCount() %></h3>
                                     </div>
                                     <div class="panel-footer back-footer-dblue">
-                                        <a class="white-link" href="${pageContext.request.contextPath}/admin/lecture/<%=lectureDashboard.getLectureID()%>/studens">Students</a>
+                                        <a class="white-link" href="${pageContext.request.contextPath}/admin/lecture/<%=lectureDashboard.getLectureID()%>/students">Students</a>
                                     </div>
                                 </div>
                             </div>

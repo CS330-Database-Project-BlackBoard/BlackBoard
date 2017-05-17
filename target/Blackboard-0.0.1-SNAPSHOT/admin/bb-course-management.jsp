@@ -41,7 +41,7 @@
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
-
+				</ul>
             </div>
 
         </nav>

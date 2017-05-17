@@ -1,7 +1,7 @@
 <%@page import="pojos.SimpleGrade"%>
 <%@page import="pojos.LectureDetail"%>
 
-<% LectureDetail lectureDetail = (LectureDetail) session.getAttribute("lectureDetail"); %>
+<% LectureDetail lectureDetail = (LectureDetail) session.getAttribute("lectureCourseGradeDetail"); %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
