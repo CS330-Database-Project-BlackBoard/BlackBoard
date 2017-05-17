@@ -13,12 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SigninController;
-import enums.AppPath;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseOfLecturer;
 import pojos.Lecturer;
-import pojos.User;
-
 
 
 @WebServlet(name="ServletLecturer", urlPatterns= {"/admin/lecturer/*"})
@@ -30,18 +27,9 @@ public class ServletLecturerCourses extends HttpServlet {
 		HttpSession session = req.getSession();
 
 
-		User user = null;
-		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!SigninController.signinRequired(session, req,resp)){
+			return;
 		}
-		finally {
-			if (!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}
-		}		
 		
 		try {
 			

@@ -1,7 +1,6 @@
 package controller.admin;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,10 +13,8 @@ import javax.servlet.http.HttpSession;
 import controller.SigninController;
 import enums.AppPath;
 import interfaceImp.CourseDaoImp;
-import pojos.Dashboard;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
-import pojos.User;
 
 
 @WebServlet(name="ServletLecturerCourseDashboard", urlPatterns= {"/admin/lecture/*"})
@@ -28,18 +25,10 @@ public class ServletLectureManagement  extends HttpServlet{
 
 		HttpSession session = req.getSession();
 		LectureDashboard lectureDashboard = null;
-		User user = null;
-		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		if(!SigninController.signinRequired(session, req,resp)){
+			return;
 		}
-		finally {
-			if (!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}
-		}	
 		
 		try {
 			

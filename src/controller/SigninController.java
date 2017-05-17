@@ -3,6 +3,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import enums.AppRole;
 import pojos.User;
@@ -61,8 +62,30 @@ public class SigninController {
 			e.printStackTrace();
 		}
 		return true;
-		
-		
+	}
+
+
+	/**
+	 *
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return is the student signed in, we use the function every servlet class to check session.
+	 */
+	public static boolean signinRequired(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		User user = null;
+		try {
+			user = (User) session.getAttribute("user");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (SigninController.adminRequired(user, request, response)) {
+				return true;
+			}else{
+				return false;
+			}
+		}
 	}
 	
 

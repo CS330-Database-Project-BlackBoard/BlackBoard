@@ -3,7 +3,6 @@ package controller.admin;
 import controller.SigninController;
 import interfaceImp.StudentDaoImp;
 import pojos.Student;
-import pojos.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,18 +24,10 @@ public class ServletStudentManagement extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        User user = null;
         HttpSession session = request.getSession();
 
-        try {
-            user = (User) session.getAttribute("user");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (!SigninController.adminRequired(user, request, response)) {
-                return;
-            }
+        if(!SigninController.signinRequired(session, request,response)){
+            return;
         }
 
         StudentDaoImp studentDaoImp = new StudentDaoImp();

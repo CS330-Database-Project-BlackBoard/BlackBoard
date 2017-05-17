@@ -15,10 +15,8 @@ import org.json.JSONObject;
 
 import controller.SigninController;
 import interfaceImp.CourseDaoImp;
-import pojos.Course;
 import pojos.CourseDashboard;
 import pojos.SimpleCourse;
-import pojos.User;
 
 @WebServlet(name="ServletSearchCourse", urlPatterns= {"/admin/search/course"})
 public class ServletSearchCourse extends HttpServlet{
@@ -27,22 +25,13 @@ public class ServletSearchCourse extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		
-		User user = null;
+
 		HttpSession session = req.getSession();
 
 		CourseDashboard courseDashboard = null;
-		
-		try {
-			user = (User) session.getAttribute("user");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}		
+
+		if(!SigninController.signinRequired(session, req,resp)){
+			return;
 		}
 		
 		
