@@ -22,20 +22,12 @@ public class ServletManagerManagement extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = null;
 		HttpSession session = req.getSession();
 
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!SigninController.signinRequired(session, req,resp)){
+			return;
 		}
-		finally {
-			if(!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}		
-		}
-		
+
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();
 		
 		ArrayList<Manager> managers = managerDaoImp.getAllManagers();
