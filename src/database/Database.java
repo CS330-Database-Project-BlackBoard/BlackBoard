@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 
 public class Database {
 	
-	private String dbUser = "root";
-	private String dbPassword = "root";
-	private String database = "Blackboard?allowMultiQueries=true";
+	private String dbUser = "dev";
+	private String dbPassword = "23579";
+	private String database = "blackboard?allowMultiQueries=true";
 	private String server = "127.0.0.1:3306/";
 	private String driver = "jdbc:mysql://";
 	private String url = driver + server  + database;
