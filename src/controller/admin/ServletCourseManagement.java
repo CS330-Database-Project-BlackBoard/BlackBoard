@@ -23,21 +23,13 @@ public class ServletCourseManagement extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		User user = null;
+
 		HttpSession session = req.getSession();
 
 		CourseDashboard courseDashboard = null;
-		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}		
+
+		if(!SigninController.signinRequired(session, req,resp)){
+			return;
 		}
 		
 		CourseDashboardDaoImp courseDashboardDaoImp = new CourseDashboardDaoImp();
