@@ -84,7 +84,7 @@
                                               <td><%= student.getSchoolID() %></td>
                                               <td><%= student.getNameSurname() %></td>
                                               <td><%= student.getAverage() %></td>
-                                              <td><a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= lectureDashboard.getCourse().getLectureID() %>/ student/<%= student.getSchoolID() %>/"><i class="fa fa-chevron-right"></i></a></td>
+                                              <td><a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= lectureDashboard.getCourse().getLectureID() %>/student/<%= student.getSchoolID() %>"><i class="fa fa-chevron-right"></i></a></td>
                                           </tr>
 
                                           <%} %>

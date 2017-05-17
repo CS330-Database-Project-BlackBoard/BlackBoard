@@ -38,8 +38,6 @@ public class ServletLectureManagement  extends HttpServlet{
 			String pathInfo = req.getPathInfo();
 			String[] path = req.getPathInfo().split("/");
 			int lectureID = Integer.parseInt(path[1]);
-			System.out.println(pathInfo);
-			session.setAttribute("lectureID", lectureID);
 			
 			if (pathInfo.contains(AppPath.GRADES)) {
 				
