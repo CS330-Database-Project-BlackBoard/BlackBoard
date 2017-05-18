@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import enums.AppPath;
 
 @WebServlet(name="ServletGradeManagement", urlPatterns= {"/grade/*"})
@@ -20,9 +20,10 @@ public class ServletGradeManagement extends HttpServlet{
 		
 		HttpSession session = req.getSession();
 		
-		if (SigninController.signinRequired(session, req, resp)) {
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		String pathInfo = req.getPathInfo();
 		

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import enums.AppPath;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseOfLecturer;
@@ -38,9 +38,10 @@ public class ServletLecturerCourses extends HttpServlet {
 			e.printStackTrace();
 		}
 		finally {
-			if (!SigninController.adminRequired(user, req, resp)) {
+			if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 				return;
 			}
+			
 		}		
 		
 		try {

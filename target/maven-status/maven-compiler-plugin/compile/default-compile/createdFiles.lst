@@ -14,7 +14,6 @@ interfaces/CourseDao.class
 controller/ServletSignout.class
 controller/admin/ServletLecturerManagement.class
 pojos/Manager.class
-controller/SigninController.class
 controller/ServletSignin.class
 controller/admin/ServletSearchLecturer.class
 interfaces/AnouncmentDao.class

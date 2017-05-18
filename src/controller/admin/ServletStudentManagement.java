@@ -1,6 +1,6 @@
 package controller.admin;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.StudentDaoImp;
 import pojos.Student;
 
@@ -21,22 +21,22 @@ import java.util.ArrayList;
 public class ServletStudentManagement extends HttpServlet {
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        HttpSession session = request.getSession();
+        HttpSession session = req.getSession();
 
-        if(!SigninController.signinRequired(session, request,response)){
-            return;
-        }
-
+        if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+			return;
+		}
+		
         StudentDaoImp studentDaoImp = new StudentDaoImp();
 
         ArrayList<Student> students =studentDaoImp.getAllStudents();
         session.setAttribute("students",students);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/bb-student-management.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-management.jsp");
+        dispatcher.forward(req, resp);
 
     }
 }

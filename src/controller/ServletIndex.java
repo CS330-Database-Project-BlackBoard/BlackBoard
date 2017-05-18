@@ -26,10 +26,10 @@ public class ServletIndex extends HttpServlet {
 			e.printStackTrace();
 		}
 		finally {
-			SigninController.isSignedIn(user,req, resp);
+			SecurityController.isSignedIn(user,req, resp);
 		}
 		
-		SigninController.redirectToUserByRole(user, resp);
+		SecurityController.redirectToUserByRole(user, resp);
 		
 	
 	}

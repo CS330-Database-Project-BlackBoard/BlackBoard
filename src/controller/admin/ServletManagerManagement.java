@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.ManagerDaoImp;
 import pojos.Manager;
 import pojos.User;
@@ -24,9 +24,10 @@ public class ServletManagerManagement extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();
 		
@@ -45,7 +46,7 @@ public class ServletManagerManagement extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
 		

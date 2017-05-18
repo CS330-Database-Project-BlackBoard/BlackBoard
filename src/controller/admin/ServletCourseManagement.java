@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.CourseDaoImp;
 import interfaceImp.CourseDashboardDaoImp;
 import pojos.CourseDashboard;
@@ -28,7 +28,8 @@ public class ServletCourseManagement extends HttpServlet{
 
 		CourseDashboard courseDashboard = null;
 
-		if(!SigninController.signinRequired(session, req,resp)){
+
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
 		
@@ -50,16 +51,10 @@ public class ServletCourseManagement extends HttpServlet{
 		HttpSession session = req.getSession();
 		CourseDashboard courseDashboard = null;
 		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+			return;
 		}
-		finally {
-			if(!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}		
-		}
+		
 		
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
 		

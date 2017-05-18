@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import enums.AppPath;
 import interfaceImp.CourseDaoImp;
 import interfaceImp.StudentDaoImp;
@@ -29,9 +29,10 @@ public class ServletLectureManagement  extends HttpServlet{
 		HttpSession session = req.getSession();
 		LectureDashboard lectureDashboard = null;
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		try {
 			
