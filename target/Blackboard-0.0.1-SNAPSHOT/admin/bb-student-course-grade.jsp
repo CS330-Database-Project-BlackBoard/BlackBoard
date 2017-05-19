@@ -1,3 +1,14 @@
+<%@page import="pojos.LectureDashboard"%>
+<%@page import="pojos.Student"%>
+<%@page import="pojos.CourseDashboard"%>
+<%@page import="pojos.StudentGrade"%>
+<%@page import="java.util.ArrayList"%>
+
+
+<% ArrayList<StudentGrade> lectureStudentGrades = (ArrayList<StudentGrade>) session.getAttribute("lectureStudentGrades");%>
+<% LectureDashboard lectureDashboard = (LectureDashboard) session.getAttribute("lectureDashboard"); %>
+<% Student student = (Student) session.getAttribute("student");%>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -17,27 +28,28 @@
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
-                    <li>
-                        <a  href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                  <ul class="nav" id="main-menu">
+         			 <li>
+                        <a  href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                        <a  class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a href="${pageContext.request.contextPath}/admin/students"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
-                        <a class="" href="bb-lecturer-management.html"><i class="fa fa-users"></i> Lecturer Management</a>
+                        <a class="" href="${pageContext.request.contextPath}/admin/lecturers"><i class="fa fa-users"></i> Lecturer Management</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/admin/settings"><i class="fa fa-edit"></i> Settings</a>
                     </li>
                 </ul>
+
 
             </div>
 
@@ -50,7 +62,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Student Management
+                           <%= lectureDashboard.getCourse().getName() %> Grades of <%= student.getNameSurname()  %>
                         </h1>
                     </div>
                 </div>
@@ -60,53 +72,30 @@
                     <div class="col-md-12 col-xs-12 col-sm-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Database Systems Course Grades
+                                Grades
                             </div>
                             <div class="panel-body">
                                 <table class="table table-responsive">
                                     <thead>
-                                        <th class="text-center">Anouncment Date</th>
                                         <th class="text-center">Grade Name</th>
                                         <th class="text-center">Grade</th>
                                         <th class="text-center">Average</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
+ 									<% for(StudentGrade grade : lectureStudentGrades){ %>
                                         <tr class="text-center">
-                                            <td>23/04/2017</td>
-                                            <td>Quiz 2</td>
-                                            <td>45</td>
-                                            <td>37.6</td>
+                                            <td><%= grade.getName() %></td>
+                                            <td><%= grade.getGrade() %></td>
+                                            <td><%= grade.getAffect() %></td>
                                             <td>
                                                 <a data-toggle="modal" href="#update-grade" class="">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
                                         </tr>
-
-                                        <tr class="text-center">
-                                            <td>15/04/2017</td>
-                                            <td>Quiz 1</td>
-                                            <td>75</td>
-                                            <td>67.1</td>
-                                            <td>
-                                                <a href="#" class="">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="text-center">
-                                            <td>05/04/2017</td>
-                                            <td>Midterm 1</td>
-                                            <td>65</td>
-                                            <td>57.3</td>
-                                            <td>
-                                                <a href="#" class="">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+									<%} %>
+                                        
                                     </tbody>
                                 </table>
                             </div>

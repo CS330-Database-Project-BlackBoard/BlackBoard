@@ -4,8 +4,9 @@ import pojos.User;
 
 public interface UserDao {
 	
-	User getUser();
-	boolean signIn(String email, String password);
-	boolean signOut();
+	public User getUser();
+	
+	public boolean signIn(String email, String password);
+	public boolean signOut();
 
 }

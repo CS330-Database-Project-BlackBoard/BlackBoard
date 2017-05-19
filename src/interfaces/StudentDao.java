@@ -11,12 +11,13 @@ public interface StudentDao {
 
 	public ArrayList<Student> getAllStudents();
 
-	public ArrayList<SimpleCourse> getStudentGrades(int schoolID); 
-	
+	public ArrayList<SimpleCourse> getStudentCourse(int schoolID); 
 	
 	public ArrayList<StudentGrade> getStudentGradesByLecture(int schoolID,int lectureID); 
 	
-	public ArrayList<Student> getStudentsByLectureID(int lectureID); 
+	public ArrayList<Student> getStudentsByLectureID(int lectureID);
+	
+	public Student getStudent(int schoolID);
 	
 	
 }

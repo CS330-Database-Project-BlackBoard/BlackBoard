@@ -41,7 +41,6 @@ public class ServletLecturerCourses extends HttpServlet {
 			
 			String pathInfo = req.getPathInfo();
 			String[] path = pathInfo.split("/");
-			System.out.println(Arrays.toString(path));
 			
 			int lecturerID = Integer.parseInt(path[1]);
 			

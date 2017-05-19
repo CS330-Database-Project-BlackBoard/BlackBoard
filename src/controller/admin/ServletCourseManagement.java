@@ -46,7 +46,7 @@ public class ServletCourseManagement extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("here");
+
 		User user = null;
 		HttpSession session = req.getSession();
 		CourseDashboard courseDashboard = null;
@@ -64,7 +64,6 @@ public class ServletCourseManagement extends HttpServlet{
 		String lecturerEmail = (String) req.getParameter("lecturer-email");
 		System.out.println(String.format("%s %s %s", code, lecture, lecturerEmail));
 		boolean result = courseDaoImp.addNewCourse(code.toUpperCase(), lecture.toUpperCase(), lecturerEmail.toLowerCase());
-		System.out.println("new course is added: " + result);
 
 		String message = "";
 		if (result) {
