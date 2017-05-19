@@ -48,38 +48,31 @@ public class SecurityController {
 	
 	public static boolean adminRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		User user;
-		try {
-			 user = (User) session.getAttribute("user");
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (signinRequired(session, req, resp)) {
 			try {
-				resp.sendRedirect(req.getContextPath() + "/signin");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			return false;
-		}
-		
-		if (user != null) {
-			if(user.getRole() != AppRole.SUPER_ADMIN  &&  user.getRole() != AppRole.ADMIN) {
-				redirectToUserByRole(user, resp);
-				return false;
-			}
-		}
-		else {
-			
-			try {
-				resp.sendRedirect(req.getContextPath() + "/signin");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				 user = (User) session.getAttribute("user");
+				 
+				 if (user != null) {
+						if(user.getRole() != AppRole.SUPER_ADMIN  &&  user.getRole() != AppRole.ADMIN) {
+							redirectToUserByRole(user, resp);
+							return false;
+						}
+						else {
+							return true;
+						}
+						
+				 }
+				 else {
+					 resp.sendRedirect(req.getContextPath() + "/signin");
+					 return false;
+				 }	 
+			} 
+			catch (Exception e) {
 				e.printStackTrace();
 			}
-			return false;
 		}
+		return false;
 		
-		return true;
 	}
 
 
@@ -88,10 +81,15 @@ public class SecurityController {
 		User user = null;
 		try {
 			user = (User) session.getAttribute("user");
+			if (user == null) {
+					resp.sendRedirect(req.getContextPath() + "/signin");
+					return false;
+			}
 			
-			
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
+			
 			try {
 				resp.sendRedirect(req.getContextPath() + "/signin");
 			} catch (IOException e1) {
@@ -101,21 +99,9 @@ public class SecurityController {
 			return false;
 		}
 		
-		if (user == null) {
-			try {
-				resp.sendRedirect(req.getContextPath() + "/signin");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
-		}
+	
 		return true;
 		
-	}
-	
-
-	
-	
+	}	
 
 }

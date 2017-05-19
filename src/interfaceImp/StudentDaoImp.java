@@ -35,6 +35,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 		ArrayList<Student> students = new ArrayList<>();
 		Connection connection = null;
 		Student student = null;
+		/*
 		String query = "set @countOfLectureGrade = (SELECT Count(goc.Affect) FROM GradeOfCourse goc WHERE goc.LectureID = ?);" 
 						+ "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, " 
 						+ "CASE WHEN @countOfLecture = 0 then 0 " 
@@ -46,13 +47,29 @@ public class StudentDaoImp extends Database implements StudentDao {
 						+ "OR (u.SchoolID = cos.SchoolID AND cos.LectureID = ? AND @countOfLectureGrade = 0) " 
 						+ "GROUP BY u.SchoolID;";
 				
+		*/
+		String query1 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, AVG(0.01 * goc.Affect* gos.Grade) "
+					  + "FROM GradeOfCourse goc, GradeOfStudent gos, User u, CourseOfStudent cos " 
+					  + "WHERE " 
+					  + "gos.CourseGradeID = goc.GradeID "  
+					  + "AND u.SchoolID = gos.StudentID " 
+					  + "AND goc.LectureID = ? "  
+					  + "GROUP BY u.SchoolID;";
+		
+		String query2 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, 0 "
+				  + "FROM GradeOfCourse goc, GradeOfStudent gos, User u, CourseOfStudent cos " 
+				  + "WHERE " 
+				  + "gos.CourseGradeID = goc.GradeID "  
+				  + "AND u.SchoolID = gos.StudentID " 
+				  + "AND goc.LectureID = ?"  
+				  + "GROUP BY u.SchoolID ";
+	
 		
 		try {
 			connection = super.getConnection();
-			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			PreparedStatement sqlStatement = connection.prepareStatement(query1);
 			sqlStatement.setInt(1, lectureID);
-			sqlStatement.setInt(2, lectureID);
-			sqlStatement.setInt(3, lectureID);
+
 			ResultSet resultSet = sqlStatement.executeQuery();
 			
 			while(resultSet.next()){

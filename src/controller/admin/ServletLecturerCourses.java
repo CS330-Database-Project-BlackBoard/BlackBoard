@@ -32,17 +32,10 @@ public class ServletLecturerCourses extends HttpServlet {
 
 		User user = null;
 		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!SecurityController.adminRequired(session, req, resp)){
+			return;
 		}
-		finally {
-			if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
-				return;
-			}
 			
-		}		
 		
 		try {
 			

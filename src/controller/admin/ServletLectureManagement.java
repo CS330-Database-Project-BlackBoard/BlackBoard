@@ -28,10 +28,11 @@ public class ServletLectureManagement  extends HttpServlet{
 
 		HttpSession session = req.getSession();
 		LectureDashboard lectureDashboard = null;
-
-		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+		
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		
 		try {

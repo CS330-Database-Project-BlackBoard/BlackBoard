@@ -27,9 +27,10 @@ public class ServletAdminDashboard extends HttpServlet{
 
 		User user = null;
 
-		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		user = (User)session.getAttribute("user");
 		
 		DashboardDaoImp dashboardDaoImp = new DashboardDaoImp();

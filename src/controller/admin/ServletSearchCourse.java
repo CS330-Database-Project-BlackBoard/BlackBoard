@@ -30,9 +30,10 @@ public class ServletSearchCourse extends HttpServlet{
 
 		CourseDashboard courseDashboard = null;
 
-		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		
 		

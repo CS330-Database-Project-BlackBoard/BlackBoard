@@ -24,9 +24,10 @@ public class ServletManagerManagement extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 
-		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();

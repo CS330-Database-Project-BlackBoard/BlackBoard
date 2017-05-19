@@ -28,10 +28,10 @@ public class ServletCourseManagement extends HttpServlet{
 
 		CourseDashboard courseDashboard = null;
 
-
-		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		CourseDashboardDaoImp courseDashboardDaoImp = new CourseDashboardDaoImp();
 		courseDashboard = courseDashboardDaoImp.getCourseDashboard();
