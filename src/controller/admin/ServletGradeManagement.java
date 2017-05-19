@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
 import enums.AppPath;
+import interfaceImp.CourseDaoImp;
+import interfaceImp.LecturerDaoImp;
 import interfaceImp.StudentDaoImp;
 import pojos.LectureDashboard;
 import pojos.Student;
@@ -44,21 +46,27 @@ public class ServletGradeManagement extends HttpServlet{
 				int schoolID = Integer.parseInt(url[4]);
 				
 				StudentDaoImp studentDaoImp = new StudentDaoImp();
+				CourseDaoImp courseDaoImp = new CourseDaoImp();
 				
 				
 				Student student = studentDaoImp.getStudent(schoolID);
 				ArrayList<StudentGrade> lectureStudentGrades = studentDaoImp.getStudentGradesByLecture(schoolID, lectureID); 
+				LectureDashboard lectureDashboard = courseDaoImp.getLectureDashboard(lectureID);
 				
-				System.out.println(student);
 				
 				session.setAttribute("student", student);
 				session.setAttribute("lectureStudentGrades", lectureStudentGrades);
+				session.setAttribute("lectureDashboard", lectureDashboard);
 				
 				
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-student-course-grade.jsp");
 				requestDispatcher.forward(req, resp);
 				return;
 			} 
+			else if(pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.GRADES)) {
+				
+				
+			}
 			
 			
 			

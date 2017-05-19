@@ -1,7 +1,10 @@
 package controller.admin;
 
 import controller.SecurityController;
+import enums.AppPath;
 import interfaceImp.StudentDaoImp;
+import pojos.Course;
+import pojos.SimpleCourse;
 import pojos.Student;
 
 import javax.servlet.RequestDispatcher;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by koryozyurt on 09.05.2017.
  */
-@WebServlet(name = "ServletStudentManagement", urlPatterns = {"/admin/students"})
+@WebServlet(name = "ServletStudentManagement", urlPatterns = {"/admin/students", "/admin/student/*"})
 public class ServletStudentManagement extends HttpServlet {
 
 
@@ -30,14 +33,38 @@ public class ServletStudentManagement extends HttpServlet {
 			return;
 		}
 		
+		String pathInfo = req.getPathInfo();
+		StudentDaoImp studentDaoImp = new StudentDaoImp();
+
+		 if(pathInfo != null && pathInfo.contains(AppPath.COURSES)){
+				String[] path = pathInfo.split("/");
+				int schoolID = Integer.parseInt(path[1]);
+				
+				Student student = studentDaoImp.getStudent(schoolID);
+		        ArrayList<Course> studentCourses =studentDaoImp.getStudentCourse(schoolID);
+		        session.setAttribute("studentCourses", studentCourses);
+		        session.setAttribute("student", student);
+		        
+		        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-course-list.jsp");
+		        dispatcher.forward(req, resp);
+		        return;
+			}
+		 
+		 else {
+			 ArrayList<Student> students =studentDaoImp.getAllStudents();
+		        session.setAttribute("students",students);
+
+		        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-management.jsp");
+		        dispatcher.forward(req, resp);
+		        return;
+			 
+		 }
+	        
 		
-        StudentDaoImp studentDaoImp = new StudentDaoImp();
+		
+		
+    	
 
-        ArrayList<Student> students =studentDaoImp.getAllStudents();
-        session.setAttribute("students",students);
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-management.jsp");
-        dispatcher.forward(req, resp);
 
     }
 }

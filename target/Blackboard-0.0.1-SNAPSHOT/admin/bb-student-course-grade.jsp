@@ -87,7 +87,7 @@
                                         <tr class="text-center">
                                             <td><%= grade.getName() %></td>
                                             <td><%= grade.getGrade() %></td>
-                                            <td><%= grade.getAffect() %></td>
+                                            <td><%= grade.getAverage() %></td>
                                             <td>
                                                 <a data-toggle="modal" href="#update-grade" class="">
                                                     <i class="fa fa-pencil"></i>

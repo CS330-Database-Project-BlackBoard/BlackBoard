@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import database.Database;
 import interfaces.StudentDao;
+import pojos.Course;
 import pojos.Lecturer;
 import pojos.SimpleCourse;
 import pojos.Student;
@@ -19,9 +20,11 @@ public class StudentDaoImp extends Database implements StudentDao {
 	
 	
 	@Override
-	public ArrayList<SimpleCourse> getStudentCourse(int schoolID) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Course> getStudentCourse(int schoolID) {
+		
+		
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		return courseDaoImp.getCourseByStudentID(schoolID);
 	}
 
 	@Override

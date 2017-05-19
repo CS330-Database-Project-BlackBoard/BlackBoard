@@ -2,7 +2,7 @@ package interfaces;
 
 import java.util.ArrayList;
 
-import pojos.SimpleCourse;
+import pojos.Course;
 import pojos.Student;
 import pojos.StudentGrade;
 
@@ -11,7 +11,7 @@ public interface StudentDao {
 
 	public ArrayList<Student> getAllStudents();
 
-	public ArrayList<SimpleCourse> getStudentCourse(int schoolID); 
+	public ArrayList<Course> getStudentCourse(int schoolID); 
 	
 	public ArrayList<StudentGrade> getStudentGradesByLecture(int schoolID,int lectureID); 
 	

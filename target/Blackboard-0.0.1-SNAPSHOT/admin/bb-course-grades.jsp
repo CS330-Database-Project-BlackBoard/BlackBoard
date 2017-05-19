@@ -94,7 +94,7 @@
                                                 <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                                <a href="${pageContext.request.contextPath}/admin/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= lectureDetail.getCourse().getLectureID() %>/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
 		                             <% } %>
