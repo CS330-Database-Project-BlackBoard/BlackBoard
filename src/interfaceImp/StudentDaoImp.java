@@ -57,7 +57,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 				int affect  = resultSet.getInt("Affect");
 				float average = resultSet.getFloat("Average");
 				float studentGrade = resultSet.getFloat("Grade");
-				System.out.println("worked");
+
 				grade = new StudentGrade(lectureID, gradeID, name, affect, average, studentGrade);
 				grades.add(grade);
 			}
@@ -107,8 +107,11 @@ public class StudentDaoImp extends Database implements StudentDao {
 					  + "FROM GradeOfCourse goc, GradeOfStudent gos, User u, CourseOfStudent cos " 
 					  + "WHERE " 
 					  + "gos.CourseGradeID = goc.GradeID "  
-					  + "AND u.SchoolID = gos.StudentID " 
-					  + "AND goc.LectureID = ? "  
+					  + "AND u.SchoolID = gos.StudentID "
+					  + "AND goc.LectureID = cos.LectureID "
+					  + "AND goc.LectureID = ? "
+					  + "AND  cos.SchoolID = gos.StudentID "
+					  + "AND cos.visible = true "
 					  + "GROUP BY u.SchoolID;";
 		
 		String query2 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, 0 AS Average "
@@ -116,6 +119,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 				  + "WHERE " 
 				  + "u.SchoolID = cos.SchoolID "
 				  + "AND cos.LectureID = ? "
+				  + "AND cos.visible = true "
 				  + "GROUP BY u.SchoolID;";
 	
 		
@@ -130,7 +134,9 @@ public class StudentDaoImp extends Database implements StudentDao {
 				sqlStatement.setInt(1, lectureID);
 				resultSet = sqlStatement.executeQuery();
 		
+			
 			}
+			resultSet.beforeFirst(); // if deni next var olan ilk datayi almayi engelliyor o yuzden resultset i basa aldik.
 			
 			while(resultSet.next()){
 				int schoolID = resultSet.getInt("SchoolID");
@@ -244,6 +250,42 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		
 		return student;
+	}
+
+	@Override
+	public boolean deleteStudentCourse(int schoolID, int lectureID) {
+		
+		boolean result = false;
+		
+		Connection connection = null;
+		
+		String query = "UPDATE CourseOfStudent SET Visible = false WHERE SchoolID = ? AND LectureID = ?";
+		
+		
+		
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, schoolID);
+			sqlStatement.setInt(2,lectureID);
+			sqlStatement.executeUpdate();
+			result = true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return result;
 	}
 
 

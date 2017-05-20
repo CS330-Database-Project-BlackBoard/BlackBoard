@@ -19,5 +19,6 @@ public interface StudentDao {
 	
 	public Student getStudent(int schoolID);
 	
+	public boolean deleteStudentCourse(int schoolID, int lectureID);
 	
 }

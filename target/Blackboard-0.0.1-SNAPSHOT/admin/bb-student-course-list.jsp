@@ -91,15 +91,15 @@
                                             <td><%= course.getName() %></td>
                                             <td><%= course.getLecturerInf() %></td>
                                             <td>
-                                                <a href="#" class="table-col-space-right">
+                                                <a href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
-                                                <a href="${pageContext.request.contextPath}/grade/lecture/<%= course.getLectureID()%>/student/<%student.getSchoolID()%>">
-                                                    <i class="glyphicon glyphicon-cheron-right"></i>
+                                                <a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= course.getLectureID()%>/student/<%= student.getSchoolID()%>">
+                                                    <i class="fa fa-chevron-right""></i>
                                                 </a>
                                             </td>
                                         </tr>
-                               
+                               			<%} %>
                                     </tbody>
                                 </table>
                             </div>

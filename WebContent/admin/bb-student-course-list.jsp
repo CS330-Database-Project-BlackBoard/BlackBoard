@@ -91,7 +91,7 @@
                                             <td><%= course.getName() %></td>
                                             <td><%= course.getLecturerInf() %></td>
                                             <td>
-                                                <a href="#" class="table-col-space-right">
+                                                <a id="delete-course" href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                                 <a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= course.getLectureID()%>/student/<%= student.getSchoolID()%>">

@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-/**
- * Created by koryozyurt on 09.05.2017.
- */
+
 @WebServlet(name = "ServletStudentManagement", urlPatterns = {"/admin/students", "/admin/student/*"})
 public class ServletStudentManagement extends HttpServlet {
 
@@ -45,18 +44,33 @@ public class ServletStudentManagement extends HttpServlet {
 		        session.setAttribute("studentCourses", studentCourses);
 		        session.setAttribute("student", student);
 		        
+		        
+				session.setAttribute("lastPath", req.getRequestURI());
 		        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-course-list.jsp");
 		        dispatcher.forward(req, resp);
 		        return;
 			}
+		 else if(pathInfo != null && pathInfo.contains(AppPath.DELETE)) {
+			 String[] path = pathInfo.split("/");
+			 int schoolID = Integer.parseInt(path[1]);
+			 int lectureID = Integer.parseInt(path[3]);
+			 
+			 if (studentDaoImp.deleteStudentCourse(schoolID, lectureID)) {
+				 resp.sendRedirect((String) session.getAttribute("lastPath"));
+				 return;
+			}	
+			 
+			 
+		 }
 		 
 		 else {
+			 session.setAttribute("lastPath", req.getRequestURI());
 			 ArrayList<Student> students =studentDaoImp.getAllStudents();
-		        session.setAttribute("students",students);
-
-		        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-management.jsp");
-		        dispatcher.forward(req, resp);
-		        return;
+		     session.setAttribute("students",students);
+		     
+		     RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-student-management.jsp");
+		     dispatcher.forward(req, resp);
+		     return;
 			 
 		 }
 	        

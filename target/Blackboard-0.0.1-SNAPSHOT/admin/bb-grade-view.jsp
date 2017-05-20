@@ -73,8 +73,8 @@
                             <div class="panel-body">
                                 <table class="table table-responsive">
                                     <thead>
-                                        <th class="text-center">Student ID</th>
-                                        <th class="text-center">Name Surname</th>
+                                        <th class="text-center">Grade Name</th>
+                                        <th class="text-center">Grade</th>
                                         <th class="text-center">Average</th>
                                         <th></th>
                                     </thead>

@@ -254,7 +254,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 				 + "AND l.CourseID = c.CourseID "
 				 + "AND cl.SchoolID = u.SchoolID "
 				 + "AND cs.LectureID = l.LectureID "
-				 + "AND cs.SchoolID = " + schoolID;
+				 + "AND cs.SchoolID = " + schoolID + " "
+				 + "AND cs.visible = 1";
 		
 		return this.getCourses(query);
 	}
@@ -349,8 +350,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 			connection = super.getConnection();
 			String query = "SELECT " 
 					+ "l.LectureID," 
-					+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID) AS EnrolledStudentCount, " 
-					+ "(SELECT COUNT(*) FROM GradeOfCourse WHERE LectureID = l.LectureID) AS GradeCount " 
+					+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID and Visible = true) AS EnrolledStudentCount, " 
+					+ "(SELECT COUNT(*) FROM GradeOfCourse WHERE LectureID = l.LectureID and Visible = true) AS GradeCount " 
 					+ "FROM Lecture l " 
 					+ "WHERE l.LectureID = ? "
 					+ "AND l.Visible = true;";
@@ -458,18 +459,21 @@ public class CourseDaoImp extends Database implements CourseDao {
 		StudentGradeView  grade = null;
 		Connection connection = null;
 		
-		String query = "SELECT gos.StudentID, u.Name, u.Surname, gos.Grade "  
-					 + "FROM User u, GradeOfCourse goc, GradeOfStudent gos " 
+		String query = "SELECT DISTINCT gos.StudentID, u.Name, u.Surname, gos.Grade "  
+					 + "FROM User u, GradeOfCourse goc, GradeOfStudent gos, CourseOfStudent cos " 
 					 + "WHERE u.SchoolID = gos.StudentID " 
 					 + "AND gos.CourseGradeID = goc.GradeID "  
-					 + "AND goc.GradeID = ?;";
+					 + "AND goc.GradeID = ? "
+					 + "AND goc.LectureID = cos.LectureID "
+					 + "AND cos.SchoolID = gos.StudentID "
+					 + "AND cos.Visible = true";
 			
 		try {
 			connection = super.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(query);
 			sqlStatement.setInt(1, gradeID);
 			ResultSet resultSet = sqlStatement.executeQuery();
-			
+				
 			while(resultSet.next()) {
 				int studentID = resultSet.getInt("StudentID");
 				String name = resultSet.getString("Name");

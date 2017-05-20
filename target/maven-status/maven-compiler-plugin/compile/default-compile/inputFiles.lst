@@ -43,6 +43,7 @@
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/DashboardDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerManagement.java
+/home/farisi/workspace/Blackboard/src/pojos/StudentGradeView.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/LecturerDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletLectureManagement.java
 /home/farisi/workspace/Blackboard/src/interfaces/ManagerDao.java
