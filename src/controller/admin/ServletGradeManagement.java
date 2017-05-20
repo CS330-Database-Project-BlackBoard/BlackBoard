@@ -20,6 +20,7 @@ import interfaceImp.StudentDaoImp;
 import pojos.LectureDashboard;
 import pojos.Student;
 import pojos.StudentGrade;
+import pojos.StudentGradeView;
 
 
 @WebServlet(name="ServletGradeManagement", urlPatterns= {"/admin/grade/*"})
@@ -37,7 +38,6 @@ public class ServletGradeManagement extends HttpServlet{
 		
 		
 		String pathInfo = req.getPathInfo();
-		System.out.println(pathInfo);
 		try {
 			if (pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.STUDENT)) {
 				
@@ -63,9 +63,21 @@ public class ServletGradeManagement extends HttpServlet{
 				requestDispatcher.forward(req, resp);
 				return;
 			} 
-			else if(pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.GRADES)) {
+			else if(pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.GRADE)) {
+
+				String[] url = req.getPathInfo().split("/");
+				int lectureID = Integer.parseInt(url[2]);
+				int gradeID = Integer.parseInt(url[4]);
 				
+				CourseDaoImp courseDaoImp = new CourseDaoImp();
 				
+				ArrayList<StudentGradeView> grades = courseDaoImp.getStudentListofGradeByGradeID(gradeID);
+				
+				session.setAttribute("lectureGradeView", grades);
+				
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-grade-view.jsp");
+				requestDispatcher.forward(req, resp);
+				return;
 			}
 			
 			

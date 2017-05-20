@@ -16,6 +16,8 @@ import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
 import pojos.SimpleGrade;
+import pojos.StudentGrade;
+import pojos.StudentGradeView;
 
 public class CourseDaoImp extends Database implements CourseDao {
 	
@@ -447,6 +449,54 @@ public class CourseDaoImp extends Database implements CourseDao {
 		gradeDashboard = new LectureDetail(course, grades, null);
 		
 		return gradeDashboard;
+	}
+
+	@Override
+	public ArrayList<StudentGradeView> getStudentListofGradeByGradeID(int gradeID) {
+		
+		ArrayList<StudentGradeView> grades = new ArrayList<>();
+		StudentGradeView  grade = null;
+		Connection connection = null;
+		
+		String query = "SELECT gos.StudentID, u.Name, u.Surname, gos.Grade "  
+					 + "FROM User u, GradeOfCourse goc, GradeOfStudent gos " 
+					 + "WHERE u.SchoolID = gos.StudentID " 
+					 + "AND gos.CourseGradeID = goc.GradeID "  
+					 + "AND goc.GradeID = ?;";
+			
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, gradeID);
+			ResultSet resultSet = sqlStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int studentID = resultSet.getInt("StudentID");
+				String name = resultSet.getString("Name");
+				String surname = resultSet.getString("Surname");
+				float studentGrade = resultSet.getFloat("Grade");
+				
+				String nameSurname = String.format("%s %s", name, surname);
+				grade = new StudentGradeView(studentID, gradeID, nameSurname, studentGrade);
+				grades.add(grade);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return grades;
 	}
 	
 	
