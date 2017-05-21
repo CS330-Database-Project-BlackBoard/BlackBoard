@@ -2,6 +2,7 @@
 /home/farisi/workspace/Blackboard/src/interfaces/UserDao.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDaoImp.java
 /home/farisi/workspace/Blackboard/src/database/Database.java
+/home/farisi/workspace/Blackboard/src/controller/SecurityController.java
 /home/farisi/workspace/Blackboard/src/interfaces/AnouncmentDao.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletSearchCourse.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDashboardDaoImp.java
@@ -32,7 +33,6 @@
 /home/farisi/workspace/Blackboard/src/pojos/SimpleGrade.java
 /home/farisi/workspace/Blackboard/src/interfaces/DashboardDao.java
 /home/farisi/workspace/Blackboard/src/pojos/Dashboard.java
-/home/farisi/workspace/Blackboard/src/controller/SigninController.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletGradeManagement.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletManagerManagement.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseOfLecturer.java
@@ -43,6 +43,7 @@
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/DashboardDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletLecturerManagement.java
+/home/farisi/workspace/Blackboard/src/pojos/StudentGradeView.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/LecturerDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletLectureManagement.java
 /home/farisi/workspace/Blackboard/src/interfaces/ManagerDao.java

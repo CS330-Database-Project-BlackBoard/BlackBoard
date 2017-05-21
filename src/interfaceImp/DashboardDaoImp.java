@@ -28,7 +28,8 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 
 		String managerSql = "SELECT COUNT(*) AS Count FROM User WHERE visible = 1 AND Role BETWEEN ? AND ?";
 		String lecturerAndStudentSql = "SELECT COUNT(*) AS Count FROM User WHERE visible = 1 AND Role = ?";
-		String CourseSql = "SELECT COUNT(*) AS Count FROM Course WHERE visible = 1 AND SemesterID = (SELECT SemesterID FROM Semester WHERE Name = ? and Year = ?)";
+		String CourseSql = "SELECT COUNT(*) AS Count FROM Lecture WHERE visible = 1;";
+		//String CourseSql = "SELECT COUNT(*) AS Count FROM Lecture WHERE visible = 1 AND SemesterID = (SELECT SemesterID FROM Semester WHERE Name = ? and Year = ?)";
 		
 		try {
 			connection = super.getConnection();
@@ -59,8 +60,8 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 			}
 			
 			sqlStatement = connection.prepareStatement(CourseSql);
-			sqlStatement.setString(1,"Spring");
-			sqlStatement.setInt(2, 2017);
+			//sqlStatement.setString(1,"Spring");
+			//sqlStatement.setInt(2, 2017);
 			resultSet = sqlStatement.executeQuery();
 			
 			if (resultSet.next()) {

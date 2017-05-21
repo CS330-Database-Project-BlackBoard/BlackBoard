@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.DashboardDaoImp;
 import pojos.Dashboard;
 import pojos.User;
@@ -27,9 +27,10 @@ public class ServletAdminDashboard extends HttpServlet{
 
 		User user = null;
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		user = (User)session.getAttribute("user");
 		
 		DashboardDaoImp dashboardDaoImp = new DashboardDaoImp();

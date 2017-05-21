@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import enums.AppPath;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseOfLecturer;
@@ -32,22 +32,15 @@ public class ServletLecturerCourses extends HttpServlet {
 
 		User user = null;
 		
-		try {
-			user = (User) session.getAttribute("user");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!SecurityController.adminRequired(session, req, resp)){
+			return;
 		}
-		finally {
-			if (!SigninController.adminRequired(user, req, resp)) {
-				return;
-			}
-		}		
+			
 		
 		try {
 			
 			String pathInfo = req.getPathInfo();
 			String[] path = pathInfo.split("/");
-			System.out.println(Arrays.toString(path));
 			
 			int lecturerID = Integer.parseInt(path[1]);
 			

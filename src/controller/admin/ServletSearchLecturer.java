@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.LecturerDaoImp;
 import pojos.Lecturer;
 
@@ -27,11 +27,11 @@ public class ServletSearchLecturer extends HttpServlet{
 		
 
 		HttpSession session = req.getSession();
-
-
-		if(!SigninController.signinRequired(session, req,resp)){
+		
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		String lecturerName = (String) req.getParameter("lecturer");
 		LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();

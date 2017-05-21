@@ -35,40 +35,74 @@ public class Course {
 		this.lectureName = lectureName;
 	}
 	
-	public int getLecturerID() {
-		return lecturerID;
-	}
-	public String getLecturerName() {
-		return lecturerName;
-	}
-	public String getLecturerSurname() {
-		return lecturerSurname;
-	}
-	public int getLectureID() {
-		return lectureID;
-	}
-	public String getLectureName() {
-		return lectureName;
-	}
+
+	
 	public int getCourseID() {
 		return courseID;
 	}
+
+
+
 	public int getDepartmentID() {
 		return departmentID;
 	}
+
+
+
 	public String getCode() {
 		return code;
 	}
+
+
+
 	public String getName() {
 		return name;
 	}
+
+
+
 	public int getSemesterID() {
 		return semesterID;
 	}
+
+
+
 	public boolean isVisible() {
 		return visible;
 	}
-	
+
+
+
+	public int getLecturerID() {
+		return lecturerID;
+	}
+
+
+
+	public String getLecturerName() {
+		return lecturerName;
+	}
+
+
+
+	public String getLecturerSurname() {
+		return lecturerSurname;
+	}
+
+
+
+	public int getLectureID() {
+		return lectureID;
+	}
+
+
+
+	public String getLectureName() {
+		return lectureName;
+	}
+
+
+
 	public String getLecturerInf() {
 		return String.format("%s %s", this.lecturerName, this.lecturerSurname);
 	}

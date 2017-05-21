@@ -91,7 +91,7 @@
                                 <h3><%= dashboard.getLecturerCount() %></h3>
                             </div>
                             <div class="panel-footer back-footer-dred">
-                                <a class="white-link" href="${pageContext.request.contextPath}/admin/lecturers/">Lecturers</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/lecturers">Lecturers</a>
 
 
                             </div>
@@ -105,7 +105,7 @@
                                 <h3><%= dashboard.getStudentCount() %> </h3>
                             </div>
                             <div class="panel-footer back-footer-dbrown">
-                                <a class="white-link" href="${pageContext.request.contextPath}/admin/students/departments">Students</a>
+                                <a class="white-link" href="${pageContext.request.contextPath}/admin/students">Students</a>
 
 
                             </div>

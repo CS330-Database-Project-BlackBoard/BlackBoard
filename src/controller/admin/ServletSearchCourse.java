@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.CourseDaoImp;
 import pojos.CourseDashboard;
 import pojos.SimpleCourse;
@@ -30,9 +30,11 @@ public class ServletSearchCourse extends HttpServlet{
 
 		CourseDashboard courseDashboard = null;
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
+		
 		
 		
 		String courseCode = (String) req.getParameter("course-code");

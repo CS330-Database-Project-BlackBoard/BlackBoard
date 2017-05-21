@@ -1,13 +1,9 @@
-<%@page import="pojos.LectureDashboard"%>
-<%@page import="pojos.Student"%>
-<%@page import="pojos.CourseDashboard"%>
-<%@page import="pojos.StudentGrade"%>
+
+<%@page import="pojos.StudentGradeView"%>
 <%@page import="java.util.ArrayList"%>
 
 
-<% ArrayList<StudentGrade> lectureStudentGrades = (ArrayList<StudentGrade>) session.getAttribute("lectureStudentGrades");%>
-<% LectureDashboard lectureDashboard = (LectureDashboard) session.getAttribute("lectureDashboard"); %>
-<% Student student = (Student) session.getAttribute("student");%>
+<% ArrayList<StudentGradeView> lectureGradeView = (ArrayList<StudentGradeView>) session.getAttribute("lectureGradeView");%>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,10 +32,10 @@
                         <a href="${pageContext.request.contextPath}/admin/managers"><i class="fa fa-user"></i> User Management</a>
                     </li>
                     <li>
-                        <a  class="active-menu" href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
+                        <a   href="${pageContext.request.contextPath}/admin/courses"><i class="fa fa-book"></i> Course Management</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/students"><i class="fa fa-graduation-cap"></i> Student Management</a>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/admin/students"><i class="fa fa-graduation-cap"></i> Student Management</a>
                     </li>
 
                     <li>
@@ -62,7 +58,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                           <%= lectureDashboard.getCourse().getName() %> Grades of <%= student.getNameSurname()  %>
+							Class List
                         </h1>
                     </div>
                 </div>
@@ -77,17 +73,17 @@
                             <div class="panel-body">
                                 <table class="table table-responsive">
                                     <thead>
-                                        <th class="text-center">Grade Name</th>
-                                        <th class="text-center">Grade</th>
+                                        <th class="text-center">Student ID</th>
+                                        <th class="text-center">Name Surname</th>
                                         <th class="text-center">Average</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
- 									<% for(StudentGrade grade : lectureStudentGrades){ %>
+ 									<% for(StudentGradeView grade : lectureGradeView){ %>
                                         <tr class="text-center">
-                                            <td><%= grade.getName() %></td>
+                                            <td><%= grade.getStudentID() %></td>
+                                            <td><%= grade.getNameSurname() %></td>
                                             <td><%= grade.getGrade() %></td>
-                                            <td><%= grade.getAverage() %></td>
                                             <td>
                                                 <a data-toggle="modal" href="#update-grade" class="">
                                                     <i class="fa fa-pencil"></i>

@@ -16,6 +16,8 @@ import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
 import pojos.SimpleGrade;
+import pojos.StudentGrade;
+import pojos.StudentGradeView;
 
 public class CourseDaoImp extends Database implements CourseDao {
 	
@@ -252,7 +254,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 				 + "AND l.CourseID = c.CourseID "
 				 + "AND cl.SchoolID = u.SchoolID "
 				 + "AND cs.LectureID = l.LectureID "
-				 + "AND cs.SchoolID = " + schoolID;
+				 + "AND cs.SchoolID = " + schoolID + " "
+				 + "AND cs.visible = 1";
 		
 		return this.getCourses(query);
 	}
@@ -347,8 +350,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 			connection = super.getConnection();
 			String query = "SELECT " 
 					+ "l.LectureID," 
-					+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID) AS EnrolledStudentCount, " 
-					+ "(SELECT COUNT(*) FROM GradeOfCourse WHERE LectureID = l.LectureID) AS GradeCount " 
+					+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID and Visible = true) AS EnrolledStudentCount, " 
+					+ "(SELECT COUNT(*) FROM GradeOfCourse WHERE LectureID = l.LectureID and Visible = true) AS GradeCount " 
 					+ "FROM Lecture l " 
 					+ "WHERE l.LectureID = ? "
 					+ "AND l.Visible = true;";
@@ -448,8 +451,71 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return gradeDashboard;
 	}
+
+	@Override
+	public ArrayList<StudentGradeView> getStudentListofGradeByGradeID(int gradeID) {
+		
+		ArrayList<StudentGradeView> grades = new ArrayList<>();
+		StudentGradeView  grade = null;
+		Connection connection = null;
+		
+		String query = "SELECT DISTINCT gos.StudentID, u.Name, u.Surname, gos.Grade "  
+					 + "FROM User u, GradeOfCourse goc, GradeOfStudent gos, CourseOfStudent cos " 
+					 + "WHERE u.SchoolID = gos.StudentID " 
+					 + "AND gos.CourseGradeID = goc.GradeID "  
+					 + "AND goc.GradeID = ? "
+					 + "AND goc.LectureID = cos.LectureID "
+					 + "AND cos.SchoolID = gos.StudentID "
+					 + "AND cos.Visible = true";
+			
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, gradeID);
+			ResultSet resultSet = sqlStatement.executeQuery();
+				
+			while(resultSet.next()) {
+				int studentID = resultSet.getInt("StudentID");
+				String name = resultSet.getString("Name");
+				String surname = resultSet.getString("Surname");
+				float studentGrade = resultSet.getFloat("Grade");
+				
+				String nameSurname = String.format("%s %s", name, surname);
+				grade = new StudentGradeView(studentID, gradeID, nameSurname, studentGrade);
+				grades.add(grade);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return grades;
+	}
 	
 	
+	
+	@Override
+	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID) {
+		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
+				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l "
+				 + "WHERE cl.LectureID = l.LectureID "
+				 + "AND l.CourseID = c.CourseID "
+				 + "AND cl.SchoolID = u.SchoolID "
+				 + "AND l.LectureID NOT IN (Select LectureID FROM CourseOfStudent WHERE SchoolID =" + schoolID +" AND visible = true);";	
+		
+		return this.getCourses(query);
+	}
 	
 	
 	

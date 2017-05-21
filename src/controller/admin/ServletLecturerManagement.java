@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SigninController;
+import controller.SecurityController;
 import interfaceImp.LecturerDaoImp;
 import pojos.Lecturer;
 
@@ -24,9 +24,10 @@ public class ServletLecturerManagement extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 
-		if(!SigninController.signinRequired(session, req,resp)){
+		if(!SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
+		
 		
 		LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
 		

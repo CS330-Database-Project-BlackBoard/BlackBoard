@@ -7,6 +7,8 @@ import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
 import pojos.SimpleGrade;
+import pojos.StudentGrade;
+import pojos.StudentGradeView;
 
 public interface CourseDao {
 	
@@ -36,5 +38,9 @@ public interface CourseDao {
 
 	public ArrayList<SimpleGrade> getLectureGrades(int lectureID);
 	
+	public ArrayList<StudentGradeView> getStudentListofGradeByGradeID(int gradeID);
+	
 	public LectureDetail getLectureDetail(int lectureID);
+	
+	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID);
 }

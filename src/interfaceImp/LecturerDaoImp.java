@@ -153,8 +153,8 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		Connection connection = null;
 		
 		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName, "
-				+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID) AS EnrolledCount "
-				+ "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs " 
+				+ "(SELECT COUNT(*) FROM CourseOfStudent WHERE LectureID = l.LectureID and Visible = true) AS EnrolledCount "
+				+ "FROM Course c, User u, CourseOfLecturer cl, Lecture l " 
 				+ "WHERE c.CourseID =  l.CourseID " 
 				+ "AND l.LectureID = cl.LectureID " 
 				+ "AND u.SchoolID = cl.SchoolID "
