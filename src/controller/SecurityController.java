@@ -35,7 +35,8 @@ public class SecurityController {
 			case 2:
 				resp.sendRedirect("admin/dashboard");
 				break;
-
+			case 5:
+				resp.sendRedirect("student/dashboard");
 			default:
 				break;
 			}
@@ -45,9 +46,25 @@ public class SecurityController {
 		
 	}
 	
+	public static boolean studentRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		User user = null;
+		
+		if(signinRequired(session, req, resp)) {
+			try {
+				user = (User) session.getAttribute("user");
+				if (user != null) {
+					
+				}
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
+	}
 	
 	public static boolean adminRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
-		User user;
+		User user = null;
 		if (signinRequired(session, req, resp)) {
 			try {
 				 user = (User) session.getAttribute("user");
