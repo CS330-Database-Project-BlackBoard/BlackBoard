@@ -508,11 +508,11 @@ public class CourseDaoImp extends Database implements CourseDao {
 	@Override
 	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID) {
 		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent "
+				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l "
 				 + "WHERE cl.LectureID = l.LectureID "
 				 + "AND l.CourseID = c.CourseID "
 				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND l.LectureID NOT IN (Select LectureID FROM CourseOfStudent WHERE SchoolID =" + schoolID +");";	
+				 + "AND l.LectureID NOT IN (Select LectureID FROM CourseOfStudent WHERE SchoolID =" + schoolID +" AND visible = true);";	
 		
 		return this.getCourses(query);
 	}

@@ -155,7 +155,7 @@
                                     <td><%= course.getLectureName() %></td>
                                     <td><%= course.getLecturerName() %> <%= course.getLecturerSurname()%></td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/student/<%= student.getSchoolID() %>/add/<%= course.getLectureID()%>"><span class="glyphicon glyphicon-plus"></span></a>
+                                        <a href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID() %>/add/<%= course.getLectureID()%>"><span class="glyphicon glyphicon-plus"></span></a>
                                     </td>
                                 </tr>
                                 <%} %>

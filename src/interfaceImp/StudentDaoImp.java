@@ -46,6 +46,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 					 + "AND gos.StudentID = ? "
 					 + "AND goc.LectureID = ?;";
 		
+		
 		try {
 			connection = super.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(query);
@@ -118,7 +119,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 					  + "GROUP BY u.SchoolID;";
 		
 		String query2 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, 0 AS Average "
-				  + "FROM GradeOfCourse goc, GradeOfStudent gos, User u, CourseOfStudent cos " 
+				  + "FROM User u, CourseOfStudent cos " 
 				  + "WHERE " 
 				  + "u.SchoolID = cos.SchoolID "
 				  + "AND cos.LectureID = ? "

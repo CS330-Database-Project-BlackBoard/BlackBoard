@@ -52,7 +52,7 @@ $('#search-lecturer').keypress(function (e) {
 });
 
 
-$("#delete-course").click(function(e){
+$(".delete-course").click(function(e){
 	if (!confirm('Are you sure to delete course from student course list?')) {
 	    e.preventDefault();
 	}
