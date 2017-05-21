@@ -29,7 +29,7 @@ public class ServletIndex extends HttpServlet {
 			SecurityController.isSignedIn(user,req, resp);
 		}
 		
-		SecurityController.redirectToUserByRole(user, resp);
+		SecurityController.redirectToUserByRole(user,req, resp);
 		
 	
 	}

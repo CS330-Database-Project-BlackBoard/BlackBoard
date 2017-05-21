@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import enums.AppRole;
 import interfaceImp.UserDaoImpl;
 import pojos.User;
 
@@ -45,7 +46,12 @@ public class ServletSignin extends HttpServlet{
 			case 1:
 				resp.sendRedirect("admin/dashboard");
 				return;
-
+			case 2:
+				resp.sendRedirect("admin/dashboard");
+				return;
+			case 5:
+				resp.sendRedirect("student/dashboard");
+				return;
 			default:
 				break;
 			}

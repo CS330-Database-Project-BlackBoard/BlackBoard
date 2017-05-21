@@ -25,18 +25,18 @@ public class SecurityController {
 	}
 	
 	
-	public static void redirectToUserByRole(User user, HttpServletResponse resp) {
+	public static void redirectToUserByRole(User user,HttpServletRequest req, HttpServletResponse resp) {
 		
 		try {
 			switch (user.getRole()) {
 			case 1:
-				resp.sendRedirect("admin/dashboard");
+				resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 				break;
 			case 2:
-				resp.sendRedirect("admin/dashboard");
+				resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 				break;
 			case 5:
-				resp.sendRedirect("student/dashboard");
+				resp.sendRedirect(req.getContextPath() + "/student/dashboard");
 			default:
 				break;
 			}
@@ -53,13 +53,24 @@ public class SecurityController {
 			try {
 				user = (User) session.getAttribute("user");
 				if (user != null) {
-					
+					if (user.getRole() !=  AppRole.STUDENT) {
+						redirectToUserByRole(user, req, resp);
+						return false;
+					}
+					else {
+						return true;
+					}
+				}
+				else {
+					 resp.sendRedirect(req.getContextPath() + "/signin");
+					 return false;
 				}
 			} 
 			catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
+		return false;
 		
 	}
 	
@@ -71,7 +82,7 @@ public class SecurityController {
 				 
 				 if (user != null) {
 						if(user.getRole() != AppRole.SUPER_ADMIN  &&  user.getRole() != AppRole.ADMIN) {
-							redirectToUserByRole(user, resp);
+							redirectToUserByRole(user, req, resp);
 							return false;
 						}
 						else {
