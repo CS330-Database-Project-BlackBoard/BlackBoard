@@ -3,7 +3,10 @@
 <%@page import="java.util.ArrayList"%>
 
 
+<% ArrayList<Course> availableCourses = (ArrayList<Course>) session.getAttribute("availableCourses"); %>
+
 <% ArrayList<Course> studentCourses = (ArrayList<Course>) session.getAttribute("studentCourses"); %>
+
 <% Student student = (Student) session.getAttribute("student"); %>
 
 
@@ -91,7 +94,7 @@
                                             <td><%= course.getName() %></td>
                                             <td><%= course.getLecturerInf() %></td>
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
+                                                <a id="delete-course" href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                                 <a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= course.getLectureID()%>/student/<%= student.getSchoolID()%>">
@@ -122,34 +125,13 @@
                       <div class="row">
                           <div class="col-md-3">
                                   <div class="form-group">
-                                      <select class="form-control">
-                                          <option>Class 1</option>
-                                          <option>Class 2</option>
-                                          <option>Class 3</option>
-                                          <option>Class 4</option>
-                                      </select>
+                                		<input class="form-control" name="schoolID" value="<%= student.getSchoolID() %>" readonly>
                                   </div>
                           </div>
                           <div class="col-md-5">
-                              <div class="form-group">
-                                  <select class="form-control">
-                                      <option>Engineering Faculty</option>
-                                      <option>Law School</option>
-                                      <option>Foreign Languages School</option>
-                                      <option>Fine Art Faculty</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div class="col-md-4">
-                              <div class="form-group">
-                                  <select class="form-control">
-                                      <option>Computer Engineering</option>
-                                      <option>Electirical Engineering</option>
-                                      <option>Civil Engineering</option>
-                                      <option>Industrial Engineering</option>
-                                  </select>
-                              </div>
-                          </div>
+	                            <div class="form-group">
+	                                	<input class="form-control" name="name-surname" value="<%= student.getNameSurname() %>" readonly>
+	                          	</div>
                       </div>
                   </form>
 
@@ -157,20 +139,26 @@
                     <div class="col-md-12">
                         <table class="table table-responsive">
                             <thead>
-                                <td class="text-center">Course Code</td>
-                                <td class="text-center">Course Name</td>
-                                <td class="text-center">Lecturer</td>
-                                <td class="text-center"></td>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Course</th>
+                                <th class="text-center">Lecture</th>
+                                <th class="text-center">Lecturer</th>
+                                <th class="text-center"></th>
                             </thead>
                             <tbody>
+                            
+                            	<%for(Course course: availableCourses){ %>
+                            
                                 <tr class="text-center">
-                                    <td>CS101</td>
-                                    <td>Introduction to Programing</td>
-                                    <td>Faradah Bilmemne</td>
+                                    <td><%= course.getCode() %></td>
+                                    <td><%= course.getName() %></td>
+                                    <td><%= course.getLectureName() %></td>
+                                    <td><%= course.getLecturerName() %> <%= course.getLecturerSurname()%></td>
                                     <td>
-                                        <a href="#"><span class="glyphicon glyphicon-plus"></span></a>
+                                        <a href="${pageContext.request.contextPath}/student/<%= student.getSchoolID() %>/add/<%= course.getLectureID()%>"><span class="glyphicon glyphicon-plus"></span></a>
                                     </td>
                                 </tr>
+                                <%} %>
                 
                             </tbody>
                         </table>

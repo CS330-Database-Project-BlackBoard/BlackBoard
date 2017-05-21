@@ -2,6 +2,7 @@ package controller.admin;
 
 import controller.SecurityController;
 import enums.AppPath;
+import interfaceImp.CourseDaoImp;
 import interfaceImp.StudentDaoImp;
 import pojos.Course;
 import pojos.SimpleCourse;
@@ -39,10 +40,22 @@ public class ServletStudentManagement extends HttpServlet {
 				String[] path = pathInfo.split("/");
 				int schoolID = Integer.parseInt(path[1]);
 				
+				
+				
 				Student student = studentDaoImp.getStudent(schoolID);
 		        ArrayList<Course> studentCourses =studentDaoImp.getStudentCourse(schoolID);
+		              
 		        session.setAttribute("studentCourses", studentCourses);
 		        session.setAttribute("student", student);
+		       
+		        
+		        CourseDaoImp courseDaoImp = new CourseDaoImp();
+		        
+		        ArrayList<Course> availableCourses = courseDaoImp.getAllCoursesNotTakenByStudent(schoolID);
+		        
+		        
+		        session.setAttribute("availableCourses", availableCourses);
+		        
 		        
 		        
 				session.setAttribute("lastPath", req.getRequestURI());
@@ -60,6 +73,18 @@ public class ServletStudentManagement extends HttpServlet {
 				 return;
 			}	
 			 
+			 
+		 }
+		 else if(pathInfo != null && pathInfo.contains(AppPath.ADD)) {
+			 
+			 String[] path = pathInfo.split("/");
+			 int schoolID = Integer.parseInt(path[1]);
+			 int lectureID = Integer.parseInt(path[3]);
+			 
+			 if (studentDaoImp.addStudentCourse(schoolID, lectureID)) {
+				 resp.sendRedirect((String) session.getAttribute("lastPath"));
+				 return;
+			}
 			 
 		 }
 		 

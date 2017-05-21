@@ -70,6 +70,7 @@
                         <div class="panel-body">
                             <table class="table table-responsive">
                                 <thead >
+		                           <th class="text-center">School ID</th>                                
 	                               <th class="text-center">E-Mail</th>
 	                               <th class="text-center">Name Surname</th>
 	                               <th></th>
@@ -77,6 +78,7 @@
                                 <tbody>
                                 <% for(Student student : students){ %>
                                 <tr class="text-center">
+									<td><%= student.getSchoolID() %></td>
                                     <td><%= student.getEmail() %></td>
                                     <td><%= student.getNameSurname() %></td>
                                 	<td>

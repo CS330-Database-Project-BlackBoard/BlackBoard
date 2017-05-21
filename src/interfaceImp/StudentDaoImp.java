@@ -1,10 +1,13 @@
 package interfaceImp;
 
+import java.security.KeyStore.ProtectionParameter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.management.QueryExp;
 
 import database.Database;
 import interfaces.StudentDao;
@@ -286,6 +289,45 @@ public class StudentDaoImp extends Database implements StudentDao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public boolean addStudentCourse(int schoolID, int lectureID) {
+
+		boolean added = false;
+		Connection connection = null;
+		
+		String query = "INSERT INTO CourseOfStudent(SchoolID, LectureID) VALUES (?, ?) ON DUPLICATE KEY UPDATE Visible = true";
+
+		
+		
+		try {
+			connection = super.getConnection();
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, schoolID);
+			sqlStatement.setInt(2, lectureID);
+			sqlStatement.executeUpdate();
+			added = true;
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return added;
+	
 	}
 
 

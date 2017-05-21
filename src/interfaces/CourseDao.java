@@ -41,4 +41,6 @@ public interface CourseDao {
 	public ArrayList<StudentGradeView> getStudentListofGradeByGradeID(int gradeID);
 	
 	public LectureDetail getLectureDetail(int lectureID);
+	
+	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID);
 }

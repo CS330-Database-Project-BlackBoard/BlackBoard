@@ -13,6 +13,7 @@ public class AppPath {
 	public static final String STUDENTS = "students";
 	public static final String STUDENT = "student";
 	public static final String DELETE = "delete";
+	public static final String ADD = "add";
 
 	
 	
