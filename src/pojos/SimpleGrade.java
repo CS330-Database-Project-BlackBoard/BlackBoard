@@ -7,6 +7,7 @@ public class SimpleGrade {
 	private String name;
 	private int affect;
 	private float average;
+	private float grade;
 	
 	public SimpleGrade( int lectureID, int gradeID, String name, int affect, float average) {
 		super();
@@ -16,6 +17,21 @@ public class SimpleGrade {
 		this.affect = affect;
 		this.average = average;
 	}
+	
+	
+
+
+	public SimpleGrade(int lectureID, int gradeID, String name, int affect, float average, float grade) {
+		super();
+		this.lectureID = lectureID;
+		this.gradeID = gradeID;
+		this.name = name;
+		this.affect = affect;
+		this.average = average;
+		this.grade = grade;
+	}
+
+
 
 
 	public int getLectureID() {

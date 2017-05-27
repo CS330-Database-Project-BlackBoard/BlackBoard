@@ -15,6 +15,7 @@ import pojos.Course;
 import pojos.Lecturer;
 import pojos.SimpleCourse;
 import pojos.Student;
+import pojos.StudentCourseGrade;
 import pojos.StudentGrade;
 import pojos.User;
 
@@ -329,6 +330,29 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		return added;
 	
+	}
+
+	@Override
+	public ArrayList<StudentCourseGrade> getStudentCourseGrades(int schoolID) {
+		ArrayList<StudentCourseGrade> studentCourseGrades = new ArrayList<>();
+		
+		ArrayList<Course> courses = this.getStudentCourse(schoolID);
+		
+		StudentCourseGrade studentCourseGrade = null;
+		
+		
+		for (Course course : courses) {
+			ArrayList<StudentGrade> grades = this.getStudentGradesByLecture(schoolID, course.getLectureID());
+			studentCourseGrade = new StudentCourseGrade(course, grades);
+			
+			studentCourseGrades.add(studentCourseGrade);
+			
+		}
+		
+	
+		
+		
+		return studentCourseGrades;
 	}
 
 

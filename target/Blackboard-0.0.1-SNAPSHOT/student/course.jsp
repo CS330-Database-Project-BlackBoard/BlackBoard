@@ -18,24 +18,21 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <li>
-                        <a  href="bb-index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                         <li>
+                   		 <a href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="bb-user-management.html"><i class="fa fa-user"></i> User Management</a>
+                   		 <a class="active-menu" href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
                     </li>
                     <li>
-                        <a href="bb-course-management.html"><i class="fa fa-book"></i> Course Management</a>
+                    	<a href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="bb-student-management.html"><i class="fa fa-graduation-cap"></i> Student Management</a>
-                    </li>
-
-                    <li>
-                        <a href="bb-lecturer-management.html"><i class="fa fa-table"></i> Lecturer Management</a>
+                   		 <a  href="${pageContext.request.contextPath}/student/assignments"><i class="fa fa-pencil-square-o"></i> Assignments</a>
                     </li>
                     <li>
-                        <a href="bb-settings.html"><i class="fa fa-edit"></i> Settings</a>
+                    	<a href="${pageContext.request.contextPath}/student/settings"><i class="fa fa-cog"></i> Settings</a>
+                    </li>
                     </li>
                 </ul>
 
