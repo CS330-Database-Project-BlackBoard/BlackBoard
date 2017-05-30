@@ -340,9 +340,24 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		StudentCourseGrade studentCourseGrade = null;
 		
+		float classAverage;
+		float overAll;
 		
 		for (Course course : courses) {
+			classAverage = 0;
+			overAll = 0;
+			
 			ArrayList<StudentGrade> grades = this.getStudentGradesByLecture(schoolID, course.getLectureID());
+			
+			for(StudentGrade studentGrade: grades) {
+				classAverage += (0.01 * studentGrade.getAffect() * studentGrade.getAverage());
+				overAll += (0.01 * studentGrade.getAffect() * studentGrade.getGrade());
+			}
+			
+			StudentGrade overAllGrade = new StudentGrade(course.getLectureID(), 0, "Overall", 0, classAverage, overAll);
+			
+			grades.add(overAllGrade);
+			
 			studentCourseGrade = new StudentCourseGrade(course, grades);
 			
 			studentCourseGrades.add(studentCourseGrade);

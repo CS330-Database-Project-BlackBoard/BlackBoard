@@ -52,19 +52,34 @@
                   </div>
               </div>
               <ul class="nav nav-pills nav-stacked col-md-4">
-                              
-                <% for(StudentCourseGrade studentCourseGrade: studentCourseGrades){ %>
-                	
-                	<li><a href="<%= studentCourseGrade.getCourse().getCourseID()%>" data-toggle="pill"><strong><%= studentCourseGrade.getCourse().getCode() %> - </strong>  <%= studentCourseGrade.getCourse().getName() %> <i class="fa fa-bell-o"></i></a></li>
-              	
-              	<%} %>
+                        
+                <% 
+             	int ind = 0;
+                for(StudentCourseGrade studentCourseGrade: studentCourseGrades){ %>
+                	<% if(ind == 0){ %>
+                		<li class="active"><a href="#<%= studentCourseGrade.getCourse().getCourseID()%>" data-toggle="pill"><strong><%= studentCourseGrade.getCourse().getCode() %> - </strong>  <%= studentCourseGrade.getCourse().getName() %> <i class="fa fa-bell-o"></i></a></li>
+                	<%} %>
+	                <%if(ind > 0){ %>
+                		<li><a href="#<%= studentCourseGrade.getCourse().getCourseID()%>" data-toggle="pill"><strong><%= studentCourseGrade.getCourse().getCode() %> - </strong>  <%= studentCourseGrade.getCourse().getName() %> <i class="fa fa-bell-o"></i></a></li>
+                    <%} %>
+              			
+              	<%
+              	ind += 1;
+                } %>
               </ul>
               
               <div class="tab-content col-md-8">
                 
-                <% for(StudentCourseGrade studentCourseGrade : studentCourseGrades){ %>
-                
-		            <div class="tab-pane" id="<%= studentCourseGrade.getCourse().getCourseID()%>">
+                <%
+             	int var = 0;
+                for(StudentCourseGrade studentCourseGrade : studentCourseGrades){ %>
+                    <% if(var == 0){ %>
+		           		 <div class="tab-pane active" id="<%= studentCourseGrade.getCourse().getCourseID()%>">
+	                  <%} %>
+	                  <%if(var > 0){ %>
+	               		<div class="tab-pane" id="<%= studentCourseGrade.getCourse().getCourseID()%>">
+	                  	
+	                  <%} %>
 	                  <div class="panel panel-default">
 	                    <div class="panel-body">
 	                      <div class="row">
@@ -94,7 +109,10 @@
 	                      </div>
 	                    </div>
 	                  </div>
-               <%} %>
+               <%
+               	var += 1;
+                }
+                %>
           
               </div><!-- tab content -->
             </div>
