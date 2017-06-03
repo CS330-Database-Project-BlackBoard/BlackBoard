@@ -5,6 +5,7 @@
 /home/farisi/workspace/Blackboard/src/database/Database.java
 /home/farisi/workspace/Blackboard/src/controller/SecurityController.java
 /home/farisi/workspace/Blackboard/src/interfaces/AnouncmentDao.java
+/home/farisi/workspace/Blackboard/src/enums/AppForm.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletSearchCourse.java
 /home/farisi/workspace/Blackboard/src/controller/student/ServletStudentCourse.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDashboardDaoImp.java
@@ -22,15 +23,19 @@
 /home/farisi/workspace/Blackboard/src/interfaceImp/AnouncmentDaoImp.java
 /home/farisi/workspace/Blackboard/src/controller/ServletIndex.java
 /home/farisi/workspace/Blackboard/src/pojos/Lecturer.java
+/home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerGrades.java
 /home/farisi/workspace/Blackboard/src/interfaces/CourseDashboardDao.java
 /home/farisi/workspace/Blackboard/src/controller/ServletSignin.java
 /home/farisi/workspace/Blackboard/src/pojos/Course.java
+/home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerDashboard.java
 /home/farisi/workspace/Blackboard/src/pojos/Anouncment.java
 /home/farisi/workspace/Blackboard/src/pojos/Student.java
 /home/farisi/workspace/Blackboard/src/enums/AppPath.java
 /home/farisi/workspace/Blackboard/src/controller/student/ServletStudentAssignment.java
+/home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerCourses.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletStudentManagement.java
 /home/farisi/workspace/Blackboard/src/pojos/LectureDetail.java
+/home/farisi/workspace/Blackboard/src/pojos/LecturerCourseGrade.java
 /home/farisi/workspace/Blackboard/src/pojos/Role.java
 /home/farisi/workspace/Blackboard/src/pojos/User.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletSearchLecturer.java
@@ -44,6 +49,7 @@
 /home/farisi/workspace/Blackboard/src/pojos/LectureDashboard.java
 /home/farisi/workspace/Blackboard/src/pojos/Assignment.java
 /home/farisi/workspace/Blackboard/src/interfaces/CourseDao.java
+/home/farisi/workspace/Blackboard/src/helper/TimeZone.java
 /home/farisi/workspace/Blackboard/src/pojos/AssigmentStd.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseDashboard.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletCourseManagement.java

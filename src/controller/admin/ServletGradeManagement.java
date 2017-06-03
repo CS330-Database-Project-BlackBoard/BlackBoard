@@ -58,7 +58,8 @@ public class ServletGradeManagement extends HttpServlet{
 				session.setAttribute("lectureStudentGrades", lectureStudentGrades);
 				session.setAttribute("lectureDashboard", lectureDashboard);
 				
-				
+				session.setAttribute("lastPath", req.getRequestURI());
+
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-student-course-grade.jsp");
 				requestDispatcher.forward(req, resp);
 				return;

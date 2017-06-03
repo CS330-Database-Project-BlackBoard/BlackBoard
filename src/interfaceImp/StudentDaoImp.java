@@ -1,23 +1,18 @@
 package interfaceImp;
 
-import java.security.KeyStore.ProtectionParameter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.management.QueryExp;
 
 import database.Database;
 import interfaces.StudentDao;
 import pojos.Course;
-import pojos.Lecturer;
-import pojos.SimpleCourse;
 import pojos.Student;
 import pojos.StudentCourseGrade;
 import pojos.StudentGrade;
-import pojos.User;
 
 public class StudentDaoImp extends Database implements StudentDao {
 
@@ -59,7 +54,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 				
 				int gradeID = resultSet.getInt("GradeID");
 				String name = resultSet.getString("Name");
-				int affect  = resultSet.getInt("Affect");
+				float affect  = resultSet.getFloat("Affect");
 				float average = resultSet.getFloat("Average");
 				float studentGrade = resultSet.getFloat("Grade");
 
@@ -134,15 +129,6 @@ public class StudentDaoImp extends Database implements StudentDao {
 			sqlStatement.setInt(1, lectureID);
 			ResultSet resultSet = sqlStatement.executeQuery();
 	
-			if(!resultSet.next()) {
-				sqlStatement = connection.prepareStatement(query2);
-				sqlStatement.setInt(1, lectureID);
-				resultSet = sqlStatement.executeQuery();
-		
-			
-			}
-			resultSet.beforeFirst(); // if deni next var olan ilk datayi almayi engelliyor o yuzden resultset i basa aldik.
-			
 			while(resultSet.next()){
 				int schoolID = resultSet.getInt("SchoolID");
 				String name = resultSet.getString("Name");
@@ -154,6 +140,31 @@ public class StudentDaoImp extends Database implements StudentDao {
 				student = new Student(schoolID, email, name, surname, role, average);
 				students.add(student);
 			}
+			// eger ogrencinin notu yoksa ama derse kayit edilmis ise
+			
+			sqlStatement = connection.prepareStatement(query2);
+			sqlStatement.setInt(1, lectureID);
+			resultSet = sqlStatement.executeQuery();
+		
+			while(resultSet.next()){
+				int schoolID = resultSet.getInt("SchoolID");
+				String name = resultSet.getString("Name");
+				String surname = resultSet.getString("Surname");
+				String email = resultSet.getString("Email");
+				int role = resultSet.getInt("Role");
+				float average = resultSet.getFloat("Average");
+				
+				student = new Student(schoolID, email, name, surname, role, average);
+				
+				if(!students.contains(student)) { // eger ogrenci students a eklenmemis ise
+					students.add(student);
+				}
+				
+			}
+			
+			
+			resultSet.beforeFirst(); // if deni next var olan ilk datayi almayi engelliyor o yuzden resultset i basa aldik.
+			
 
 		} 
 		catch (Exception e) {
@@ -209,7 +220,6 @@ public class StudentDaoImp extends Database implements StudentDao {
 				try{
 					connection.close();
 				}catch (Exception e){
-					System.out.println(getClass() + "line 100 ");
 					e.printStackTrace();
 				}
 			}
@@ -342,19 +352,22 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		float classAverage;
 		float overAll;
+		float affectTotal;
 		
 		for (Course course : courses) {
 			classAverage = 0;
 			overAll = 0;
+			affectTotal = 0;
 			
 			ArrayList<StudentGrade> grades = this.getStudentGradesByLecture(schoolID, course.getLectureID());
 			
 			for(StudentGrade studentGrade: grades) {
 				classAverage += (0.01 * studentGrade.getAffect() * studentGrade.getAverage());
 				overAll += (0.01 * studentGrade.getAffect() * studentGrade.getGrade());
+				affectTotal += studentGrade.getAffect();
 			}
 			
-			StudentGrade overAllGrade = new StudentGrade(course.getLectureID(), 0, "Overall", 0, classAverage, overAll);
+			StudentGrade overAllGrade = new StudentGrade(course.getLectureID(), 0, "Overall", affectTotal , classAverage, overAll);
 			
 			grades.add(overAllGrade);
 			

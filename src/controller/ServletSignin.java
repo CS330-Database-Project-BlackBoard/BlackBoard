@@ -49,9 +49,17 @@ public class ServletSignin extends HttpServlet{
 			case 2:
 				resp.sendRedirect("admin/dashboard");
 				return;
+			case 3:
+				resp.sendRedirect("lecturer/dashboard");
+				return;
+			case 4:
+				resp.sendRedirect("lecturer/dashboard");
+				return;
+			
 			case 5:
 				resp.sendRedirect("student/dashboard");
 				return;
+		
 			default:
 				break;
 			}

@@ -400,7 +400,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		Connection connection = null;
 		
-		
+		float total = 0;
+		float affectTotal = 0;
 		try {
 			connection = super.getConnection();
 			String query = "SELECT gc.*, (SELECT AVG(Grade) FROM GradeOfStudent WHERE CourseGradeID = gc.GradeID) AS Average "
@@ -413,14 +414,17 @@ public class CourseDaoImp extends Database implements CourseDao {
 			
 			while (resultSet.next()) {
 				int gradeID = resultSet.getInt("GradeID");
-				int affect = resultSet.getInt("Affect");
+				float affect = resultSet.getFloat("Affect");
 				String name = resultSet.getString("Name");
 				float average = resultSet.getFloat("Average");
 				grade = new SimpleGrade(lectureID, gradeID, name, affect, average);
 				grades.add(grade);
 				
+				affectTotal += affect;
+				total += (average * affect * 0.01);
 			}
-			
+				grade = new SimpleGrade(lectureID, 0, "Overall", affectTotal, total);
+				grades.add(grade);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

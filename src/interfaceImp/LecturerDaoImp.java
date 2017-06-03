@@ -12,7 +12,9 @@ import interfaces.LecturerDao;
 import pojos.Course;
 import pojos.CourseOfLecturer;
 import pojos.Lecturer;
+import pojos.LecturerCourseGrade;
 import pojos.Manager;
+import pojos.SimpleGrade;
 
 public class LecturerDaoImp extends Database implements LecturerDao{
 
@@ -182,6 +184,7 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 				int lectureID = resultSet.getInt("LectureID");
 				String lectureName = resultSet.getString("LectureName");
 				int enrolledStudent = resultSet.getInt("EnrolledCount");
+				
 				course = new CourseOfLecturer(courseID, departmentID, code, name, semesterID, visible, lecturerID, lecturerName, lecturerSurname, lectureID, lectureName, enrolledStudent);
 				courses.add(course);
 				
@@ -205,6 +208,33 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		}
 		return courses;
 		
+	}
+
+
+	@Override
+	public ArrayList<LecturerCourseGrade> getCourseGradesOfLecturer(Lecturer lecturer) {
+		
+		LecturerCourseGrade courseGrade= null;
+		
+		ArrayList<LecturerCourseGrade> courseGradesOfLecturer = new ArrayList<>();
+		
+		
+		ArrayList<CourseOfLecturer> coursesOfLecturer = this.getCoursesOfLecturer(lecturer); 
+		
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		
+		for (CourseOfLecturer course : coursesOfLecturer) {
+			
+			ArrayList<SimpleGrade> grades = courseDaoImp.getLectureGrades(course.getLectureID());
+			
+			courseGrade = new LecturerCourseGrade(course, grades);
+			courseGradesOfLecturer.add(courseGrade);
+			
+		}
+		
+		
+		
+		return courseGradesOfLecturer;
 	}
 	
 	

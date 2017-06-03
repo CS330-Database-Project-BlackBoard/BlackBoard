@@ -32,7 +32,11 @@ public class Student extends User {
 	
 	
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		Student other = (Student) obj;
+		return other.getSchoolID() == this.getSchoolID();
+	}
 
 	
 	

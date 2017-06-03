@@ -113,7 +113,12 @@
                     </div>
                 </div>
 
-
+			  <div class="row bottom-space">
+                   <div class="col-md-12">
+                       <button type="button" name="button" class="btn btn-success" data-toggle="modal" data-target="#new-anouncment"><span class=" glyphicon glyphicon-plus"></span> New Anouncment</button>
+                   </div>
+               </div>
+               
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
@@ -143,8 +148,59 @@
         </div>
         <!-- /. PAGE WRAPPER  -->
     </div>
-
-		<%@include file="script.jsp" %>
+	
+	<form action="" method="post">
+	
+		<div id="new-anouncment" class="modal fade" role="dialog">
+			
+			 <div class="modal-dialog">
+			
+			   <!-- Modal content-->
+			   <div class="modal-content">
+			     <div class="modal-header">
+			       <button type="button" class="close" data-dismiss="modal">&times;</button>
+			       <h4 class="modal-title">New Anouncment</h4>
+			     </div>
+			     <div class="modal-body">
+			      <div class="row">
+			      	<div class="col-md-12 form-group">
+			      		<input type="test" class="form-control" placeholder="Title" name="anouncment-title" id="anouncment-title"/>
+			      	</div>
+			      </div>
+			      <div class="row">
+			      	<div class="col-md-12 form-group">
+	 					 <textarea class="form-control" rows="10" name="anouncment-content" placeholder="Content..." id="anouncment-content"></textarea>
+			      	</div>
+			      </div>
+			      <div class="row">
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="anouncment-postTo" value="only-managers" checked="checked">Only Managers</label>
+						</div>
+			      	</div>
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="anouncment-postTo" value="only-lecturers">Only Lecturers</label>
+						</div>
+			      	</div>
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="anouncment-postTo" value="all-users">All Users</label>
+						</div>
+			      	</div>
+			      </div>
+			     </div>
+			     <div class="modal-footer">
+			       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			       <button type="submit" class="btn btn-success" id="anouncment-send">Send</button>
+			     </div>
+			   </div>
+			  </div>
+		</div>
+	</form>	
+	
+	
+	<%@include file="script.jsp" %>
 	
 
 
