@@ -10,7 +10,7 @@ import org.omg.CORBA.StringHolder;
 
 import database.Database;
 import interfaces.CourseDao;
-import pojos.Anouncment;
+import pojos.Announcement;
 import pojos.Course;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
@@ -365,8 +365,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 				int enrolledStudentCount = resultSet.getInt("EnrolledStudentCount");
 				int gradeCount = resultSet.getInt("GradeCount");
 				
-				AnouncmentDaoImp anouncmentDaoImp = new AnouncmentDaoImp();
-				ArrayList<Anouncment> anouncments = anouncmentDaoImp.getAnouncmentsByLecture(lectureID);
+				AnnouncementDaoImp anouncmentDaoImp = new AnnouncementDaoImp();
+				ArrayList<Announcement> anouncments = anouncmentDaoImp.getAnnouncementsByLecture(lectureID);
 				course = this.getCourseByLectureID(lectureID);
 				
 				lectureDashboard = new LectureDashboard(course, lectureID, anouncments, enrolledStudentCount, gradeCount);

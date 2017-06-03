@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import database.Database;
 import enums.AppRole;
 import interfaces.DashboardDao;
-import pojos.Anouncment;
+import pojos.Announcement;
 import pojos.Dashboard;
 import pojos.User;
 
@@ -23,8 +23,8 @@ public class DashboardDaoImp extends Database implements DashboardDao{
 		ResultSet resultSet = null;
 		int manager = 0, lecturer = 0, student = 0, course = 0;
 		
-		AnouncmentDaoImp anouncmentDaoImp = new AnouncmentDaoImp();
-		ArrayList<Anouncment> anouncments = anouncmentDaoImp.getAnouncmentsByRole(user.getRole());
+		AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+		ArrayList<Announcement> anouncments = announcementDaoImp.getAnnouncementsByRole(user.getRole());
 
 		String managerSql = "SELECT COUNT(*) AS Count FROM User WHERE visible = 1 AND Role BETWEEN ? AND ?";
 		String lecturerAndStudentSql = "SELECT COUNT(*) AS Count FROM User WHERE visible = 1 AND Role = ?";

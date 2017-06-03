@@ -1,7 +1,7 @@
 package pojos;
 
-public class Anouncment {
-	private int anouncmentID;
+public class Announcement {
+	private int announcementID;
 	private int postedBy;
 	private String title;
 	private String content;
@@ -11,9 +11,9 @@ public class Anouncment {
 	
 	
 	
-	public Anouncment(int anouncmentID, int postedBy, String title, String content, String postedAt) {
+	public Announcement(int anouncmentID, int postedBy, String title, String content, String postedAt) {
 		super();
-		this.anouncmentID = anouncmentID;
+		this.announcementID = anouncmentID;
 		this.postedBy = postedBy;
 		this.title = title;
 		this.content = content;
@@ -21,8 +21,8 @@ public class Anouncment {
 	}
 
 
-	public int getAnouncmentID() {
-		return anouncmentID;
+	public int getAnnouncementID() {
+		return announcementID;
 	}
 
 	public int getpostedBy() {
@@ -44,7 +44,7 @@ public class Anouncment {
 	
 	@Override
 	public boolean equals(Object obj) {
-		Anouncment other = (Anouncment) obj;
+		Announcement other = (Announcement) obj;
 		if(other.getTitle() == this.getTitle() && other.getContent() == this.getContent())
 		{
 			return false;

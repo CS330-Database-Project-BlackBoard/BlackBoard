@@ -1,5 +1,5 @@
 
-<%@page import="pojos.Anouncment"%>
+<%@page import="pojos.Announcement"%>
 <%@page import="pojos.LectureDashboard"%>
 <% LectureDashboard lectureDashboard = (LectureDashboard) session.getAttribute("lectureDashboard"); %>
 
@@ -101,15 +101,15 @@
 					<div class="col-md-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">Course Anouncments</h3>
+								<h3 class="panel-title">Course Announcement</h3>
 							</div>
 							<div class="panel-body">
 								<div class="list-group">
-									<%for(Anouncment anouncment: lectureDashboard.getAnouncments()){ %>
+									<%for(Announcement announcement: lectureDashboard.getAnnouncements()){ %>
 
 									<a
-										href="${pageContext.request.contextPath}/admin/anouncment/<%=anouncment.getAnouncmentID() %>"
-										class="list-group-item"><%= anouncment.getTitle() %> <span
+										href="${pageContext.request.contextPath}/admin/anouncment/<%= announcement.getAnnouncementID() %>" class="list-group-item">
+										<%= announcement.getTitle() %> <span>
 										class="badge">yesterday</span> </a>
 									<%} %>
 								</div>

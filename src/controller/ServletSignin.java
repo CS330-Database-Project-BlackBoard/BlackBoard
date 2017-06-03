@@ -14,59 +14,44 @@ import enums.AppRole;
 import interfaceImp.UserDaoImpl;
 import pojos.User;
 
+/*
+ * This servlet is for signing in 
+ * 
+ * */
+
 @WebServlet(name="ServletLogin", urlPatterns={"/signin"})
 public class ServletSignin extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//super.doGet(req, resp);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-login.jsp");
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-login.jsp"); // render login jsp
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//super.doPost(req, resp);
+
 		User user = null;
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(); // get session 
 		
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");		
-		UserDaoImpl userDaoImplementation = new UserDaoImpl();
-		boolean isSignedIn = userDaoImplementation.signIn(email, password);
-		if(isSignedIn)
+		
+		UserDaoImpl userDaoImplementation = new UserDaoImpl(); 
+		
+		if(userDaoImplementation.signIn(email, password)) // check is signed in
 		{
 			user = userDaoImplementation.getUser();
 			session.setAttribute("user", user);
-			// redirection
 			
-			switch (user.getRole()) {
-			case 1:
-				resp.sendRedirect("admin/dashboard");
-				return;
-			case 2:
-				resp.sendRedirect("admin/dashboard");
-				return;
-			case 3:
-				resp.sendRedirect("lecturer/dashboard");
-				return;
-			case 4:
-				resp.sendRedirect("lecturer/dashboard");
-				return;
 			
-			case 5:
-				resp.sendRedirect("student/dashboard");
-				return;
-		
-			default:
-				break;
-			}
+			SecurityController.redirectToUserByRole(user, req, resp); // redirect to 
+			return;
 			
 		}
 		
-		resp.sendRedirect("login");
+		resp.sendRedirect("login"); // if no user, redirect login page
 	}
 
 }

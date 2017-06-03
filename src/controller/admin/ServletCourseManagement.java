@@ -11,11 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
+import enums.AppForm;
 import interfaceImp.CourseDaoImp;
 import interfaceImp.CourseDashboardDaoImp;
 import pojos.CourseDashboard;
 import pojos.User;
 
+/*
+ * This servlet helps to manage courses
+ * 
+ * */
 
 @WebServlet(name="ServletCourseManagement", urlPatterns= {"/admin/courses"})
 public class ServletCourseManagement extends HttpServlet{
@@ -34,11 +39,13 @@ public class ServletCourseManagement extends HttpServlet{
 		
 		
 		CourseDashboardDaoImp courseDashboardDaoImp = new CourseDashboardDaoImp();
+		
 		courseDashboard = courseDashboardDaoImp.getCourseDashboard();
 		
 		session.setAttribute("courseDashboard", courseDashboard);
 		
 		session.setAttribute("lastPath", req.getRequestURI());
+		
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-management.jsp");
 		requestDispatcher.forward(req, resp);
 		
@@ -58,13 +65,14 @@ public class ServletCourseManagement extends HttpServlet{
 		
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
 		
-		
-		String code = (String) req.getParameter("course-code");
-		String lecture = (String) req.getParameter("course-lecture");
-		String lecturerEmail = (String) req.getParameter("lecturer-email");
-		System.out.println(String.format("%s %s %s", code, lecture, lecturerEmail));
-		boolean result = courseDaoImp.addNewCourse(code.toUpperCase(), lecture.toUpperCase(), lecturerEmail.toLowerCase());
+		// get form datas
+		String code = (String) req.getParameter(AppForm.COURSE_CODE);
+		String lecture = (String) req.getParameter(AppForm.COURSE_LECTURE);
+		String lecturerEmail = (String) req.getParameter(AppForm.LECTURER_EMAIL);
 
+		boolean result = courseDaoImp.addNewCourse(code.toUpperCase(), lecture.toUpperCase(), lecturerEmail.toLowerCase()); // send to database
+		
+		/*
 		String message = "";
 		if (result) {
 			message = "Course is added";
@@ -72,9 +80,10 @@ public class ServletCourseManagement extends HttpServlet{
 		else {
 			message = "Course is not added";
 		}
+		*/
 		
 		
-		resp.sendRedirect(req.getContextPath() + "/admin/courses");
+		resp.sendRedirect(req.getContextPath() + "/admin/courses"); // update page
 		
 	}
 

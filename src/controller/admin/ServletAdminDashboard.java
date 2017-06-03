@@ -11,11 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
-import interfaceImp.AnouncmentDaoImp;
+import enums.AppForm;
+import interfaceImp.AnnouncementDaoImp;
 import interfaceImp.DashboardDaoImp;
 import pojos.Dashboard;
 import pojos.User;
 
+
+/*
+ * This servlets manages admin dashboad 
+ * */
 
 
 @WebServlet(name="ServletAdminDashboard", urlPatterns={"/admin/dashboard"})
@@ -35,20 +40,25 @@ public class ServletAdminDashboard extends HttpServlet{
 		user = (User)session.getAttribute("user");
 		
 		DashboardDaoImp dashboardDaoImp = new DashboardDaoImp();
-		Dashboard dashboard = dashboardDaoImp.getDashboard(user);
+		
+		Dashboard dashboard = dashboardDaoImp.getDashboard(user); // get dashboard object which contains data from database
 		
 		
-		session.setAttribute("dashboard", dashboard);
+		session.setAttribute("dashboard", dashboard); // put it in session
 		
-		session.setAttribute("lastPath", req.getRequestURI());
+		session.setAttribute("lastPath", req.getRequestURI()); // keep last path for errors
 
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-index.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-index.jsp"); // render index jsp which contains dashboard design
 		dispatcher.forward(req, resp);
 		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		/*
+		 * for publishing anouncment
+		 * */
 		
 		HttpSession session = req.getSession();
 
@@ -58,14 +68,15 @@ public class ServletAdminDashboard extends HttpServlet{
 			return;
 		}
 		
+		// 
 		user = (User)session.getAttribute("user");
-		String title = req.getParameter("anouncment-title");
-		String content = req.getParameter("anouncment-content");
-		String toWho = req.getParameter("anouncment-postTo");
+		String title = req.getParameter(AppForm.ANNOUNCEMENT_TITLE);
+		String content = req.getParameter(AppForm.ANNOUNCEMENT_CONTENT);
+		String toWho = req.getParameter(AppForm.ANNOUNCEMENT_POSTED_TO);
 	
 		if (title != null && !title.isEmpty() && content != null && !content.isEmpty() && toWho != null && !toWho.isEmpty()) {
-			AnouncmentDaoImp anouncmentDaoImp = new AnouncmentDaoImp();
-			anouncmentDaoImp.sendAnouncment(title, content, toWho, user.getSchoolID());
+			AnnouncementDaoImp anouncmentDaoImp = new AnnouncementDaoImp();
+			anouncmentDaoImp.sendAnnouncement(title, content, toWho, user.getSchoolID());
 		}
 		
 		resp.sendRedirect(req.getContextPath() + "/admin/dashboad");

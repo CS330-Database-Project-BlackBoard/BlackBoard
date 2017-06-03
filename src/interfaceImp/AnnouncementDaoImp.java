@@ -11,17 +11,17 @@ import com.mysql.cj.api.jdbc.Statement;
 import database.Database;
 import enums.AppForm;
 import helper.TimeZone;
-import interfaces.AnouncmentDao;
-import pojos.Anouncment;
+import interfaces.AnnouncementDao;
+import pojos.Announcement;
 import pojos.Lecturer;
 import pojos.Manager;
 import pojos.Student;
 
-public class AnouncmentDaoImp extends Database implements AnouncmentDao {
+public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	
-	private ArrayList<Anouncment> getAnouncments(String query) {
-		Anouncment anouncment;
-		ArrayList<Anouncment> anouncments = new ArrayList<>();	
+	private ArrayList<Announcement> getAnnouncements(String query) {
+		Announcement announcement;
+		ArrayList<Announcement> announcements = new ArrayList<>();	
 		Connection connection = null;
 		
 		try {
@@ -31,7 +31,7 @@ public class AnouncmentDaoImp extends Database implements AnouncmentDao {
 			 ResultSet resultSet = sqlStatement.executeQuery();
 			 
 			 while(resultSet.next()) {
-				 int anouncmentID = resultSet.getInt("AnouncmentID");
+				 int AnnouncementID = resultSet.getInt("AnnouncementID");
 				 int postedBy = resultSet.getInt("PostedBY");
 				 String title = resultSet.getString("Title");
 				 String content = resultSet.getString("Content");
@@ -39,8 +39,8 @@ public class AnouncmentDaoImp extends Database implements AnouncmentDao {
 				 
 				 
 				 
-				anouncment = new Anouncment(anouncmentID, postedBy, title, content, postedAt);
-				anouncments.add(anouncment);	 
+				announcement = new Announcement(AnnouncementID, postedBy, title, content, postedAt);
+				announcements.add(announcement);	 
 				 
 			 }
 			 
@@ -62,52 +62,52 @@ public class AnouncmentDaoImp extends Database implements AnouncmentDao {
 		}
 	
 
-		return anouncments;
+		return announcements;
 	
 	}
 	
 	
 
 	@Override
-	public ArrayList<Anouncment> getAllAnouncments() {
-		String query = "SELECT * FROM Anouncment";
-		return this.getAnouncments(query);
+	public ArrayList<Announcement> getAllAnnouncements() {
+		String query = "SELECT * FROM Announcement";
+		return this.getAnnouncements(query);
 	}
 
 	@Override
-	public ArrayList<Anouncment> getAnouncmentsByLecture(int lectureID) {
+	public ArrayList<Announcement> getAnnouncementsByLecture(int lectureID) {
 	
-		String query = "SELECT * FROM Anouncment WHERE PostedTO = " + lectureID;
-		return this.getAnouncments(query);
+		String query = "SELECT * FROM Announcement WHERE PostedTO = " + lectureID;
+		return this.getAnnouncements(query);
 	}
 
 	@Override
-	public Anouncment getAnouncmentByID(int anouncmentID) {
+	public Announcement getAnnouncementByID(int AnnouncementID) {
 		
-		String query = "SELECT * FROM Anouncment WHERE AnouncmentID = " + anouncmentID;
-		return this.getAnouncments(query).get(0);
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + AnnouncementID;
+		return this.getAnnouncements(query).get(0);
 	}
 
 	@Override
-	public ArrayList<Anouncment> getAnouncmentsBySchoolID(int schoolID) {
+	public ArrayList<Announcement> getAnnouncementsBySchoolID(int schoolID) {
 		
-		String query = "SELECT * FROM Anouncment WHERE AnouncmentID IN (SELECT AnouncmentID FROM AnouncmentOwner WHERE SchoolID = " + schoolID + ");"; 
-		return this.getAnouncments(query);
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID IN (SELECT AnnouncementID FROM AnnouncementOwner WHERE SchoolID = " + schoolID + ");"; 
+		return this.getAnnouncements(query);
 	}
 
 	@Override
-	public ArrayList<Anouncment> getAnouncmentsByRole(int level) {
+	public ArrayList<Announcement> getAnnouncementsByRole(int level) {
 		
-		String query = "SELECT * FROM Anouncment WHERE PostedBY IN (SELECT SchoolID FROM User WHERE Role <= " + level + ")";
-		return this.getAnouncments(query);
+		String query = "SELECT * FROM Announcement WHERE PostedBY IN (SELECT SchoolID FROM User WHERE Role <= " + level + ")";
+		return this.getAnnouncements(query);
 	}
 
 	@Override
-	public boolean sendAnouncment(String title, String content, String toWho, int sentBy) {
+	public boolean sendAnnouncement(String title, String content, String toWho, int sentBy) {
 		
 		Connection connection = null;
 		
-		String query = "INSERT INTO Anouncment(PostedBy, Title, Content, PostedAT) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO Announcement(PostedBy, Title, Content, PostedAT) VALUES (?, ?, ?, ?)";
 		
 		try {
 			connection = super.getConnection();
@@ -121,22 +121,22 @@ public class AnouncmentDaoImp extends Database implements AnouncmentDao {
 			
 			try (ResultSet resultSet = sqlStatement.getGeneratedKeys()){
 				if (resultSet.next()) {
-					int anouncmentID = resultSet.getInt(1);
+					int AnnouncementID = resultSet.getInt(1);
 					
 					query = "";
 					
 					
 					if (toWho.equals(AppForm.ONLY_MANAGERS)) {
-						query = "INSERT INTO AnouncmentOwner(AnouncmentID, SchoolID) SELECT " + anouncmentID + ", SchoolID FROM User WHERE Role = 1 OR Role = 2";
+						query = "INSERT INTO AnnouncementOwner(AnnouncementID, SchoolID) SELECT " + AnnouncementID + ", SchoolID FROM User WHERE Role = 1 OR Role = 2";
 						
 					}
 					else if(toWho.equals(AppForm.ONLY_LECTURERS)) {
-						query = "INSERT INTO AnouncmentOwner(AnouncmentID, SchoolID) SELECT " + anouncmentID + ", SchoolID FROM User WHERE Role = 3 OR Role = 4";
+						query = "INSERT INTO AnnouncementOwner(AnnouncementID, SchoolID) SELECT " + AnnouncementID + ", SchoolID FROM User WHERE Role = 3 OR Role = 4";
 						
 						
 					}
 					else if(toWho.equals(AppForm.ALL_USERS)){
-						query = "INSERT INTO AnouncmentOwner(AnouncmentID, SchoolID) SELECT " + anouncmentID + ", SchoolID FROM User";
+						query = "INSERT INTO AnnouncementOwner(AnnouncementID, SchoolID) SELECT " + AnnouncementID + ", SchoolID FROM User";
 						
 					}
 					

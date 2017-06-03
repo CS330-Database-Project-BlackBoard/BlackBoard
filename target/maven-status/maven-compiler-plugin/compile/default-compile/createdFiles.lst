@@ -6,7 +6,6 @@ interfaceImp/DashboardDaoImp.class
 interfaceImp/StudentDaoImp.class
 pojos/CourseOfLecturer.class
 controller/admin/ServletStudentManagement.class
-interfaceImp/AnouncmentDaoImp.class
 pojos/Course.class
 interfaces/UserDao.class
 interfaceImp/CourseDaoImp.class
@@ -16,7 +15,6 @@ controller/admin/ServletLecturerManagement.class
 pojos/Manager.class
 controller/ServletSignin.class
 controller/admin/ServletSearchLecturer.class
-interfaces/AnouncmentDao.class
 database/Database.class
 controller/admin/ServletManagerManagement.class
 pojos/Role.class
@@ -25,7 +23,6 @@ interfaceImp/UserDaoImpl.class
 interfaces/CourseDashboardDao.class
 pojos/CourseDashboard.class
 pojos/Dashboard.class
-pojos/Anouncment.class
 controller/ServletIndex.class
 interfaceImp/LecturerDaoImp.class
 security/AppSecurity.class

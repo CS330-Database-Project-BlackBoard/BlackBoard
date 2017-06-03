@@ -25,6 +25,10 @@ public class SecurityController {
 	}
 	
 	
+	
+	/* 
+	 * this function redirects the user to related dashboard according to their role, 
+	 * */
 	public static void redirectToUserByRole(User user,HttpServletRequest req, HttpServletResponse resp) {
 		
 		try {
@@ -46,12 +50,17 @@ public class SecurityController {
 			default:
 				break;
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
 	
+	/* 
+	 * these functions checks the requirement of users, if has no permission to open page, redirecet to related dashboard
+	 * if no session is found then redirect to sign in page
+	 * */
 	public static boolean studentRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		User user = null;
 		
@@ -79,7 +88,7 @@ public class SecurityController {
 		return false;
 		
 	}
-	
+
 	public static boolean adminRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		User user = null;
 		if (signinRequired(session, req, resp)) {
@@ -139,7 +148,6 @@ public class SecurityController {
 		
 	}
 
-	
 	
 	public static boolean signinRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp){
 		User user = null;
