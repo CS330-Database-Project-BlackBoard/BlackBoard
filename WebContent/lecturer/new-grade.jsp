@@ -45,7 +45,8 @@
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/lecturer/settings"><i class="fa fa-edit"></i> Settings</a>
-                </li
+                </li>
+               </ul>
             </div>
         </nav>
         <!-- /. NAV SIDE  -->
