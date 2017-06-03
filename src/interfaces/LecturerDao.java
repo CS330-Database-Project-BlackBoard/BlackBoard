@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pojos.CourseOfLecturer;
 import pojos.Lecturer;
@@ -19,5 +20,6 @@ public interface LecturerDao {
 	
 	public ArrayList<LecturerCourseGrade> getCourseGradesOfLecturer(Lecturer lecturer);
 	
-
+	public boolean saveStudentGrades(Lecturer lecturer, int lectureID, String name, float affect, HashMap<Integer, Float> gradeOfStudents);
+	
 }

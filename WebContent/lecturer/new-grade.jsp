@@ -1,7 +1,8 @@
 
-
+<%@page import="pojos.Course"%>
 <%@page import="pojos.Student"%>
 <%@page import="java.util.ArrayList"%>
+
 <% Course course = (Course) session.getAttribute("course"); %>
 <% ArrayList<Student> students = (ArrayList<Student>) session.getAttribute("students"); %>
 
@@ -52,7 +53,7 @@
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-header"> Create New Grade <small>CS - 330 Intro. to Database System</small></h1>
+                        <h1 class="page-header"> Create New Grade <small><%= course.getCode() %> - <%= course.getName() %> </small></h1>
                     </div>
                 </div>
                 <!-- /. ROW  -->
@@ -62,12 +63,12 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input type="text" name="" value="" class="form-control" placeholder="Grade Name">
+                                    <input type="text" name="grade-name" value="" class="form-control" placeholder="Grade Name" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <input type="text" name="" class="form-control" value="" placeholder="Affect">
+                                    <input type="text" name="grade-affect" class="form-control" value="" placeholder="Affect" required>
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
@@ -88,21 +89,13 @@
                                             <th class="text-right">Grade</th>
                                         </thead>
                                         <tbody>
+                                        	<% for(Student student : students){ %>
                                             <tr>
-                                                <td class="text-center">130201024</td>
-                                                <td class="text-center">Umit Kas</td>
-                                                <td class="text-right"><input type="text" name="" class="form-control grade-text" value="0"></td>
+                                                <td class="text-center"><%= student.getSchoolID() %></td>
+                                                <td class="text-center"><%= student.getNameSurname() %></td>
+                                                <td class="text-right"><input type="text" name="<%= student.getSchoolID() %>" class="form-control grade-text" value="0" required></td>
                                             </tr>
-                                            <tr class="text-center new-grade-row">
-                                                <td>130201004</td>
-                                                <td>Mehmet Arici</td>
-                                                <td class="text-right"><input type="text" name="" class="form-control grade-text" value="0"></td>
-                                            </tr>
-                                            <tr class="text-center new-grade-row">
-                                                <td>130201026</td>
-                                                <td>Murat Dogan</td>
-                                                <td class="text-right"><input type="text" name="" class="form-control grade-text" value="0"></td>
-                                            </tr>
+                                           <%} %>
                                         </tbody>
                                     </table>
                                 </div>

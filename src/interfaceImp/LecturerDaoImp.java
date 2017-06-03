@@ -5,9 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mysql.cj.api.jdbc.Statement;
 
 import database.Database;
 import enums.AppRole;
+import helper.TimeZone;
 import interfaces.LecturerDao;
 import pojos.Course;
 import pojos.CourseOfLecturer;
@@ -141,9 +146,6 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 	
 	}
 
-
-	
-	
 	
 	@Override
 	public ArrayList<CourseOfLecturer> getCoursesOfLecturer(Lecturer lecturer) {
@@ -235,6 +237,68 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		
 		
 		return courseGradesOfLecturer;
+	}
+
+
+	
+	
+	@Override
+	public boolean saveStudentGrades(Lecturer lecturer, int lectureID, String name, float affect, HashMap<Integer, Float> gradeOfStudents) {
+		
+		Connection connection = null;
+		
+		String queryInsertGrade = "INSERT INTO GradeOfCourse (LectureID, Name, Affect, CreatedBY) VALUES (?, ?, ?, ?)";
+		String queryInsertStudentGrade =  "INSERT INTO GradeOfStudent (CourseGradeID, StudentID, Grade, GivenBY, CreatedAT) VALUES (?, ?, ?, ?, ?)";
+		
+		try {
+			connection = super.getConnection();
+			// firt insert the grade into Grade of course table
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(queryInsertGrade, Statement.RETURN_GENERATED_KEYS); // return generated key will help to return the last genereted index
+			sqlStatement.setInt(1, lectureID);
+			sqlStatement.setString(2, name);
+			sqlStatement.setFloat(3, affect);
+			sqlStatement.setInt(4, lecturer.getSchoolID());
+			sqlStatement.executeUpdate(); // insert
+			
+			try(ResultSet resultSet = sqlStatement.getGeneratedKeys()){ // if no error 
+				if (resultSet.next()) { // get next element
+					int courseGradeID = resultSet.getInt(1); // get last index from table
+					
+					sqlStatement = connection.prepareStatement(queryInsertStudentGrade); // now will add the user grades
+					
+					for (Map.Entry<Integer, Float> entry : gradeOfStudents.entrySet()) { // iterate hash map
+						
+						sqlStatement.setInt(1, courseGradeID); 
+						sqlStatement.setInt(2, entry.getKey());
+						sqlStatement.setFloat(3, entry.getValue());
+						sqlStatement.setInt(4, lecturer.getSchoolID());
+						sqlStatement.setString(5, TimeZone.getDateTime());
+						sqlStatement.executeUpdate(); // insert datas and execute
+					}
+					
+				}
+			}
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return true;
 	}
 	
 	
