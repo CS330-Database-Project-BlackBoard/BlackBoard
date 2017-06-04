@@ -2,7 +2,6 @@ package controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +14,16 @@ import javax.servlet.http.HttpSession;
 import controller.SecurityController;
 import enums.AppPath;
 import interfaceImp.CourseDaoImp;
-import interfaceImp.LecturerDaoImp;
 import interfaceImp.StudentDaoImp;
 import pojos.LectureDashboard;
 import pojos.Student;
 import pojos.StudentGrade;
 import pojos.StudentGradeView;
 
+/*
+ * This servlet helps to manage grades
+ * 
+ * */
 
 @WebServlet(name="ServletGradeManagement", urlPatterns= {"/admin/grade/*"})
 public class ServletGradeManagement extends HttpServlet{
@@ -37,33 +39,39 @@ public class ServletGradeManagement extends HttpServlet{
 		
 		
 		
-		String pathInfo = req.getPathInfo();
+		String pathInfo = req.getPathInfo(); // get path	
 		try {
+			// admin/grade/lecture/13/student/130201004 if path is like this if works
 			if (pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.STUDENT)) {
 				
-				String[] url = req.getPathInfo().split("/");
-				int lectureID = Integer.parseInt(url[2]);
+				String[] url = req.getPathInfo().split("/"); // split the path
+				int lectureID = Integer.parseInt(url[2]); // get the numbers in path
 				int schoolID = Integer.parseInt(url[4]);
 				
 				StudentDaoImp studentDaoImp = new StudentDaoImp();
 				CourseDaoImp courseDaoImp = new CourseDaoImp();
 				
 				
-				Student student = studentDaoImp.getStudent(schoolID);
-				ArrayList<StudentGrade> lectureStudentGrades = studentDaoImp.getStudentGradesByLecture(schoolID, lectureID); 
+				Student student = studentDaoImp.getStudent(schoolID); // get student object
+				
+				// get specific student grades by lecture
+				ArrayList<StudentGrade> lectureStudentGrades = studentDaoImp.getStudentGradesByLecture(schoolID, lectureID);
 				LectureDashboard lectureDashboard = courseDaoImp.getLectureDashboard(lectureID);
 				
 				
-				session.setAttribute("student", student);
+				// put the objects in session to show in jsp
+				session.setAttribute("student", student); 
 				session.setAttribute("lectureStudentGrades", lectureStudentGrades);
 				session.setAttribute("lectureDashboard", lectureDashboard);
 				
 				session.setAttribute("lastPath", req.getRequestURI());
-
+				
+				// render the related page
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-student-course-grade.jsp");
 				requestDispatcher.forward(req, resp);
 				return;
 			} 
+			// admin/grade/lecture/13/grade/4 if path is like this else if works
 			else if(pathInfo.contains(AppPath.LECTURE) && pathInfo.contains(AppPath.GRADE)) {
 
 				String[] url = req.getPathInfo().split("/");
@@ -72,6 +80,7 @@ public class ServletGradeManagement extends HttpServlet{
 				
 				CourseDaoImp courseDaoImp = new CourseDaoImp();
 				
+				// get the student and grades by the grade_id
 				ArrayList<StudentGradeView> grades = courseDaoImp.getStudentListofGradeByGradeID(gradeID);
 				
 				session.setAttribute("lectureGradeView", grades);
@@ -86,7 +95,7 @@ public class ServletGradeManagement extends HttpServlet{
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			resp.sendRedirect((String) session.getAttribute("lastPath"));
+			resp.sendRedirect((String) session.getAttribute("lastPath")); // if there is an error redirect to last path
 			return;
 		}
 		

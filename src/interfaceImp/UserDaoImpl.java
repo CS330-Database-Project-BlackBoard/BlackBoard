@@ -18,6 +18,7 @@ public class UserDaoImpl extends Database implements UserDao{
 		return this.user;
 	}
 
+	// check user exist and parameters are correct, and assign new User to user object
 	@Override
 	public boolean signIn(String email, String password) {
 		if (this.user == null) {

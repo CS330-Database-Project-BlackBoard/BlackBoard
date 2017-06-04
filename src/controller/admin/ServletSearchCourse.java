@@ -14,12 +14,18 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import controller.SecurityController;
+import enums.AppForm;
 import interfaceImp.CourseDaoImp;
 import pojos.CourseDashboard;
 import pojos.SimpleCourse;
 
 @WebServlet(name="ServletSearchCourse", urlPatterns= {"/admin/search/course"})
 public class ServletSearchCourse extends HttpServlet{
+	
+	/* Search Course
+	 * This servlet renders json for front end
+	 * Jquert will send post request with course code parameter and servlet will return courses
+	 * */
 	
 	
 	@Override
@@ -37,17 +43,17 @@ public class ServletSearchCourse extends HttpServlet{
 		
 		
 		
-		String courseCode = (String) req.getParameter("course-code");
+		String courseCode = (String) req.getParameter(AppForm.COURSE_CODE);
 		
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
 		
 		
-		ArrayList<SimpleCourse> courses = courseDaoImp.getCoursesByCodeUsingLike(courseCode);
+		ArrayList<SimpleCourse> courses = courseDaoImp.getCoursesByCodeUsingLike(courseCode); // get courses
 		JSONObject response = new JSONObject();
 		
 		
 		for (SimpleCourse course : courses) {
-			response.put(course.getCode(), course.getName());
+			response.put(course.getCode(), course.getName()); // put courses in json object 
 		}
 		
 		resp.setContentType("application/json");
@@ -55,7 +61,7 @@ public class ServletSearchCourse extends HttpServlet{
 		
 		PrintWriter printWriter = resp.getWriter();
 		
-		printWriter.print(response.toString());
+		printWriter.print(response.toString());  // write json 
 		
 		
 		

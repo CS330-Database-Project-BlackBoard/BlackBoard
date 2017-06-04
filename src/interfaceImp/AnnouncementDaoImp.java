@@ -19,19 +19,21 @@ import pojos.Student;
 
 public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	
+	
+	// main function, will return given sql
 	private ArrayList<Announcement> getAnnouncements(String query) {
 		Announcement announcement;
-		ArrayList<Announcement> announcements = new ArrayList<>();	
+		ArrayList<Announcement> announcements = new ArrayList<>();	 // keeps anouncements
 		Connection connection = null;
 		
 		try {
 			connection = super.getConnection();
-			 PreparedStatement sqlStatement = connection.prepareStatement(query);
+			 PreparedStatement sqlStatement = connection.prepareStatement(query); // prepare statement
 
-			 ResultSet resultSet = sqlStatement.executeQuery();
+			 ResultSet resultSet = sqlStatement.executeQuery(); // execute
 			 
-			 while(resultSet.next()) {
-				 int AnnouncementID = resultSet.getInt("AnnouncementID");
+			 while(resultSet.next()) { // iterate resultset
+				 int AnnouncementID = resultSet.getInt("AnnouncementID"); // get fields by column name
 				 int postedBy = resultSet.getInt("PostedBY");
 				 String title = resultSet.getString("Title");
 				 String content = resultSet.getString("Content");
@@ -39,8 +41,8 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 				 
 				 
 				 
-				announcement = new Announcement(AnnouncementID, postedBy, title, content, postedAt);
-				announcements.add(announcement);	 
+				announcement = new Announcement(AnnouncementID, postedBy, title, content, postedAt); // put in new object
+				announcements.add(announcement); // add object to arraylist
 				 
 			 }
 			 
@@ -53,7 +55,7 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 		finally {
 			if (connection != null ) {
 				try {
-					connection.close();
+					connection.close(); // close connection
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -62,12 +64,12 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 		}
 	
 
-		return announcements;
+		return announcements; // return objects as arraylist
 	
 	}
 	
 	
-
+	// send sql to getAnnouncement function
 	@Override
 	public ArrayList<Announcement> getAllAnnouncements() {
 		String query = "SELECT * FROM Announcement";
@@ -77,16 +79,10 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	@Override
 	public ArrayList<Announcement> getAnnouncementsByLecture(int lectureID) {
 	
-		String query = "SELECT * FROM Announcement WHERE PostedTO = " + lectureID;
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID IN (SELECT AnnouncementID FROM CourseAnnouncement WHERE LectureID =" + lectureID + ")";
 		return this.getAnnouncements(query);
 	}
 
-	@Override
-	public Announcement getAnnouncementByID(int AnnouncementID) {
-		
-		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + AnnouncementID;
-		return this.getAnnouncements(query).get(0);
-	}
 
 	@Override
 	public ArrayList<Announcement> getAnnouncementsBySchoolID(int schoolID) {
@@ -111,22 +107,23 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 		
 		try {
 			connection = super.getConnection();
-			PreparedStatement sqlStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement sqlStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // RETURN GENERATED KEYS WILL HELP TO GET LAST GENERATED INDEX
 			sqlStatement.setInt(1, sentBy);
 			sqlStatement.setString(2, title);
 			sqlStatement.setString(3, content);
 			sqlStatement.setString(4, TimeZone.getDateTime());
 			
-			sqlStatement.executeUpdate();
+			sqlStatement.executeUpdate(); // insert anouncement
 			
-			try (ResultSet resultSet = sqlStatement.getGeneratedKeys()){
+			try (ResultSet resultSet = sqlStatement.getGeneratedKeys()){ // if no error when getting generated key
 				if (resultSet.next()) {
-					int AnnouncementID = resultSet.getInt(1);
+					int AnnouncementID = resultSet.getInt(1); // get key
 					
 					query = "";
 					
 					
-					if (toWho.equals(AppForm.ONLY_MANAGERS)) {
+					if (toWho.equals(AppForm.ONLY_MANAGERS)) { // according to form data execute one of sql query
+						
 						query = "INSERT INTO AnnouncementOwner(AnnouncementID, SchoolID) SELECT " + AnnouncementID + ", SchoolID FROM User WHERE Role = 1 OR Role = 2";
 						
 					}
@@ -141,7 +138,7 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 					}
 					
 					sqlStatement = connection.prepareStatement(query);
-					sqlStatement.executeLargeUpdate();
+					sqlStatement.executeLargeUpdate(); // insert
 					
 					
 				}
@@ -167,4 +164,15 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 		return false;
 	}
 
+	@Override
+	public Announcement getAnnouncementByID(int AnnouncementID) {
+		
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + AnnouncementID;
+		return this.getAnnouncements(query).get(0); // function will return single anouncment so get first element
+		
+	}
+
+	
+	
+	
 }

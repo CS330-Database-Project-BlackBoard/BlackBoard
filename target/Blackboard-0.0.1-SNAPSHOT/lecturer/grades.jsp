@@ -93,7 +93,7 @@
 	                    <div class="panel-body">
 	                      <div class="row">
 	                          <div class="col-md-12 bottom-space">
-	                           <a href="${pageContext.request.contextPath}/lecturer/new-grade/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>">
+	                           <a href="">
 	                           	<button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Grade</button>
 	                           </a>
 	                          </div>

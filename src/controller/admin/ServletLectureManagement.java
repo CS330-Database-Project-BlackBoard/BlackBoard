@@ -20,6 +20,11 @@ import pojos.Student;
 import pojos.LectureDashboard;
 
 
+/*
+ * This servlet helps to manage course lectures 
+ * 
+ * */
+
 @WebServlet(name="ServletLecturerCourseDashboard", urlPatterns= {"/admin/lecture/*"})
 public class ServletLectureManagement  extends HttpServlet{
 	@Override
@@ -37,28 +42,30 @@ public class ServletLectureManagement  extends HttpServlet{
 		
 		try {
 			
-			String pathInfo = req.getPathInfo();
+			String pathInfo = req.getPathInfo(); // get path
 			String[] path = req.getPathInfo().split("/");
 			int lectureID = Integer.parseInt(path[1]);
 			
-			if (pathInfo.contains(AppPath.GRADES)) {
+			
+			if (pathInfo.contains(AppPath.GRADES)) { // /admin/lecture/13/grades
 				
 				CourseDaoImp courseDaoImp = new CourseDaoImp();
-				LectureDetail courseGradeDetail = courseDaoImp.getLectureDetail(lectureID);
+				LectureDetail courseGradeDetail = courseDaoImp.getLectureDetail(lectureID); // get lecture detail object that contains Course and CourseGrades for viewing
 
-				session.setAttribute("lectureCourseGradeDetail", courseGradeDetail);
+				session.setAttribute("lectureCourseGradeDetail", courseGradeDetail); // put the session
 				session.setAttribute("lastPath", req.getRequestURI());
 				
 				
-				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-grades.jsp");
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-grades.jsp"); // render
 				requestDispatcher.forward(req, resp);
 				return;
 				
 			}
-			else if(pathInfo.contains(AppPath.STUDENTS)) {
+			else if(pathInfo.contains(AppPath.STUDENTS)) { // /admin/lecture/13/students
+					
 				
 					StudentDaoImp studentDaoImp = new StudentDaoImp();
-					ArrayList<Student> lectureStudents = studentDaoImp.getStudentsByLectureID(lectureID);
+					ArrayList<Student> lectureStudents = studentDaoImp.getStudentsByLectureID(lectureID); // get Student object, contains student detail and average of std
 					
 					session.setAttribute("lectureStudents", lectureStudents);
 					session.setAttribute("lastPath", req.getRequestURI());
@@ -67,10 +74,10 @@ public class ServletLectureManagement  extends HttpServlet{
 					requestDispatcher.forward(req, resp);
 					return;
 			}
-			else {
+			else { // /admin/lecture/13/dashboard
 				
 				CourseDaoImp courseDaoImp = new CourseDaoImp();
-				lectureDashboard = courseDaoImp.getLectureDashboard(lectureID);
+				lectureDashboard = courseDaoImp.getLectureDashboard(lectureID); // get lecture dashboad, contains grade count, student count and, anouncment
 				
 			}
 			
@@ -81,8 +88,9 @@ public class ServletLectureManagement  extends HttpServlet{
 			return;
 		}
 		
-		session.setAttribute("lectureDashboard", lectureDashboard);
+		session.setAttribute("lectureDashboard", lectureDashboard); // put dashboard object to session
 		session.setAttribute("lastPath", req.getRequestURI());
+		// render the releted page
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-course-detail.jsp");
 		requestDispatcher.forward(req, resp);
 	}

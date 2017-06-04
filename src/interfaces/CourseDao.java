@@ -43,4 +43,6 @@ public interface CourseDao {
 	public LectureDetail getLectureDetail(int lectureID);
 	
 	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID);
+	
+	
 }

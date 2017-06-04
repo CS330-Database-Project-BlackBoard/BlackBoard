@@ -24,7 +24,7 @@ import pojos.SimpleGrade;
 public class LecturerDaoImp extends Database implements LecturerDao{
 
 	
-	
+	// return lecturers as arraylist, gets query as parameter
 	private ArrayList<Lecturer> getLecturers(String query){
 		ArrayList<Lecturer> lecturers = new ArrayList<>();
 		Connection connection = null;
@@ -67,48 +67,6 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 	}
 	
 	
-	private Lecturer getLecturer(String query) {
-			Connection connection = null;
-			Lecturer lecturer = null;
-			
-			try {
-				connection = super.getConnection();
-				PreparedStatement sqlStatement = connection.prepareStatement(query);
-				ResultSet resultSet = sqlStatement.executeQuery();
-				
-				if(resultSet.next()){
-					int schoolID = resultSet.getInt("SchoolID");
-					String name = resultSet.getString("Name");
-					String surname = resultSet.getString("Surname");
-					String email = resultSet.getString("Email");
-					int role = resultSet.getInt("Role");
-					
-					lecturer = new Lecturer(schoolID, email, name, surname, role);
-					
-				}
-
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally{
-				if (connection != null) {
-					try {
-						connection.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			
-			return lecturer;
-			
-		
-		
-	}
-	
-	
 	
 	@Override
 	public Lecturer getLecturerBySchooID(int schoolID) {
@@ -119,7 +77,9 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 				 + "AND u.visible = true "
 				 + "AND u.SchoolID = " +schoolID;
 		
-		return this.getLecturer(query);
+		//return this.getLecturer(query); // no need extra function just get the first element of array list for single object
+		return this.getLecturers(query).get(0);
+	
 	}
 
 	@Override
@@ -146,7 +106,7 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 	
 	}
 
-	
+	// get courses that are given by lecturer
 	@Override
 	public ArrayList<CourseOfLecturer> getCoursesOfLecturer(Lecturer lecturer) {
 
@@ -212,7 +172,7 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		
 	}
 
-
+	// return course grades of lectures which are given by lecturer
 	@Override
 	public ArrayList<LecturerCourseGrade> getCourseGradesOfLecturer(Lecturer lecturer) {
 		
@@ -221,15 +181,15 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		ArrayList<LecturerCourseGrade> courseGradesOfLecturer = new ArrayList<>();
 		
 		
-		ArrayList<CourseOfLecturer> coursesOfLecturer = this.getCoursesOfLecturer(lecturer); 
+		ArrayList<CourseOfLecturer> coursesOfLecturer = this.getCoursesOfLecturer(lecturer);  // use exist function
 		
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
 		
 		for (CourseOfLecturer course : coursesOfLecturer) {
 			
-			ArrayList<SimpleGrade> grades = courseDaoImp.getLectureGrades(course.getLectureID());
+			ArrayList<SimpleGrade> grades = courseDaoImp.getLectureGrades(course.getLectureID()); // execute exist function for each course
 			
-			courseGrade = new LecturerCourseGrade(course, grades);
+			courseGrade = new LecturerCourseGrade(course, grades); // put in LecturerCourseGrade container
 			courseGradesOfLecturer.add(courseGrade);
 			
 		}
@@ -241,7 +201,7 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 
 
 	
-	
+	// save new grade and student grades
 	@Override
 	public boolean saveStudentGrades(Lecturer lecturer, int lectureID, String name, float affect, HashMap<Integer, Float> gradeOfStudents) {
 		

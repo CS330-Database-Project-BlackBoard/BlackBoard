@@ -21,6 +21,10 @@ import pojos.User;
 
 
 
+/*
+ * This servlet renders course of lecturer
+ * */
+
 @WebServlet(name="ServletLecturer", urlPatterns= {"/admin/lecturer/*"})
 public class ServletLecturerCourses extends HttpServlet {
 	
@@ -42,7 +46,7 @@ public class ServletLecturerCourses extends HttpServlet {
 			String pathInfo = req.getPathInfo();
 			String[] path = pathInfo.split("/");
 			
-			int lecturerID = Integer.parseInt(path[1]);
+			int lecturerID = Integer.parseInt(path[1]); // get lecturer id from path
 			
 	
 			
@@ -50,16 +54,16 @@ public class ServletLecturerCourses extends HttpServlet {
 			
 			LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
 			
-			Lecturer lecturer = lecturerDaoImp.getLecturerBySchooID(lecturerID);
+			Lecturer lecturer = lecturerDaoImp.getLecturerBySchooID(lecturerID); // get lecturer object
 			
 			if(lecturer == null) {
 				throw new Exception("Lecturer is not found");
 			}
 			
 			
-			ArrayList<CourseOfLecturer> coursesOfLecturer = lecturerDaoImp.getCoursesOfLecturer(lecturer);
+			ArrayList<CourseOfLecturer> coursesOfLecturer = lecturerDaoImp.getCoursesOfLecturer(lecturer); // get course of lecturer
 			
-			session.setAttribute("lecturer", lecturer);
+			session.setAttribute("lecturer", lecturer); // put to session
 			session.setAttribute("coursesOfLecturer", coursesOfLecturer);
 		
 			
@@ -67,14 +71,14 @@ public class ServletLecturerCourses extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 			resp.sendRedirect((String)session.getAttribute("lastPath"));
-			resp.sendRedirect(req.getContextPath() + "/admin/lecturer");
+			resp.sendRedirect(req.getContextPath() + "/admin/lecturer"); 
 			return;
 		}
 		
 		
 	
 		session.setAttribute("lastPath", req.getRequestURI());
-
+		// render
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin/bb-lecturer-management-course-list.jsp");
 		requestDispatcher.forward(req, resp);
 		

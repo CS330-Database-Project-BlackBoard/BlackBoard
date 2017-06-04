@@ -23,4 +23,21 @@ public class AppForm {
 	public static String COURSE_LECTURE = "course-lecture";
 	
 	public static String LECTURER_EMAIL = "lecturer-email";
+	
+	public static String SCHOOL_ID = "schoolID";
+
+	public static String EMAIL = "email";
+	
+	public static String PASSWORD = "password";
+	
+	public static String NAME = "schoolID";
+
+	public static String SURNAME = "name";
+
+	public static String ROLE = "role";
+	
+	public static String LECTURER  = "lecturer";
+
+	
+	
 }
