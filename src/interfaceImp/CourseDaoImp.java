@@ -348,7 +348,6 @@ public class CourseDaoImp extends Database implements CourseDao {
 	
 	}
 
-	
 	// get grade list of lecture
 	@Override
 	public ArrayList<SimpleGrade> getLectureGrades(int lectureID) {
@@ -400,7 +399,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return grades;
 	}
-
+	
 	
 	//  get lecture details
 	@Override
