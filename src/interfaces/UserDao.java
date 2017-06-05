@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.util.ArrayList;
+
 import pojos.User;
 
 public interface UserDao {
@@ -7,6 +9,7 @@ public interface UserDao {
 	public User getUser();
 	
 	public boolean signIn(String email, String password);
+	
 	public boolean signOut();
 
 }

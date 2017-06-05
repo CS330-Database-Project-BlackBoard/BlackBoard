@@ -8,15 +8,15 @@ public class Dashboard {
 	private int courseCount;
 	private int lecturerCount;
 	private int studentCount;
-	private ArrayList<Anouncment> anouncments;
+	private ArrayList<Announcement> announcements;
 	
 	
-	public Dashboard(int managerCount, int courseCount, int lecturerCount, int studentCount, ArrayList<Anouncment> anouncments) {
+	public Dashboard(int managerCount, int courseCount, int lecturerCount, int studentCount, ArrayList<Announcement> anouncments) {
 		this.managerCount = managerCount;
 		this.courseCount = courseCount;
 		this.lecturerCount = lecturerCount;
 		this.studentCount = studentCount;
-		this.anouncments = anouncments;
+		this.announcements = anouncments;
 	}
 	
 	public int getManagerCount() {
@@ -32,8 +32,8 @@ public class Dashboard {
 		return studentCount;
 	}
 
-	public ArrayList<Anouncment> getAnouncments() {
-		return anouncments;
+	public ArrayList<Announcement> getAnnouncements() {
+		return announcements;
 	}
 	
 	

@@ -62,3 +62,15 @@ $(".delete-course").click(function(e){
 $("#save-course").click(function(){
 	$("#new-course").submit();
 })
+
+
+$("#anouncment-send").click(function(e){
+	if($("#anouncment-content").val() == '' || $("#anouncment-title").val() == ''){
+	    e.preventDefault();
+	    alert("Fill all null spaces");
+
+	}
+	else if (!confirm('Are you sure to send the anouncment')) {
+	    e.preventDefault();
+	}
+});

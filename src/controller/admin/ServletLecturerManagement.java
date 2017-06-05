@@ -15,6 +15,10 @@ import controller.SecurityController;
 import interfaceImp.LecturerDaoImp;
 import pojos.Lecturer;
 
+/*
+ * This servlet renders all lecturers
+ * 
+ * */
 
 @WebServlet(name="ServletLecturerManagement", urlPatterns= {"/admin/lecturers"})
 public class ServletLecturerManagement extends HttpServlet {
@@ -31,7 +35,7 @@ public class ServletLecturerManagement extends HttpServlet {
 		
 		LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
 		
-		ArrayList<Lecturer> lecturers = lecturerDaoImp.getAllLecturers();
+		ArrayList<Lecturer> lecturers = lecturerDaoImp.getAllLecturers(); // get lecturers
 		
 		
 		session.setAttribute("lecturers", lecturers);

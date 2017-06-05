@@ -1,35 +1,32 @@
 package interfaceImp;
 
-import java.security.KeyStore.ProtectionParameter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.management.QueryExp;
 
 import database.Database;
 import interfaces.StudentDao;
 import pojos.Course;
-import pojos.Lecturer;
-import pojos.SimpleCourse;
 import pojos.Student;
+import pojos.StudentCourseGrade;
 import pojos.StudentGrade;
-import pojos.User;
 
 public class StudentDaoImp extends Database implements StudentDao {
 
 	
-	
+	// get courses that are taken by student
 	@Override
 	public ArrayList<Course> getStudentCourse(int schoolID) {
 		
 		
 		CourseDaoImp courseDaoImp = new CourseDaoImp();
-		return courseDaoImp.getCourseByStudentID(schoolID);
+		return courseDaoImp.getCourseByStudentID(schoolID); // use exist function
 	}
 
+	// get student grades for specific lecture
 	@Override
 	public ArrayList<StudentGrade> getStudentGradesByLecture(int schoolID, int lectureID) {
 		
@@ -58,7 +55,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 				
 				int gradeID = resultSet.getInt("GradeID");
 				String name = resultSet.getString("Name");
-				int affect  = resultSet.getInt("Affect");
+				float affect  = resultSet.getFloat("Affect");
 				float average = resultSet.getFloat("Average");
 				float studentGrade = resultSet.getFloat("Grade");
 
@@ -88,6 +85,8 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return grades;
 	}
 
+	
+	// return students for specific lecture
 	@Override
 	public ArrayList<Student> getStudentsByLectureID(int lectureID) {
 		
@@ -107,7 +106,9 @@ public class StudentDaoImp extends Database implements StudentDao {
 						+ "GROUP BY u.SchoolID;";
 				
 		*/
-		String query1 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, AVG(0.01 * goc.Affect* gos.Grade) AS Average "
+		
+		// if user has grades use this query
+		String query1 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, SUM(0.01 * goc.Affect* gos.Grade) AS Average "
 					  + "FROM GradeOfCourse goc, GradeOfStudent gos, User u, CourseOfStudent cos " 
 					  + "WHERE " 
 					  + "gos.CourseGradeID = goc.GradeID "  
@@ -118,6 +119,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 					  + "AND cos.visible = true "
 					  + "GROUP BY u.SchoolID;";
 		
+		// if user does not have any grade use this query
 		String query2 = "SELECT u.SchoolID, u.Name, u.Surname, u.Role, u.Email, 0 AS Average "
 				  + "FROM User u, CourseOfStudent cos " 
 				  + "WHERE " 
@@ -133,16 +135,8 @@ public class StudentDaoImp extends Database implements StudentDao {
 			sqlStatement.setInt(1, lectureID);
 			ResultSet resultSet = sqlStatement.executeQuery();
 	
-			if(!resultSet.next()) {
-				sqlStatement = connection.prepareStatement(query2);
-				sqlStatement.setInt(1, lectureID);
-				resultSet = sqlStatement.executeQuery();
-		
-			
-			}
-			resultSet.beforeFirst(); // if deni next var olan ilk datayi almayi engelliyor o yuzden resultset i basa aldik.
-			
-			while(resultSet.next()){
+			while(resultSet.next()){ // get resuts from first query
+				
 				int schoolID = resultSet.getInt("SchoolID");
 				String name = resultSet.getString("Name");
 				String surname = resultSet.getString("Surname");
@@ -153,7 +147,28 @@ public class StudentDaoImp extends Database implements StudentDao {
 				student = new Student(schoolID, email, name, surname, role, average);
 				students.add(student);
 			}
-
+			// eger ogrencinin notu yoksa ama derse kayit edilmis ise
+			
+			sqlStatement = connection.prepareStatement(query2);
+			sqlStatement.setInt(1, lectureID);
+			resultSet = sqlStatement.executeQuery();
+		
+			while(resultSet.next()){ // then get from second query
+				int schoolID = resultSet.getInt("SchoolID");
+				String name = resultSet.getString("Name");
+				String surname = resultSet.getString("Surname");
+				String email = resultSet.getString("Email");
+				int role = resultSet.getInt("Role");
+				float average = resultSet.getFloat("Average");
+				
+				student = new Student(schoolID, email, name, surname, role, average);
+				
+				if(!students.contains(student)) { // if there is no conflict
+					students.add(student);
+				}
+				
+			}
+			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -208,7 +223,6 @@ public class StudentDaoImp extends Database implements StudentDao {
 				try{
 					connection.close();
 				}catch (Exception e){
-					System.out.println(getClass() + "line 100 ");
 					e.printStackTrace();
 				}
 			}
@@ -217,6 +231,8 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return students;
 	}
 
+	
+	// get specific student
 	@Override
 	public Student getStudent(int schoolID) {
 		Student student = null;
@@ -256,6 +272,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return student;
 	}
 
+	// remove course from student course list
 	@Override
 	public boolean deleteStudentCourse(int schoolID, int lectureID) {
 		
@@ -292,6 +309,8 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return result;
 	}
 
+	
+	// add new course to student course list
 	@Override
 	public boolean addStudentCourse(int schoolID, int lectureID) {
 
@@ -329,6 +348,49 @@ public class StudentDaoImp extends Database implements StudentDao {
 		
 		return added;
 	
+	}
+
+	
+	// returns grades of student for all courses, StudentCourseGrade acts as container keep Course object and Arraylist for grades
+	@Override
+	public ArrayList<StudentCourseGrade> getStudentCourseGrades(int schoolID) {
+		ArrayList<StudentCourseGrade> studentCourseGrades = new ArrayList<>();
+		
+		ArrayList<Course> courses = this.getStudentCourse(schoolID);
+		
+		StudentCourseGrade studentCourseGrade = null;
+		
+		float classAverage;
+		float overAll;
+		float affectTotal;
+		
+		for (Course course : courses) {
+			classAverage = 0; // set 0 for each course
+			overAll = 0;
+			affectTotal = 0;
+			
+			ArrayList<StudentGrade> grades = this.getStudentGradesByLecture(schoolID, course.getLectureID()); // get grades from exist func.
+			
+			for(StudentGrade studentGrade: grades) { // calculate averages and over all grade
+				classAverage += (0.01 * studentGrade.getAffect() * studentGrade.getAverage());
+				overAll += (0.01 * studentGrade.getAffect() * studentGrade.getGrade());
+				affectTotal += studentGrade.getAffect();
+			}
+			
+			StudentGrade overAllGrade = new StudentGrade(course.getLectureID(), 0, "Overall", affectTotal , classAverage, overAll); // add overall for each course
+			
+			grades.add(overAllGrade);
+			
+			studentCourseGrade = new StudentCourseGrade(course, grades);
+			
+			studentCourseGrades.add(studentCourseGrade);
+			
+		}
+		
+	
+		
+		
+		return studentCourseGrades;
 	}
 
 

@@ -29,7 +29,7 @@
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                       <ul class="nav" id="main-menu">
+              <ul class="nav" id="main-menu">
                 <li>
                     <a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>

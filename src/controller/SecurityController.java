@@ -25,36 +25,79 @@ public class SecurityController {
 	}
 	
 	
-	public static void redirectToUserByRole(User user, HttpServletResponse resp) {
+	
+	/* 
+	 * this function redirects the user to related dashboard according to their role, 
+	 * */
+	public static void redirectToUserByRole(User user,HttpServletRequest req, HttpServletResponse resp) {
 		
 		try {
 			switch (user.getRole()) {
 			case 1:
-				resp.sendRedirect("admin/dashboard");
+				resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 				break;
 			case 2:
-				resp.sendRedirect("admin/dashboard");
+				resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 				break;
-
+			case 3:
+				resp.sendRedirect(req.getContextPath() + "/lecturer/dashboard");
+				break;
+			case 4:
+				resp.sendRedirect(req.getContextPath() + "/lecturer/dashboard");
+				break;
+			case 5:
+				resp.sendRedirect(req.getContextPath() + "/student/dashboard");
 			default:
 				break;
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
 	
-	
+	/* 
+	 * these functions checks the requirement of users, if has no permission to open page, redirecet to related dashboard
+	 * if no session is found then redirect to sign in page
+	 * */
+	public static boolean studentRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		User user = null;
+		
+		if(signinRequired(session, req, resp)) {
+			try {
+				user = (User) session.getAttribute("user");
+				if (user != null) {
+					if (user.getRole() !=  AppRole.STUDENT) {
+						redirectToUserByRole(user, req, resp);
+						return false;
+					}
+					else {
+						return true;
+					}
+				}
+				else {
+					 resp.sendRedirect(req.getContextPath() + "/signin");
+					 return false;
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+		
+	}
+
 	public static boolean adminRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
-		User user;
+		User user = null;
 		if (signinRequired(session, req, resp)) {
 			try {
 				 user = (User) session.getAttribute("user");
 				 
 				 if (user != null) {
 						if(user.getRole() != AppRole.SUPER_ADMIN  &&  user.getRole() != AppRole.ADMIN) {
-							redirectToUserByRole(user, resp);
+							redirectToUserByRole(user, req, resp);
 							return false;
 						}
 						else {
@@ -75,8 +118,37 @@ public class SecurityController {
 		
 	}
 
+	public static boolean lecturerRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		
+		User user = null;
+		if (signinRequired(session, req, resp)) {
+			try {
+				 user = (User) session.getAttribute("user");
+				 
+				 if (user != null) {
+						if(user.getRole() != AppRole.LECTURER  &&  user.getRole() != AppRole.TEACHING_ASISSTANT) {
+							redirectToUserByRole(user, req, resp);
+							return false;
+						}
+						else {
+							return true;
+						}
+						
+				 }
+				 else {
+					 resp.sendRedirect(req.getContextPath() + "/signin");
+					 return false;
+				 }	 
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+		
+	}
 
-
+	
 	public static boolean signinRequired(HttpSession session, HttpServletRequest req, HttpServletResponse resp){
 		User user = null;
 		try {

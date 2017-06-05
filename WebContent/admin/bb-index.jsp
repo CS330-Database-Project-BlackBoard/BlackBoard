@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="pojos.Anouncment"%>
+<%@page import="pojos.Announcement"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="pojos.Dashboard"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -113,7 +113,12 @@
                     </div>
                 </div>
 
-
+			  <div class="row bottom-space">
+                   <div class="col-md-12">
+                       <button type="button" name="button" class="btn btn-success" data-toggle="modal" data-target="#new-anouncment"><span class=" glyphicon glyphicon-plus"></span> New Anouncment</button>
+                   </div>
+               </div>
+               
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
@@ -122,10 +127,10 @@
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
-									<% for(Anouncment anouncment : dashboard.getAnouncments()){ %>
+									<% for(Announcement announcement : dashboard.getAnnouncements()){ %>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">7 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> <%= anouncment.getTitle() %>
+                                        <i class="fa fa-fw fa-comment"></i> <%= announcement.getTitle() %>
                                     </a>
                                 	<% } %>
                                 </div>
@@ -143,8 +148,59 @@
         </div>
         <!-- /. PAGE WRAPPER  -->
     </div>
-
-		<%@include file="script.jsp" %>
+	
+	<form action="" method="post">
+	
+		<div id="new-anouncment" class="modal fade" role="dialog">
+			
+			 <div class="modal-dialog">
+			
+			   <!-- Modal content-->
+			   <div class="modal-content">
+			     <div class="modal-header">
+			       <button type="button" class="close" data-dismiss="modal">&times;</button>
+			       <h4 class="modal-title">New Announcement</h4>
+			     </div>
+			     <div class="modal-body">
+			      <div class="row">
+			      	<div class="col-md-12 form-group">
+			      		<input type="text" class="form-control" placeholder="Title" name="anouncment-title" id="anouncment-title"/>
+			      	</div>
+			      </div>
+			      <div class="row">
+			      	<div class="col-md-12 form-group">
+	 					 <textarea class="form-control" rows="10" name="anouncment-content" placeholder="Content..." id="anouncment-content"></textarea>
+			      	</div>
+			      </div>
+			      <div class="row">
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="announcement-postTo" value="only-managers" checked="checked">Only Managers</label>
+						</div>
+			      	</div>
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="announcement-postTo" value="only-lecturers">Only Lecturers</label>
+						</div>
+			      	</div>
+			      	<div class="col-md-4 form-group">
+				      	<div class="radio">
+						  <label><input type="radio" name="announcement-postTo" value="all-users">All Users</label>
+						</div>
+			      	</div>
+			      </div>
+			     </div>
+			     <div class="modal-footer">
+			       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			       <button type="submit" class="btn btn-success" id="anouncment-send">Send</button>
+			     </div>
+			   </div>
+			  </div>
+		</div>
+	</form>	
+	
+	
+	<%@include file="script.jsp" %>
 	
 
 

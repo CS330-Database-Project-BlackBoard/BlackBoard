@@ -14,3 +14,24 @@ body {
 .head-right{
 	padding-right: 9px;
 }
+
+ 
+@media screen and (min-width: 768px) {
+	
+	#new-anouncment .modal-dialog  {width:900px;}
+
+}
+
+
+.login-body{
+	    background:#555753;
+		
+}
+
+.login-form{
+	background-color: #eee;
+	margin-top:250px
+}
+.blackboard{
+	color: #353535;
+}

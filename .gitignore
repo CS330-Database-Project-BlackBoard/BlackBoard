@@ -16,3 +16,4 @@ hs_err_pid*
 Database.java
 *.class
 
+/build/

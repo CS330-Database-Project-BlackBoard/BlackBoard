@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pojos.Course;
 import pojos.Student;
+import pojos.StudentCourseGrade;
 import pojos.StudentGrade;
 
 
@@ -22,4 +23,7 @@ public interface StudentDao {
 	public boolean deleteStudentCourse(int schoolID, int lectureID);
 	
 	public boolean addStudentCourse(int schoolID, int lectureID);
+	
+	public ArrayList<StudentCourseGrade> getStudentCourseGrades(int schoolID);
+	
 }

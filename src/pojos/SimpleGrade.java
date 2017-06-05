@@ -1,3 +1,4 @@
+
 package pojos;
 
 public class SimpleGrade {
@@ -5,16 +6,41 @@ public class SimpleGrade {
 	private int lectureID;
 	private int gradeID;
 	private String name;
-	private int affect;
+	private float affect;
 	private float average;
+	private float grade;
 	
-	public SimpleGrade( int lectureID, int gradeID, String name, int affect, float average) {
+	
+	public SimpleGrade( int lectureID, int gradeID, String name, float affect, float average) {
 		super();
 		this.lectureID = lectureID;
 		this.gradeID = gradeID;
 		this.name = name;
 		this.affect = affect;
 		this.average = average;
+	}
+	
+	
+	
+
+
+	
+
+	public SimpleGrade(int lectureID, int gradeID, String name, float affect, float average, float grade) {
+		this.lectureID = lectureID;
+		this.gradeID = gradeID;
+		this.name = name;
+		this.affect = affect;
+		this.average = average;
+		this.grade = grade;
+	}
+
+	
+
+
+
+	public float getGrade() {
+		return grade;
 	}
 
 
@@ -30,9 +56,16 @@ public class SimpleGrade {
 		return name;
 	}
 
-	public int getAffect() {
+
+	public float getAffect() {
 		return affect;
 	}
+
+
+
+
+
+
 
 	public float getAverage() {
 		return average;

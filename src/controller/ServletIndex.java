@@ -10,6 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import pojos.User;
 
+/*
+ * 
+ *  This is the main servlet, checks if user is exist in session redirect to related dashboard, else redirect to sign in page
+ * 
+ * */
 
 @WebServlet(name="ServletIndex", urlPatterns= {"/"})
 public class ServletIndex extends HttpServlet {
@@ -26,10 +31,10 @@ public class ServletIndex extends HttpServlet {
 			e.printStackTrace();
 		}
 		finally {
-			SecurityController.isSignedIn(user,req, resp);
+			SecurityController.isSignedIn(user,req, resp); // check is signed in
 		}
 		
-		SecurityController.redirectToUserByRole(user, resp);
+		SecurityController.redirectToUserByRole(user,req, resp); // if it is redirect to dashboard
 		
 	
 	}

@@ -13,15 +13,24 @@ import javax.servlet.http.HttpSession;
 
 
 import controller.SecurityController;
+import enums.AppForm;
 import interfaceImp.ManagerDaoImp;
 import pojos.Manager;
 import pojos.User;
+
+/*
+ * 
+ * This servlet renders all managers and save new manager
+ * 
+ * */
+
 
 @WebServlet(name="ServletManagerManagement", urlPatterns={"/admin/managers"})
 public class ServletManagerManagement extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// render 
 		HttpSession session = req.getSession();
 
 		if(!SecurityController.adminRequired(session, req, resp)){
@@ -32,12 +41,13 @@ public class ServletManagerManagement extends HttpServlet{
 
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();
 		
-		ArrayList<Manager> managers = managerDaoImp.getAllManagers();
+		ArrayList<Manager> managers = managerDaoImp.getAllManagers(); // get all managers
 		session.setAttribute("managers", managers);
-		session.setAttribute("roles", managerDaoImp.getAdminRoles());
+		session.setAttribute("roles", managerDaoImp.getAdminRoles()); // get all role types
 
 		session.setAttribute("lastPath", req.getRequestURI());
-
+		
+		// render
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/bb-user-management.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -45,31 +55,33 @@ public class ServletManagerManagement extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// save
 		HttpSession session = req.getSession();
 
 		if(!SecurityController.signinRequired(session, req,resp) && !SecurityController.adminRequired(session, req, resp)){
 			return;
 		}
 		
-		int schoolID = Integer.parseInt(req.getParameter("schoolID"));
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
-		String name = req.getParameter("name");
-		String surname = req.getParameter("surname");
-		int role = Integer.parseInt(req.getParameter("role"));
-		System.out.println("role: " + role);
+		// get posted data from form
+		
+		int schoolID = Integer.parseInt(req.getParameter(AppForm.SCHOOL_ID));
+		String email = req.getParameter(AppForm.EMAIL);
+		String password = req.getParameter(AppForm.PASSWORD);
+		String name = req.getParameter(AppForm.NAME);
+		String surname = req.getParameter(AppForm.SURNAME);
+		int role = Integer.parseInt(req.getParameter(AppForm.ROLE));
 		
 		Manager manager = new Manager(schoolID, email, password, name, surname, role);
 		String message = "";
 		
 		ManagerDaoImp managerDaoImp = new ManagerDaoImp();
-		if(managerDaoImp.createNewManager(manager)) {
+		if(managerDaoImp.createNewManager(manager)) { // save manager
 			message = "Manager is created successfully";
 		}
 		else {
 			message = "Manager is not created";
 		}
-		session.setAttribute("manager.message", message);
+		//session.setAttribute("manager.message", message);
 		
 		
 		resp.sendRedirect(req.getContextPath() + "/admin/managers");

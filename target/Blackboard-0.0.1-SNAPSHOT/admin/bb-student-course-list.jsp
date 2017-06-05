@@ -29,7 +29,7 @@
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
-                       <ul class="nav" id="main-menu">
+              <ul class="nav" id="main-menu">
                 <li>
                     <a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
@@ -82,8 +82,9 @@
                             <div class="panel-body">
                                 <table class="table table-responsive">
                                     <thead>
-                                        <th class="text-center">Course Code</th>
-                                        <th class="text-center">Course Name</th>
+                                        <th class="text-center">Code</th>
+                                        <th class="text-center">Course</th>
+										<th class="text-center">Lecture</th>
                                         <th class="text-center">Lecturer</th>
                                         <th></th>
                                     </thead>
@@ -92,9 +93,10 @@
                                         <tr class="text-center">
                                             <td><%= course.getCode() %></td>
                                             <td><%= course.getName() %></td>
+                                     	   <td><%= course.getLectureName() %></td>
                                             <td><%= course.getLecturerInf() %></td>
                                             <td>
-                                                <a id="delete-course" href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
+                                                <a class="delete-course" href="${pageContext.request.contextPath}/admin/student/<%= student.getSchoolID()%>/delete/<%= course.getLectureID()%>" class="table-col-space-right">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                                 <a href="${pageContext.request.contextPath}/admin/grade/lecture/<%= course.getLectureID()%>/student/<%= student.getSchoolID()%>">

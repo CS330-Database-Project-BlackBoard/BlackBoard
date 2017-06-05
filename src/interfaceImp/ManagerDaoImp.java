@@ -15,6 +15,8 @@ import pojos.User;
 
 public class ManagerDaoImp extends Database implements ManagerDao{
 
+	
+	// create new manager
 	@Override
 	public boolean createNewManager(Manager manager) {
 		boolean doesSaved = false;
@@ -64,7 +66,7 @@ public class ManagerDaoImp extends Database implements ManagerDao{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	// returns all managers
 	@Override
 	public ArrayList<Manager> getAllManagers() {
 		Manager manager = null;
@@ -119,7 +121,7 @@ public class ManagerDaoImp extends Database implements ManagerDao{
 
 
 	
-	
+	// returns manager roles
 	public ArrayList<Role> getAdminRoles() {
 		ArrayList<Role> roles = new ArrayList<>();
 		

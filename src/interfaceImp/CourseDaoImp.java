@@ -10,7 +10,7 @@ import org.omg.CORBA.StringHolder;
 
 import database.Database;
 import interfaces.CourseDao;
-import pojos.Anouncment;
+import pojos.Announcement;
 import pojos.Course;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
@@ -21,59 +21,10 @@ import pojos.StudentGradeView;
 
 public class CourseDaoImp extends Database implements CourseDao {
 	
-	
-	private Course getCourse(String query) {
-		Course course = null;
-		
-		Connection connection = null;
-		
-		
-		try {
-			connection = super.getConnection();
-			PreparedStatement sqlStatement = connection.prepareStatement(query);
-			ResultSet resultSet = sqlStatement.executeQuery();
-			
-			if(resultSet.next()) {
-				int courseID = resultSet.getInt("CourseID");
-				int departmentID = resultSet.getInt("DepartmentID");
-				String code = resultSet.getString("Code");
-				String name = resultSet.getString("Name");
-				int semesterID = resultSet.getInt("SemesterID");
-				boolean visible = resultSet.getBoolean("Visible");
-				int lecturerID = resultSet.getInt("SchoolID");
-				String lecturerName = resultSet.getString("LecturerName");
-				String lecturerSurname = resultSet.getString("LecturerSurname");
-				int lectureID = resultSet.getInt("LectureID");
-				String lectureName = resultSet.getString("LectureName");
-				
-				course = new Course(courseID, departmentID, code, name, semesterID, visible, lecturerID, lecturerName, lecturerSurname, lectureID, lectureName);
-				
-			}
-			
-			
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		}
-		
-		
-		return course;
-		
-	}
-	
+
+	// return courses as arraylist
 	private ArrayList<Course> getCourses(String query){
-		ArrayList<Course> courses = new ArrayList<>();
+		ArrayList<Course> courses = new ArrayList<>(); // store objects
 
 		
 		Course course = null;
@@ -82,11 +33,14 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		
 		try {
-			connection = super.getConnection();
-			PreparedStatement sqlStatement = connection.prepareStatement(query);
-			ResultSet resultSet = sqlStatement.executeQuery();
+			connection = super.getConnection(); // connect 
+			PreparedStatement sqlStatement = connection.prepareStatement(query); // prepare statement
+			ResultSet resultSet = sqlStatement.executeQuery(); // execute
 			
-			while(resultSet.next()) {
+			while(resultSet.next()) { // iterate
+				
+				// get fields by column name
+				
 				int courseID = resultSet.getInt("CourseID");
 				int departmentID = resultSet.getInt("DepartmentID");
 				String code = resultSet.getString("Code");
@@ -99,8 +53,9 @@ public class CourseDaoImp extends Database implements CourseDao {
 				int lectureID = resultSet.getInt("LectureID");
 				String lectureName = resultSet.getString("LectureName");
 				
+				// store row in new Course object
 				course = new Course(courseID, departmentID, code, name, semesterID, visible, lecturerID, lecturerName, lecturerSurname, lectureID, lectureName);
-				courses.add(course);
+				courses.add(course); // put in arraylist
 				
 			}
 			
@@ -112,9 +67,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 		finally {
 			if (connection != null) {
 				try {
-					connection.close();
+					connection.close(); // close connection
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -126,7 +80,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 	}
 	
-	
+	// returns simplecourse as arraylist
 	private ArrayList<SimpleCourse> getSimpleCourses(String query){
 		ArrayList<SimpleCourse> courses = new ArrayList<>();
 
@@ -209,7 +163,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 				 + "AND l.CourseID = c.CourseID "
 				 + "AND cl.SchoolID = u.SchoolID "
 				 + "AND c.CourseID = " + courseID;
-		return this.getCourse(query);
+		return getCourses(query).get(0);
 	}
 
 	@Override
@@ -221,7 +175,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 				 + "AND cl.SchoolID = u.SchoolID "
 				 + "AND cl.LectureID = " + lectureID;
 		
-		return this.getCourse(query);
+		return getCourses(query).get(0);
+
 	}
 
 	@Override
@@ -296,6 +251,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 		return this.getSimpleCourses(query);
 	}
 
+	
+	// add new course
 	@Override
 	public boolean addNewCourse(String code, String lecture, String lecturerEmail) {
 		
@@ -305,17 +262,17 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		try {
 			connection = super.getConnection();
-			String query = "SET @CourseID = (SELECT CourseID FROM Course WHERE Code = ?); " 
-						 + "INSERT INTO Lecture(CourseID, Name) VALUES ( @CourseID, ?); " 
-						 + "SET @LectureID = (SELECT LAST_INSERT_ID()); "
-						 + "SET @SchoolID = (SELECT SchoolID FROM User WHERE Email = ?); "
-						 + "INSERT INTO CourseOfLecturer(LectureID, SchoolID) VALUES (@LectureID, @SchoolID);";
+			String query = "SET @CourseID = (SELECT CourseID FROM Course WHERE Code = ?); "  // get course id by course code
+						 + "INSERT INTO Lecture(CourseID, Name) VALUES ( @CourseID, ?); " // insert lecture of course
+						 + "SET @LectureID = (SELECT LAST_INSERT_ID()); " // get lecture id
+  						 + "SET @SchoolID = (SELECT SchoolID FROM User WHERE Email = ?); " // get school id of lecturer
+						 + "INSERT INTO CourseOfLecturer(LectureID, SchoolID) VALUES (@LectureID, @SchoolID);"; // assign the lecture to lecturer
 			
-			PreparedStatement sqlStatement = connection.prepareStatement(query);
-			sqlStatement.setString(1, code);
+			PreparedStatement sqlStatement = connection.prepareStatement(query); // prepare statement
+			sqlStatement.setString(1, code); // put value instead of ? in query
 			sqlStatement.setString(2, lecture);
 			sqlStatement.setString(3, lecturerEmail);
-			sqlStatement.executeQuery();
+			sqlStatement.executeQuery(); // execute
 			
 			added = true;
 			
@@ -365,8 +322,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 				int enrolledStudentCount = resultSet.getInt("EnrolledStudentCount");
 				int gradeCount = resultSet.getInt("GradeCount");
 				
-				AnouncmentDaoImp anouncmentDaoImp = new AnouncmentDaoImp();
-				ArrayList<Anouncment> anouncments = anouncmentDaoImp.getAnouncmentsByLecture(lectureID);
+				AnnouncementDaoImp anouncmentDaoImp = new AnnouncementDaoImp();
+				ArrayList<Announcement> anouncments = anouncmentDaoImp.getAnnouncementsByLecture(lectureID);
 				course = this.getCourseByLectureID(lectureID);
 				
 				lectureDashboard = new LectureDashboard(course, lectureID, anouncments, enrolledStudentCount, gradeCount);
@@ -391,8 +348,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 	
 	}
 
-	
-	
+	// get grade list of lecture
 	@Override
 	public ArrayList<SimpleGrade> getLectureGrades(int lectureID) {
 		ArrayList<SimpleGrade> grades = new ArrayList<>();
@@ -400,7 +356,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		Connection connection = null;
 		
-		
+		float total = 0;
+		float affectTotal = 0;
 		try {
 			connection = super.getConnection();
 			String query = "SELECT gc.*, (SELECT AVG(Grade) FROM GradeOfStudent WHERE CourseGradeID = gc.GradeID) AS Average "
@@ -413,14 +370,17 @@ public class CourseDaoImp extends Database implements CourseDao {
 			
 			while (resultSet.next()) {
 				int gradeID = resultSet.getInt("GradeID");
-				int affect = resultSet.getInt("Affect");
+				float affect = resultSet.getFloat("Affect");
 				String name = resultSet.getString("Name");
 				float average = resultSet.getFloat("Average");
 				grade = new SimpleGrade(lectureID, gradeID, name, affect, average);
 				grades.add(grade);
 				
+				affectTotal += affect; // total affect of grades
+				total += (average * affect * 0.01); // calculate total average
 			}
-			
+				grade = new SimpleGrade(lectureID, 0, "Overall", affectTotal, total); // add overall grade
+				grades.add(grade);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -439,7 +399,9 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return grades;
 	}
-
+	
+	
+	//  get lecture details
 	@Override
 	public LectureDetail getLectureDetail(int lectureID) {
 		
@@ -452,6 +414,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 		return gradeDashboard;
 	}
 
+	// get student grades by grade id
 	@Override
 	public ArrayList<StudentGradeView> getStudentListofGradeByGradeID(int gradeID) {
 		
@@ -504,7 +467,8 @@ public class CourseDaoImp extends Database implements CourseDao {
 	}
 	
 	
-	
+	// returns courses which are not taken by student, if course has more then one lecture and student takes that course
+	// does not show the other lectures.
 	@Override
 	public ArrayList<Course> getAllCoursesNotTakenByStudent(int schoolID) {
 		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "

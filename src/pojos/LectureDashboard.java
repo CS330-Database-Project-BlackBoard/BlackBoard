@@ -7,14 +7,14 @@ public class LectureDashboard {
 	
 		private Course course;
 		private int lectureID;
-		private ArrayList<Anouncment> anouncments;
+		private ArrayList<Announcement> announcements;
 		private int enrolledStudentCount = 0;
 		private int gradeCount = 0;
 		
-		public LectureDashboard(Course course, int lectureID, ArrayList<Anouncment> anouncments, int enrolledStudentCount, int gradeCount) {
+		public LectureDashboard(Course course, int lectureID, ArrayList<Announcement> anouncments, int enrolledStudentCount, int gradeCount) {
 			this.course = course;
 			this.lectureID = lectureID;
-			this.anouncments = anouncments;
+			this.announcements = anouncments;
 			this.enrolledStudentCount = enrolledStudentCount;
 			this.gradeCount = gradeCount;
 		}
@@ -22,8 +22,8 @@ public class LectureDashboard {
 		public int getLectureID() {
 			return lectureID;
 		}
-		public ArrayList<Anouncment> getAnouncments() {
-			return anouncments;
+		public ArrayList<Announcement> getAnnouncements() {
+			return announcements;
 		}
 		public int getEnrolledStudentCount() {
 			return enrolledStudentCount;
