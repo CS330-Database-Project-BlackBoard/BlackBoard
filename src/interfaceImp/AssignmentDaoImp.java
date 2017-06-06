@@ -76,7 +76,7 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
 
     @Override
     public ArrayList<Assignment> getAllAssignmentByStudentID(int studentID) {
-        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM file f WHERE assign.AnouncmentID = f.AnouncmentID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate, assign.isSubmitted  "
+        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnouncmentID = f.AnnouncmentID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate, assign.isSubmitted  "
                          +   "FROM Assignment assign, CourseOfStudent cos  "
                          +   "WHERE cos.LectureID = assign.LectureID "
                          +   "AND cos.SchoolID = " + studentID;
@@ -86,7 +86,7 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
 
     @Override
     public ArrayList<Assignment> getAllAssignmentByLectureID(int LectureID) {
-        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM file f WHERE assign.AnouncmentID = f.AnouncmentID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate, assign.isSubmitted  "
+        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnouncmentID = f.AnnouncmentID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate, assign.isSubmitted  "
                 +   "FROM Assignment assign, CourseOfStudent cos  "
                 +   "WHERE cos.LectureID = assign.LectureID "
                 +   "AND cos.LectureID = " + LectureID + " "

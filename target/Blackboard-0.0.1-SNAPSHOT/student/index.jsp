@@ -63,7 +63,7 @@
                                 } %>
                                 <a class="list-group-item">
                                     <span class="badge"><%=Announcement.getPostedAt()%></span>
-                                    <i class="fa fa-fw fa-truck"><%=Announcement.getContent()%></i>
+                                    <%=Announcement.getContent()%>
                                 </a>
                                 <% var++; %>
                                 <% } %>

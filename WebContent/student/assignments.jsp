@@ -101,6 +101,8 @@
                                     <small class="text-muted"><strong>Due Date:</strong></small>
                                     <br>
                                     <small class="text-muted">Submission:</small>
+                                      <br>
+                                      <input type="file" class="glyphicon-file" data-buttonName="btn-primary">
                                   </td>
                                   <td class="text-right">
                                     <br>
@@ -133,6 +135,10 @@
             </div>
         </div>
     </div>
+
+     <script>
+         $(":file").filestyle({buttonText: "Find file"});
+     </script>
 
 	<%@include file="script.jsp" %>
 
