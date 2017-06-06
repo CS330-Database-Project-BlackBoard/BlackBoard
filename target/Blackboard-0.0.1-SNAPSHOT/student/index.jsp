@@ -29,6 +29,10 @@
                     <a  href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
                 </li>
                 <li>
+                    <a href="${pageContext.request.contextPath}/student/course-materials"><i class="fa fa-book"></i> Course Materials</a>
+                </li>
+
+                <li>
                     <a  href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
                 </li>
                 <li>
@@ -73,7 +77,7 @@
                                 </a>
                             </div>
                             <div class="text-right">
-                                <a href="announcment.html">More Announcments <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="${pageContext.request.contextPath}/student/announcment.jsp">More Announcments <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>

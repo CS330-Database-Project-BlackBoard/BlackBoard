@@ -22,22 +22,27 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-           		   <li>
-                   		 <a href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
+                    <li>
+                        <a class="active-menu" href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
                     </li>
                     <li>
-                   		 <a class="active-menu" href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
+                        <a  href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
                     </li>
                     <li>
-                    	<a href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
+                        <a href="${pageContext.request.contextPath}/student/course-materials"><i class="fa fa-book"></i> Course Materials</a>
+                    </li>
+
+                    <li>
+                        <a  href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
                     </li>
                     <li>
-                   		 <a  href="${pageContext.request.contextPath}/student/assignments"><i class="fa fa-pencil-square-o"></i> Assignments</a>
+                        <a  href="${pageContext.request.contextPath}/student/assignments"><i class="fa fa-pencil-square-o"></i> Assignments</a>
                     </li>
                     <li>
-                    	<a href="${pageContext.request.contextPath}/student/settings"><i class="fa fa-cog"></i> Settings</a>
+                        <a href="${pageContext.request.contextPath}/student/settings"><i class="fa fa-cog"></i> Settings</a>
                     </li>
                 </ul>
+
             </div>
         </nav>
         <!-- /. NAV SIDE  -->

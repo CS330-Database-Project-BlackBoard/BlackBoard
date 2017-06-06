@@ -116,6 +116,8 @@
 												      <div class="panel-body">
 												      	<p><%= file.getAnnouncement().getContent() %></p>
 												      	<a href="<%= file.getPath() %>"><%= file.getName() %></a>
+														<p class="pull-right text-muted"><%= file.getPostedAT() %></p>
+												      	
 												      </div>
 
 												    </div>
@@ -159,6 +161,7 @@
 												      <div class="panel-body">
 												      	<p><%= file.getAnnouncement().getContent() %></p>
 												      	<a href="<%= file.getPath() %>"><%= file.getName() %></a>
+												      	<p class="pull-right text-muted"><%= file.getPostedAT() %></p>
 												      </div>
 
 												    </div>

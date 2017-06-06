@@ -414,7 +414,7 @@ public class StudentDaoImp extends Database implements StudentDao {
 	
 	
 	@Override
-	public ArrayList<CourseMaterial> getCourseMaterialsOfLecturer(int schoolID) {
+	public ArrayList<CourseMaterial> getCourseMaterialsOfStudent(int schoolID) {
 		ArrayList<CourseMaterial> courseMaterials = new ArrayList<>();
 		
 		ArrayList<Course> studentCourses = this.getStudentCourse(schoolID);

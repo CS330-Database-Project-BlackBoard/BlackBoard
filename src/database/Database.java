@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 
 public class Database {
 
-	private String dbUser = "dev";
-	private String dbPassword = "23579";
-	//private String database = "blackboard?allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-	//private String server = "104.131.84.114:3306/";
-	private String database = "blackboard?allowMultiQueries=true";
-	private String server = "127.0.0.1:3306/";
+	private String dbUser = "root";
+	private String dbPassword = "root";
+	private String database = "blackboard?allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private String server = "104.131.84.114:3306/";
+	//private String database = "blackboard?allowMultiQueries=true";
+	//private String server = "127.0.0.1:3306/";
 
 	private String driver = "jdbc:mysql://";
 	private String url = driver + server  + database;
