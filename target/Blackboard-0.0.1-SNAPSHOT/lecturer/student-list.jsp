@@ -71,7 +71,7 @@
                                     <tr class="text-center">
                                         <td class="text-center"><%= grade.getStudentID() %></td>
                                         <td class="text-center"><%= grade.getNameSurname() %></td>
-                                        <td class="text-right"><input type="text" size="4" name="<%= grade.getStudentID() %>" class="form-control grade-text" value="<%= grade.getGrade() %>"></td>
+                                        <td class="text-center"><input type="text" size="4" name="<%= grade.getStudentID() %>" class="form-control grade-text" value="<%= grade.getGrade() %>"></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
