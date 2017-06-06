@@ -35,12 +35,10 @@ public class ServletLecturerUpdateGrade extends HttpServlet {
             return;
         }
 
-
         try {
 
             String path = req.getPathInfo();
             String[] paths = path.split("/");
-            System.out.println(Arrays.toString(paths));
 
             if(path.contains(AppPath.LECTURE) ) {
                 int lectureID = Integer.parseInt(paths[3]);
@@ -108,7 +106,6 @@ public class ServletLecturerUpdateGrade extends HttpServlet {
 
                     gradeOfStudent.put(student.getSchoolID(), grade);
 
-                    System.out.println(gradeOfStudent.size());
                 }
 
                 LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
