@@ -1,6 +1,7 @@
 package controller.student;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
-import pojos.User;
+import interfaceImp.AnnouncementDaoImp;
+import interfaceImp.CourseDaoImp;
+import interfaceImp.StudentDaoImp;
+import pojos.*;
 
 @WebServlet(name="ServletStudentDashboard", urlPatterns= {"/student/dashboard"})
 public class ServletStudentDashboard extends HttpServlet{
@@ -40,9 +44,26 @@ public class ServletStudentDashboard extends HttpServlet{
 		if (!SecurityController.studentRequired(session, req, resp)) {
 			return;
 		}
-		
-		
-		
+
+		try{
+			user = (User) session.getAttribute("user");
+			AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+			StudentDaoImp studentDaoImp = new StudentDaoImp();
+			ArrayList<Announcement> announcements = announcementDaoImp.getAnnouncementsBySchoolID(user.getSchoolID());
+			ArrayList<Course> courses = studentDaoImp.getStudentCourse(user.getSchoolID());
+
+			session.setAttribute("courses",courses);
+			session.setAttribute("Announcements",announcements);
+
+		}catch (Exception e){
+			e.printStackTrace();
+			resp.sendRedirect((String)session.getAttribute("lastPath"));
+			return;
+		}
+
+
+
+		session.setAttribute("lastPath", req.getRequestURI());
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/student/index.jsp");
 		dispatcher.forward(req, resp);
 	
@@ -50,3 +71,4 @@ public class ServletStudentDashboard extends HttpServlet{
 	
 
 }
+

@@ -79,7 +79,7 @@
 	                  <%if(var > 0){ %>
 	               		<div class="tab-pane" id="<%= studentCourseGrade.getCourse().getCourseID()%>">
 	                  	
-	                  <%} %>
+	                  <% } %>
 	                  <div class="panel panel-default">
 	                    <div class="panel-body">
 	                      <div class="row">
