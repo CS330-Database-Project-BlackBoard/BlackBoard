@@ -165,11 +165,18 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	}
 
 	@Override
-	public Announcement getAnnouncementByID(int AnnouncementID) {
+	public Announcement getAnnouncementByID(int announcementID) {
 		
-		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + AnnouncementID;
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + announcementID;
 		return this.getAnnouncements(query).get(0); // function will return single anouncment so get first element
 		
+	}
+
+
+	@Override
+	public Announcement getMaterialAnnouncementByID(int announcementID) {
+		String query = "SELECT * FROM MaterialAnnouncement WHERE AnnouncementID = " + announcementID;
+		return this.getAnnouncements(query).get(0); // function will return single anouncment so get first element
 	}
 
 	

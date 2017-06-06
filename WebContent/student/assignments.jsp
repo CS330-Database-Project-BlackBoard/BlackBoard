@@ -1,6 +1,6 @@
+<%@page import="pojos.CourseAssignment"%>
 <%@ page import="pojos.Assignment" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pojos.CourseAssignment" %>
 <%ArrayList<CourseAssignment> courseAssignments = (ArrayList<CourseAssignment>) session.getAttribute("courseAssignments"); %>
 <%ArrayList<Assignment> assignments = (ArrayList<Assignment>) session.getAttribute("assignments"); %>
 

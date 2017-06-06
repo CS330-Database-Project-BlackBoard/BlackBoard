@@ -25,5 +25,6 @@ public interface StudentDao {
 
 	public ArrayList<StudentCourse> getStudentCourseAndClassMates(int schoolID);
 
-	
+	public ArrayList<CourseMaterial> getCourseMaterialsOfLecturer(int schoolID);
+
 }

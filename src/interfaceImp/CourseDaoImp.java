@@ -12,6 +12,8 @@ import database.Database;
 import interfaces.CourseDao;
 import pojos.Announcement;
 import pojos.Course;
+import pojos.CourseMaterial;
+import pojos.File;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
@@ -494,5 +496,64 @@ public class CourseDaoImp extends Database implements CourseDao {
 		return null;
 	}
 
+	@Override
+	public ArrayList<File> getFilesByLectureID(int lectureID) {
+		ArrayList<File> files = new ArrayList<>();
+		
+		Announcement announcement = null;
+		AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+		
+		
+		File file = null;
+		
+		Connection connection = null;
+		
+		String query = "SELECT * FROM File WHERE LectureID = ?";
+			
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
+			ResultSet resultSet = sqlStatement.executeQuery();
+				
+			while(resultSet.next()) {
+				int fileID = resultSet.getInt("FileID");
+				int postedBY = resultSet.getInt("PostedBY");
+				String path = resultSet.getString("Path");
+				String name = resultSet.getString("Name");
+				String type = resultSet.getString("Type");
+				String postedAT = resultSet.getString("postedAT");
+				int announcementID = resultSet.getInt("AnnouncementID");
+				
+				announcement = announcementDaoImp.getMaterialAnnouncementByID(announcementID);
+				
+				file = new File(fileID, lectureID, postedBY, path, name, type, postedAT, announcementID, announcement);
+				files.add(file);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return files;
+	}
+
+	
+	
+	
+	
+	
 
 }

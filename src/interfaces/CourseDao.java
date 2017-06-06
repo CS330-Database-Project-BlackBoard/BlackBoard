@@ -3,11 +3,12 @@ package interfaces;
 import java.util.ArrayList;
 
 import pojos.Course;
+import pojos.CourseMaterial;
+import pojos.File;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
 import pojos.SimpleGrade;
-import pojos.StudentGrade;
 import pojos.StudentGradeView;
 
 public interface CourseDao {
@@ -46,6 +47,8 @@ public interface CourseDao {
 
 	public SimpleGrade getGradeName(int lectureID, int gradeID);
 
-
+	public ArrayList<File> getFilesByLectureID(int lectureID);
+	
+	
 
 }
