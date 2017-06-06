@@ -47,5 +47,8 @@ public class ServletStudentCourse extends HttpServlet{
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/student/courses.jsp");
 		dispatcher.forward(req, resp);
 	}
+
+	// this is for notify the git for change
+
 }
 
