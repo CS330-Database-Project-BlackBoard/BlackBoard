@@ -1,3 +1,9 @@
+<%@page import="pojos.StudentCourse"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="pojos.Student" %>
+
+<% ArrayList<StudentCourse> studentCourses = (ArrayList<StudentCourse>)session.getAttribute("studentCourses"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -45,24 +51,48 @@
                   </div>
               </div>
               <ul class="nav nav-pills nav-stacked col-md-4">
-                <li class="active"><a href="#CS330" data-toggle="pill"><strong>CS 330 - </strong>Into. to Database System</a></li>
-                <li><a href="#CS306" data-toggle="pill"><strong>CS 306 - </strong>Software Engineering</a></li>
+
+                <%
+                  int ind = 0;
+                  for(StudentCourse studentCourse: studentCourses){  %>
+                      <% if(ind ==0){ %>
+                          <li class="active"><a href="#<%=studentCourse.getCourse().getCourseID()%>" data-toggle="pill"> <Strong><%=studentCourse.getCourse().getCode()%> - </Strong> <%=studentCourse.getCourse().getName()%> <i class="fa fa-bell-o"></i></a></li>
+                      <% } %>
+                      <% if(ind > 0){ %>
+                      <li><a href="#<%=studentCourse.getCourse().getCourseID()%>" data-toggle="pill"> <Strong><%=studentCourse.getCourse().getCode()%> - </Strong> <%=studentCourse.getCourse().getName()%> <i class="fa fa-bell-o"></i></a></li>
+                      <% } %>
+                  <%
+                    ind += 1;
+                  } %>
               </ul>
+
+
               <div class="tab-content">
-                <div class="tab-pane active" id="CS330">
+
+              <%
+                int var = 0;
+                for(StudentCourse studentCourse: studentCourses){ %>
+                    <% if(var == 0){ %>
+                        <div class="tab-pane active" id="<%=studentCourse.getCourse().getCourseID() %>">
+                    <% } %>
+                    <% if(var > 0){ %>
+                          <div class="tab-pane" id="<%=studentCourse.getCourse().getCourseID()%>">
+                     <% } %>
+
                   <div class="col-md-4">
                     <div class="panel panel-danger">
-                      <div class="panel-heading">Introduction to Database System</div>
+
+                      <div class="panel-heading"><%=studentCourse.getCourse().getName()%></div>
                       <div class="panel-body">
                         <table class="table table-responsive">
                           <tbody>
                             <tr>
                               <td><label class="text-muted">Course Code: </label></td>
-                              <td><label class="text-muted text">CS 330</label></td>
+                              <td><label class="text-muted text"><%=studentCourse.getCourse().getCode()%></label></td>
                             </tr>
                             <tr>
                               <td><label class="text-muted">Lecturer: </label></td>
-                              <td><label class="text-muted">Joseph Ledet</label></td>
+                              <td><label class="text-muted"><%=studentCourse.getCourse().getLecturerName()%> <%=studentCourse.getCourse().getLecturerSurname()%></label></td>
                             </tr>
                             <tr>
                               <td><label class="text-muted">Assistant: </label></td>
@@ -70,15 +100,15 @@
                             </tr>
                             <tr>
                               <td><label class="text-muted">Section: </label></td>
-                              <td><label class="text-muted">Lecture1</label></td>
+                              <td><label class="text-muted"><%=studentCourse.getCourse().getLectureName()%></label></td>
                             </tr>
                             <tr>
                               <td><label class="text-muted">Term: </label></td>
-                              <td><label class="text-muted">Spring - 2017</label></td>
+                              <td><label class="text-muted"><%=studentCourse.getCourse().getSemesterID()%></label></td>
                             </tr>
                             <tr>
                               <td><label class="text-muted">Syllabus : </label></td>
-                              <td><label class="text-muted"><a href="bb.png" download><i class="fa fa-cloud-download fa-2x"></a></label></td>
+                              <td><label class="text-muted"><a href="bb.png" download><i class="fa fa-cloud-download fa-2x"></i></a></label></td>
                             </tr>
                           </tbody>
                         </table>
@@ -92,26 +122,16 @@
                         <div class="scroll">
                           <table class="table table-hover table-responsive">
                             <tbody>
+
+                              <% for(Student student : studentCourse.getStudents()){ %>
                               <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Mehmet Arici</strong></td>
+                                <td>
+                                    <td><img style="max-height: 30px; max-width: 50px;" src="https://png.icons8.com/student-male/dusk/64/" alt="" class="circle"></td>
+                                    <td><strong><%=student.getName() + " " + student.getSurname()%></strong>
+                                </td>
                               </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Murat Dogan</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Ümit Kas</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Cok Yakısıklı Koray Ozyurt</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Ertugrul Celik</strong></td>
-                              </tr>
+                              <% } %>
+
                               </tbody>
                             </table>
                           </div>
@@ -119,76 +139,10 @@
                       </div>
                   </div>
                 </div>
-                <div class="tab-pane" id="CS306">
-                  <div class="col-md-4">
-                    <div class="panel panel-danger">
-                      <div class="panel-heading">Software</div>
-                      <div class="panel-body">
-                        <table class="table table-responsive">
-                          <tbody>
-                            <tr>
-                              <td><label class="text-muted">Course Code: </label></td>
-                              <td><label class="text-muted"> CS 330</label></td>
-                            </tr>
-                            <tr>
-                              <td><label class="text-muted"> Lecturer : </label></td>
-                              <td><label class="text-muted"> Joseph Ledet</label></td>
-                            </tr>
-                            <tr>
-                              <td><label class="text-muted"> Assistant : </label></td>
-                              <td><label class="text-muted"> Serhan Aksoy</label></td>
-                            </tr>
-                            <tr>
-                              <td><label class="text-muted"> Section : </label></td>
-                              <td><label class="text-muted"> Lecture1</label></td>
-                            </tr>
-                            <tr>
-                              <td><label class="text-muted"> Term : </label></td>
-                              <td><label class="text-muted"> Spring - 2017</label></td>
-                            </tr>
-                            <tr>
-                              <td><label class="text-muted"> Syllabus : </label></td>
-                              <td><label class="text-muted"><a href="bb.png" download><i class="fa fa-cloud-download fa-2x"></a></label></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="panel panel-danger">
-                      <div class="panel-heading">Course Members</div>
-                      <div class="panel-body">
-                        <div class="scroll">
-                          <table class="table table-hover table-responsive">
-                            <tbody>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Mehmet Arici</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Murat Dogan</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Ümit Kas</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Cok Yakısıklı Koray Ozyurt</strong></td>
-                              </tr>
-                              <tr>
-                                <td><img style="max-height: 30px; max-width: 50px;" src="assets/user.png" alt="" class="circle"></td>
-                                <td><strong>Ertugrul Celik</strong></td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
+                  <%
+                    var += 1;
+                    }
+                  %>
               </div><!-- tab content -->
             </div><!-- /row -->
           </div>

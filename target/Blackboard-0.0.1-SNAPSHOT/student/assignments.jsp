@@ -1,3 +1,9 @@
+<%@ page import="pojos.Assignment" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pojos.CourseAssignment" %>
+<%ArrayList<CourseAssignment> courseAssignments = (ArrayList<CourseAssignment>) session.getAttribute("courseAssignments"); %>
+<%ArrayList<Assignment> assignments = (ArrayList<Assignment>) session.getAttribute("assignments"); %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -46,86 +52,72 @@
                   </div>
               </div>
               <ul class="nav nav-pills nav-stacked col-md-4">
-                <li class="active"><a href="#tab_all" data-toggle="pill"><strong>All Assignments   </strong><i class="fa fa-bell-o"></i></a></li>
-                <li><a href="#tab_a" data-toggle="pill"><strong>CS 330 - </strong>Into. to Database System  <i class="fa fa-bell-o"></i></a></li>
-                <li><a href="#tab_b" data-toggle="pill"><strong>CS 306 - </strong>Software Engineering</a></li>
-              </ul>
-              <div class="tab-content col-md-8">
-                <div class="tab-pane active" id="tab_all">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <div class="row">
-                        <table class="table table-hover">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <label><strong>CS 330 - Intro. to Database System</strong></label>
-                                <br>
-                                <small class="text-muted">Assignment 1</small>
-                                <br>
-                                <small class="text-muted">Due Date</small>
-                                <br>
-                                <small class="text-muted">Submission</small>
 
-                              </td>
-                              <td class=" text-right">
-                                <br>
-                                <br>
-                                <small class="text-info">04/22/17</small>
-                                <br>
-                                <strong><i class="fa fa-check-circle fa-lg icongreencolor"></i></strong>
-                                <br>
-                                <a class="" href="#">assignment1.pdf</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <label><strong>CS 306 - Software Engineering</strong></label>
-                                <br>
-                                <small class="text-muted">Assignment 2</small>
-                                <br>
-                                <small class="text-muted">Due Date</small>
-                                <br>
-                                <small class="text-muted">Submission</small>
-                              </td>
-                              <td class=" text-right">
-                                <br>
-                                <br>
-                                <small>05/22/17</small>
-                                <br>
-                                <strong><i class="fa fa-times-circle fa-lg iconredcolor"></i></strong>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tab_a">
+                <%
+                  ArrayList<String> duplicates = new ArrayList<>();
+                  int ind = 0;
+                  for(Assignment assignment : assignments){ %>
+                      <% if(duplicates.contains(String.valueOf(assignment.getCourse().getCourseID()))){ %>
+                      <% continue; } %>
+                      <% duplicates.add(String.valueOf(assignment.getCourse().getCourseID())); %>
+                      <% if(ind == 0){ %>
+                        <li class="active"><a href="#<%=assignment.getCourse().getCourseID()%>" data-toggle="pill"><strong><%=assignment.getCourse().getCode() %></strong> - <%=assignment.getCourse().getName()%><i class="fa fa-bell-o"></i></a></li>
+                      <% } %>
+                      <% if(ind > 0) { %>
+                        <li><a href="#<%=assignment.getCourse().getCourseID()%>" data-toggle="pill"><strong><%=assignment.getCourse().getCode() %></strong> - <%=assignment.getCourse().getName()%><i class="fa fa-bell-o"></i></a></li>
+                      <% } %>
+                   <%
+                    ind +=1;
+                  } %>
+               </ul>
+
+
+              <div class="tab-content col-md-8">
+
+                <%
+                  int var = 0;
+                %>
+                <% for (CourseAssignment courseAssignment:courseAssignments){ %>
+
+                <% if(var ==0){ %>
+                    <div class="tab-pane active" id = "<%=courseAssignment.getCourse().getCourseID()%>">
+                 <% }%>
+                 <% if(var>0){ %>
+                      <div class="tab-pane" id="<%=courseAssignment.getCourse().getCourseID()%>">
+                  <% } %>
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <div class="row">
                         <table class="table table-hover">
                           <tbody>
-                            <tr>
-                              <td>
-                                <label><strong>Assignment 1</strong></label>
-                                <br>
-                                <small class="text-muted">Due Date</small>
-                                <br><br>
-                                <small class="text-muted">Assignment File</small>
-                                <br><br>
-                                <small class="text-muted">Submitted File</small>
-                              </td>
-                              <td class=" text-right">
-                                <br>
-                                <small>04/22/17</small>
-                                <br><br>
-                                <a href="bb.png" download type="button" class="btn btn-success btn-sm"><i class="fa fa-cloud-download"></i></a>
-                                <br><br>
-                                <a href="upload.html" type="button" class="btn btn-danger btn-sm"><i class="fa fa-cloud-upload"></i></a>
-                              </td>
+                            <% assignments = courseAssignment.getAssignments(); %>
+                            <% for(Assignment assignment : assignments){ %>
+                                <tr>
+                                  <td>
+                                    <label><strong><%=assignment.getCourse().getCourseID()%> </strong> - <%=assignment.getCourse().getName()%></label>
+                                    <br>
+                                    <small class="text-muted"><%=assignment.getName()%></small>
+                                    <br>
+                                    <small class="text-muted"><strong>Due Date:</strong></small>
+                                    <br>
+                                    <small class="text-muted">Submission:</small>
+                                  </td>
+                                  <td class="text-right">
+                                    <br>
+                                    <small class="text-muted"><%= assignment.getDueDate()%></small>
+                                    <br>
+                                    <small class="text-muted"><%=assignment.isSubmitted()%></small>
+                                    <% if(assignment.isSubmitted()){ %>
+                                      <br>
+                                        <strong><i class="fa fa-check-circle fa-lg icongreencolor"></i></strong>
+                                    <% }else{ %>
+                                      <br>
+                                      <strong><i class="fa fa-times-circle fa-lg iconredcolor"></i></strong>
+                                    <% } %>
+                                  </td>
+                                </tr>
+                            <% } %>
+
                             </tr>
                           </tbody>
                         </table>
@@ -133,37 +125,10 @@
                     </div>
                   </div>
                 </div>
-                  <div class="tab-pane" id="tab_b">
-                    <div class="panel panel-default">
-                      <div class="panel-body">
-                        <div class="row">
-                          <table class="table table-hover">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <label><strong>Assignment 2</strong></label>
-                                  <br>
-                                  <small class="text-muted">Due Date</small>
-                                  <br><br>
-                                  <small class="text-muted">Assignment File</small>
-                                  <br><br>
-                                  <small class="text-muted">Submitted File</small>
-                                </td>
-                                <td class=" text-right">
-                                  <br>
-                                  <small>05/15/17</small>
-                                  <br><br>
-                                  <a href="bb.png" download type="button" class="btn btn-success btn-sm"><i class="fa fa-cloud-download"></i></a>
-                                  <br><br>
-                                  <a type="button" class="btn btn-danger btn-sm"><i class="fa fa-cloud-upload"></i></a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
+                <% var+=1; %>
+                <% } %>
+
               </div><!-- tab content -->
             </div>
         </div>
