@@ -102,7 +102,11 @@
                                     <br>
                                     <small class="text-muted">Submission:</small>
                                       <br>
-                                      <input type="file" class="glyphicon-file" data-buttonName="btn-primary">
+
+                                      <input id="uploadFile" type="file" class="upload btn btn-default" placeholder="Choose File"  name="assignmentFile" />
+                                      <button id="uploadBtn" type="submit" class="upload btn btn-primary">Upload</button>
+
+
                                   </td>
                                   <td class="text-right">
                                     <br>
@@ -137,7 +141,10 @@
     </div>
 
      <script>
-         $(":file").filestyle({buttonText: "Find file"});
+         document.getElementById("uploadBtn").onchange = function () {
+             document.getElementById("uploadFile").value = this.value;
+         };
+
      </script>
 
 	<%@include file="script.jsp" %>
