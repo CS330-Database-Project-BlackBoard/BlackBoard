@@ -121,7 +121,7 @@
 	                                                      <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
 	                                                          <i class="fa fa-pencil"></i>
 	                                                      </a>
-	                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= lecturerCourseGrade.getCourse().getLectureID()%>/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
+														  <a href="${pageContext.request.contextPath}/lecturer/grade/<%= grade.getGradeID() %>/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>"><i class="fa fa-eye"></i></a>
 	                                                  </td>
 	                                              </tr>
 		                                          	
@@ -174,7 +174,7 @@
 		                                                      <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
 		                                                          <i class="fa fa-pencil"></i>
 		                                                      </a>
-		                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= lecturerCourseGrade.getCourse().getLectureID()%>/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
+		                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= grade.getGradeID() %>/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>"><i class="fa fa-eye"></i></a>
 		                                                  </td>
 		                                              </tr>
 			                                          	

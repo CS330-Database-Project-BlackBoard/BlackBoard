@@ -260,8 +260,47 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 		
 		return true;
 	}
-	
-	
-	
+
+
+	@Override
+	public boolean updateStudentGrades(int gradeID, HashMap<Integer, Float> gradeOfStudents) {
+
+		Connection connection = null;
+
+
+		try {
+
+			connection = super.getConnection();
+			String queryUpdateStudentGrades = "UPDATE GradeOfStudent SET Grade = ?, UpdatedAt = ? WHERE CourseGradeID = ? AND StudentID = ?";
+
+			PreparedStatement sqlStatement = connection.prepareStatement(queryUpdateStudentGrades);
+
+			for (Map.Entry<Integer, Float> entry : gradeOfStudents.entrySet()){
+				sqlStatement.setFloat(1, entry.getValue());
+				sqlStatement.setString(2, TimeZone.getDateTime());
+				sqlStatement.setInt(3, gradeID);
+				sqlStatement.setInt(4, entry.getKey());
+
+				sqlStatement.executeUpdate(); // insert datas and execute
+			}
+
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			if (connection != null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+
+		return true;
+	}
+
+
 
 }

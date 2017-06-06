@@ -480,8 +480,19 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return this.getCourses(query);
 	}
-	
-	
-	
-	
+
+
+
+	@Override
+	public SimpleGrade getGradeName(int lectureID, int gradeID) {
+		ArrayList<SimpleGrade> grades = getLectureGrades(lectureID);
+		for (SimpleGrade grade : grades){
+			if (grade.getGradeID() == gradeID){
+				return grade;
+			}
+		}
+		return null;
+	}
+
+
 }

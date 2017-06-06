@@ -21,5 +21,7 @@ public interface LecturerDao {
 	public ArrayList<LecturerCourseGrade> getCourseGradesOfLecturer(Lecturer lecturer);
 	
 	public boolean saveStudentGrades(Lecturer lecturer, int lectureID, String name, float affect, HashMap<Integer, Float> gradeOfStudents);
-	
+
+	public boolean updateStudentGrades(int gradeID, HashMap<Integer, Float> gradeOfStudents);
+
 }
