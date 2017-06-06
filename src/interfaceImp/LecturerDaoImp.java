@@ -14,8 +14,11 @@ import database.Database;
 import enums.AppRole;
 import helper.TimeZone;
 import interfaces.LecturerDao;
+import pojos.Announcement;
 import pojos.Course;
+import pojos.CourseMaterial;
 import pojos.CourseOfLecturer;
+import pojos.File;
 import pojos.Lecturer;
 import pojos.LecturerCourseGrade;
 import pojos.Manager;
@@ -300,6 +303,35 @@ public class LecturerDaoImp extends Database implements LecturerDao{
 
 		return true;
 	}
+
+
+
+	@Override
+	public ArrayList<CourseMaterial> getCourseMaterialsOfLecturer(Lecturer lecturer) {
+		
+		ArrayList<CourseMaterial> courseMaterials = new ArrayList<>();
+		CourseMaterial courseMaterial = null;
+
+
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		
+		ArrayList<CourseOfLecturer> _lecturerCourses = this.getCoursesOfLecturer(lecturer); 
+		ArrayList<? extends Course> lecturerCourses = _lecturerCourses;
+		
+		for (Course course : lecturerCourses) {
+			
+			ArrayList<File> files = courseDaoImp.getFilesByLectureID(course.getLectureID());
+			
+			
+			courseMaterial = new CourseMaterial(course, files);
+			courseMaterials.add(courseMaterial);
+			
+		}
+		
+		return courseMaterials;
+	}
+	
+	
 
 
 

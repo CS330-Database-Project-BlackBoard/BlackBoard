@@ -410,6 +410,29 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return studentCourses;
 	}
 
+	
+	
+	
+	@Override
+	public ArrayList<CourseMaterial> getCourseMaterialsOfLecturer(int schoolID) {
+		ArrayList<CourseMaterial> courseMaterials = new ArrayList<>();
+		
+		ArrayList<Course> studentCourses = this.getStudentCourse(schoolID);
+		CourseMaterial courseMaterial = null;
+		
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		
+		for (Course course : studentCourses) {
+			ArrayList<File> files = courseDaoImp.getFilesByLectureID(course.getLectureID());
+			courseMaterial = new CourseMaterial(course, files);
+			courseMaterials.add(courseMaterial);
+		}
+		
+		return courseMaterials;
+	}
+
+	
+	
 
 
 
