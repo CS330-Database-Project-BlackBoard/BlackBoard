@@ -27,9 +27,7 @@ public interface CourseDao {
 	
 	public ArrayList<Course> getCourseByStudentID(int schoolID);
 	
-	public ArrayList<Course> getCourseByDepartmentID(int departmentID);
 	
-	public ArrayList<Course> getCoursesByCode(String courseCode);
 
 	public ArrayList<SimpleCourse> getCoursesByCodeUsingLike(String courseCode);
 	

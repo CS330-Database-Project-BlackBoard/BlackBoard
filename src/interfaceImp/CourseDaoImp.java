@@ -217,31 +217,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 		return this.getCourses(query);
 	}
 
-	@Override
-	public ArrayList<Course> getCourseByDepartmentID(int departmentID) {
-		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cs.LectureID = l.LectureID "
-				 + "AND c.DepartmentID= " + departmentID + " "
-				 + "AND c.Visible = true;";
-		return this.getCourses(query);
-	}
 
-	@Override
-	public ArrayList<Course> getCoursesByCode(String courseCode) {
-		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cs.LectureID = l.LectureID "
-				 + "AND c.Code = " + courseCode + " "
-				 + "AND c.Visible = true";
-		return this.getCourses(query);
-	}
 
 	@Override
 	public ArrayList<SimpleCourse> getCoursesByCodeUsingLike(String courseCode) {
