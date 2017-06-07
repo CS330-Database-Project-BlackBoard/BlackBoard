@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
+import enums.AppPath;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseMaterial;
 import pojos.Lecturer;
 import pojos.User;
 
 
-@WebServlet(name="ServletLecturerCourseMaterial", urlPatterns= {"/lecturer/course-materials"})
+@WebServlet(name="ServletLecturerCourseMaterial", urlPatterns= {"/lecturer/course-materials", "/lecturer/course-material/*"})
 public class ServletLecturerCourseMaterial extends HttpServlet{
 	
 	
@@ -34,20 +35,36 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 	
 		
 		try {
-
 			
 			
 			User user = (User) session.getAttribute("user");
 			
 			Lecturer lecturer = new Lecturer(user.getSchoolID(), user.getEmail(),user.getName(), user.getSurname(), user.getRole());
 			
-			LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
+			String path = req.getPathInfo();
 			
-			ArrayList<CourseMaterial> courseMaterials = lecturerDaoImp.getCourseMaterialsOfLecturer(lecturer);
 			
-			session.setAttribute("courseMaterials", courseMaterials);
 			
-			System.out.println("worked");
+			
+			if (path != null && path.contains(AppPath.LECTURE) && path.contains(AppPath.NEW)) {
+				String paths[] = path.split("/");
+					
+				
+			}
+			else {
+				LecturerDaoImp lecturerDaoImp = new LecturerDaoImp();
+				
+				ArrayList<CourseMaterial> courseMaterials = lecturerDaoImp.getCourseMaterialsOfLecturer(lecturer);
+				
+				session.setAttribute("courseMaterials", courseMaterials);
+				
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/lecturer/course-materials.jsp");
+				requestDispatcher.forward(req, resp);
+				return;
+			}
+			
+			
+		
 
 
 		}
@@ -57,8 +74,6 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 			return;
 		}
 
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/lecturer/course-materials.jsp");
-		requestDispatcher.forward(req, resp);
 		
 	
 		
