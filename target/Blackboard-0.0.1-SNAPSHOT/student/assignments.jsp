@@ -24,7 +24,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
                     </li>
                     <li>
                         <a  href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
@@ -37,7 +37,7 @@
                         <a  href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
                     </li>
                     <li>
-                        <a  href="${pageContext.request.contextPath}/student/assignments"><i class="fa fa-pencil-square-o"></i> Assignments</a>
+                        <a  class="active-menu" href="${pageContext.request.contextPath}/student/assignments"><i class="fa fa-pencil-square-o"></i> Assignments</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/student/settings"><i class="fa fa-cog"></i> Settings</a>
@@ -107,10 +107,11 @@
                                     <br>
                                     <small class="text-muted">Submission:</small>
                                       <br>
-
-                                      <input id="uploadFile" type="file" class="upload btn btn-default" placeholder="Choose File"  name="assignmentFile" />
-                                      <button id="uploadBtn" type="submit" class="upload btn btn-primary">Upload</button>
-
+                                      <form  method="POST" action="ServletStudentFile" enctype="multipart/form-data" >
+                                          <input id="uploadFile" type="file" class="upload btn btn-default" placeholder="Choose File"  name="file" id = "file"/>
+                                          <% session.setAttribute("uploadedAssignment",assignment); %>
+                                          <button id="Upload" type="submit" value="Upload" name="Upload" class="upload btn btn-primary">Upload</button>
+                                      </form>
 
                                   </td>
                                   <td class="text-right">

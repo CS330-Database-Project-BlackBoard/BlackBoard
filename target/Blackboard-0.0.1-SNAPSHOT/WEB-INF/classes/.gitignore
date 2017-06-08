@@ -1,7 +1,6 @@
 /controller/
-/interfaces/
-/pojos/
-/interfaceImp/
 /database/
-/enums/
+/interfaceImp/
+/interfaces/
 /helper/
+/enums/

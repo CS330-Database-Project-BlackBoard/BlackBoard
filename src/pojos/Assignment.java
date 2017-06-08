@@ -18,14 +18,13 @@ public class Assignment {
 	private boolean isSubmitted;
 
 	public Assignment(int assignmentID, int lectureID, String filePath, String name, String postedAT, String dueDate, Course course, boolean isSubmitted) {
-		super();
 		this.assignmentID = assignmentID;
 		this.lectureID = lectureID;
 		this.filePath = filePath;
 		this.name = name;
 		this.postedAT = postedAT;
-		this.course = course;
 		this.dueDate = dueDate;
+		this.course = course;
 		this.isSubmitted = isSubmitted;
 	}
 
@@ -59,5 +58,9 @@ public class Assignment {
 
 	public boolean isSubmitted() {
 		return isSubmitted;
+	}
+
+	public void setSubmitted(boolean submitted) {
+		isSubmitted = submitted;
 	}
 }
