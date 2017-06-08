@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import pojos.User;
 
 
 @WebServlet(name="ServletStudentAssignment", urlPatterns= {"/student/assignments"})
+@MultipartConfig
 public class ServletStudentAssignment extends HttpServlet{
 	
 	/*
@@ -64,6 +66,17 @@ public class ServletStudentAssignment extends HttpServlet{
 		dispatcher.forward(req, resp);
 	
 	}
-	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	}
 }
+
+
+
+
+
+
+
 

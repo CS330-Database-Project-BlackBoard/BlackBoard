@@ -27,7 +27,6 @@
                     <li>
                         <a href="${pageContext.request.contextPath}/student/course-materials"><i class="fa fa-book"></i> Course Materials</a>
                     </li>
-
                     <li>
                         <a  href="${pageContext.request.contextPath}/student/grades"><i class="fa fa-table"></i> Grades</a>
                     </li>
