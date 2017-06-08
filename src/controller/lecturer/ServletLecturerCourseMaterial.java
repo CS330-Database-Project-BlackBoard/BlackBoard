@@ -48,7 +48,11 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 			
 			if (path != null && path.contains(AppPath.LECTURE) && path.contains(AppPath.NEW)) {
 				String paths[] = path.split("/");
-					
+				
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("/lecturer/new-course-material.jsp");
+				requestDispatcher.forward(req, resp);
+				return;
+				
 				
 			}
 			else {

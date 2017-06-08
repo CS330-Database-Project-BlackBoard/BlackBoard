@@ -15,6 +15,7 @@
 /home/farisi/workspace/Blackboard/src/enums/AppRole.java
 /home/farisi/workspace/Blackboard/src/pojos/SimpleCourse.java
 /home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerNewGrade.java
+/home/farisi/workspace/Blackboard/src/helper/FileManager.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/StudentDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/UserDaoImpl.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletAdminDashboard.java
@@ -53,6 +54,7 @@
 /home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerUpdateGrade.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseAssignment.java
 /home/farisi/workspace/Blackboard/src/pojos/Assignment.java
+/home/farisi/workspace/Blackboard/src/controller/student/ServletStudentCourseMaterial.java
 /home/farisi/workspace/Blackboard/src/interfaces/CourseDao.java
 /home/farisi/workspace/Blackboard/src/helper/TimeZone.java
 /home/farisi/workspace/Blackboard/src/pojos/CourseDashboard.java
