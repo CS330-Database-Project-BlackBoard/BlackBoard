@@ -5,21 +5,29 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.tomcat.util.http.fileupload.FileUpload;
 
 import controller.SecurityController;
+import enums.AppForm;
 import enums.AppPath;
+import helper.Uploader;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseMaterial;
 import pojos.Lecturer;
+import pojos.SimpleFile;
 import pojos.User;
 
 
 @WebServlet(name="ServletLecturerCourseMaterial", urlPatterns= {"/lecturer/course-materials", "/lecturer/course-material/*"})
+@MultipartConfig
 public class ServletLecturerCourseMaterial extends HttpServlet{
 	
 	
@@ -81,6 +89,52 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 		
 	
 		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
+		
+		HttpSession session = req.getSession();
+
+		if (!SecurityController.lecturerRequired(session, req, resp)) {
+			return;
+		}
+		String path = req.getPathInfo();
+		
+		if (path != null && path.contains(AppPath.LECTURE) && path.contains(AppPath.NEW)) {
+			String paths[] = path.split("/");
+			int lectureID = Integer.parseInt(paths[1]);
+			
+			
+			
+			User user = (User) session.getAttribute("user");
+			
+			
+			String announcementTitle = req.getParameter(AppForm.ANNOUNCEMENT_TITLE);
+			String announcementContent = req.getParameter(AppForm.ANNOUNCEMENT_CONTENT);
+			
+	        Part filePart = req.getPart(AppForm.COURSE_MATERIAL_FILE);
+	        
+	        
+	        if (filePart != null) {
+	        	SimpleFile file = Uploader.uploadFile(user.getSchoolID(), filePart); // file is uploaded and returned a simple file object
+	        	if (file != null) {
+					
+				}
+	        }
+	        
+	        
+
+			
+			
+		}
+
+        
+        resp.sendRedirect(req.getContextPath() + "/lecturer/course-materials");
+        
+        
 	}
 		
 		

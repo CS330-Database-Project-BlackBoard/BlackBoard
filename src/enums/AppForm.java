@@ -37,7 +37,8 @@ public class AppForm {
 	public static String ROLE = "role";
 	
 	public static String LECTURER  = "lecturer";
-
+	
+	public static String COURSE_MATERIAL_FILE = "course-material-file";
 	
 	
 }

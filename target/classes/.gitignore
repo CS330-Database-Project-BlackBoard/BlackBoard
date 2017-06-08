@@ -1,8 +1,6 @@
-/controller/
-/database/
-/interfaceImp/
-/interfaces/
-/helper/
-/enums/
-/security/
 /pojos/
+/security/
+/database/
+/helper/
+/controller/
+/enums/
