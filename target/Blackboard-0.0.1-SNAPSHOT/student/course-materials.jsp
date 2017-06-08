@@ -64,7 +64,7 @@
               	for(CourseMaterial courseMaterial : courseMaterials){ %>
               		<% if(index == 0){ %>
                		 <li class="active">
-	               		 <a href="#<%= courseMaterial.getCourse().getLectureID() %>" data-toggle="pill">
+	               		 <a href="#lec<%= courseMaterial.getCourse().getLectureID() %>" data-toggle="pill">
 	               		 	<strong><%= courseMaterial.getCourse().getCode() %> - </strong><%= courseMaterial.getCourse().getName() %>
 	               		 </a>
                		 </li>
@@ -72,7 +72,7 @@
               	    
               	    <% if(index > 0){ %>
                		 <li class="">
-	               		 <a href="#<%= courseMaterial.getCourse().getLectureID() %>" data-toggle="pill">
+	               		 <a href="#lec<%= courseMaterial.getCourse().getLectureID() %>" data-toggle="pill">
 	               		 	<strong><%= courseMaterial.getCourse().getCode() %> - </strong><%= courseMaterial.getCourse().getName() %>
 	               		 </a>
                		 </li>
@@ -90,17 +90,9 @@
               	for(CourseMaterial courseMaterial : courseMaterials){ %>
               	   <% if(index2 == 0){ %>
               	     	
-	                <div class="tab-pane active" id="<%= courseMaterial.getCourse().getLectureID()%>">
+	                <div class="tab-pane active" id="lec<%= courseMaterial.getCourse().getLectureID()%>">
 	                  <div class="panel panel-default">
 	                    <div class="panel-body">
-	                      <div class="row">
-	                          <div class="col-md-12 bottom-space">
-	                           <a href="${pageContext.request.contextPath}/student/course-material/new/<%= courseMaterial.getCourse().getLectureID()%>">
-	                           	<button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Material</button>
-	                           </a>
-	                          </div>
-	                      </div>
-	
 	                      <div class="row">
 	                          <div class="col-md-12 col-xs-12 col-sm-12">
 	                              <div class="panel panel-default">
@@ -108,10 +100,15 @@
 	                                		<%for(File file : courseMaterial.getFiles()){ %>
 	                                			<div class="panel-group">
 												  <div class="panel panel-default">
-												    <div class="panel-heading">
-												      <h4 class="panel-title">
-												        <a data-toggle="collapse" href="#<%= file.getAnnouncement().getAnnouncementID()%>"><%= file.getAnnouncement().getTitle() %></a>
-												      </h4>
+												    <div class="panel-heading head" data-toggle="collapse" href="#<%= file.getAnnouncement().getAnnouncementID()%>">
+												     	<div class="row">
+												     		<div class="col-md-1">
+												     			<i class="glyphicon glyphicon-chevron-down"></i>
+												     		</div>
+												     		<div class="col-md-11">
+												        			<%= file.getAnnouncement().getTitle() %>
+												     		</div>
+												     	</div>
 												    </div>
 												    <div id="<%= file.getAnnouncement().getAnnouncementID()%>" class="panel-collapse collapse">
 												      <div class="panel-body">
@@ -135,47 +132,45 @@
             		<% } %>
               	     
               		 <% if(index2 > 0){ %>
-              		 	                <div class="tab-pane" id="<%= courseMaterial.getCourse().getLectureID()%>">
-	                  <div class="panel panel-default">
-	                    <div class="panel-body">
-	                      <div class="row">
-	                          <div class="col-md-12 bottom-space">
-	                           <a href="${pageContext.request.contextPath}/student/course-material/new/<%= courseMaterial.getCourse().getLectureID()%>">
-	                           	<button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Material</button>
-	                           </a>
-	                          </div>
-	                      </div>
-	
-	                      <div class="row">
-	                          <div class="col-md-12 col-xs-12 col-sm-12">
-	                              <div class="panel panel-default">
-	                                  <div class="panel-body">
-	                                		<%for(File file : courseMaterial.getFiles()){ %>
-	                                			<div class="panel-group">
-												  <div class="panel panel-default">
-												    <div class="panel-heading">
-												      <h4 class="panel-title">
-												        <a data-toggle="collapse" href="#<%= file.getAnnouncement().getAnnouncementID()%>"><%= file.getAnnouncement().getTitle() %></a>
-												      </h4>
-												    </div>
-												    <div id="<%= file.getAnnouncement().getAnnouncementID()%>" class="panel-collapse collapse">
-												      <div class="panel-body">
-												      	<p><%= file.getAnnouncement().getContent() %></p>
-												      	<a href="<%= file.getPath() %>"><%= file.getName() %></a>
-												      	<p class="pull-right text-muted"><%= file.getPostedAT() %></p>
-												      </div>
-
-												    </div>
-												  </div>
-												</div>
-	                                		<%}%>
-	                                  </div>
-	                              </div>
-	                          </div>
-	                      </div>
-	                      </div>
-	                    </div>
-	                  </div>
+              		       <div class="tab-pane" id="lec<%= courseMaterial.getCourse().getLectureID()%>">
+			                  <div class="panel panel-default">
+			                    <div class="panel-body">
+			                      <div class="row">
+			                          <div class="col-md-12 col-xs-12 col-sm-12">
+			                              <div class="panel panel-default">
+			                                  <div class="panel-body">
+			                                		<%for(File file : courseMaterial.getFiles()){ %>
+			                                			<div class="panel-group">
+														  <div class="panel panel-default">
+														    <div class="panel-heading head" data-toggle="collapse" href="#<%= file.getAnnouncement().getAnnouncementID()%>">
+														     	<div class="row">
+														     		<div class="col-md-1">
+														     			<i class="glyphicon glyphicon-chevron-down"></i>
+														     		</div>
+														     		<div class="col-md-11">
+														        			<%= file.getAnnouncement().getTitle() %>
+														     		</div>
+														     	</div>
+														    </div>
+														    <div id="<%= file.getAnnouncement().getAnnouncementID()%>" class="panel-collapse collapse">
+														      <div class="panel-body">
+														      	<p><%= file.getAnnouncement().getContent() %></p>
+														      	<a href="<%= file.getPath() %>"><%= file.getName() %></a>
+																<p class="pull-right text-muted"><%= file.getPostedAT() %></p>
+														      	
+														      </div>
+		
+														    </div>
+														  </div>
+														</div>
+			                                		<%}%>
+			                                  </div>
+			                              </div>
+			                          </div>
+			                      </div>
+			                      </div>
+			                    </div>
+		                  </div>
               		 
               		<% } %>
               		              	    

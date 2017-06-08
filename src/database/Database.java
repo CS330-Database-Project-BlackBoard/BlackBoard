@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class Database {
 
 	private String dbUser = "dev";
-	private String dbPassword = "23579";
+	private String dbPassword = "bb.Dev2017";
 	//private String database = "blackboard?allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	//private String server = "104.131.84.114:3306/";
 	private String database = "blackboard?allowMultiQueries=true";

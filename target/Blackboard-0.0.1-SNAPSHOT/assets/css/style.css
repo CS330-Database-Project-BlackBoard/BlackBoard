@@ -55,3 +55,8 @@ body {
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
+
+
+.head{
+	background: #b58888;
+}
