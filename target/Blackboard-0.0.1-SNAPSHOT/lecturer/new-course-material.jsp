@@ -46,7 +46,8 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-                <div class="row">
+            <form action="" method="post" enctype="multipart/form-data">
+            	    <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">New Material <small> </small></h1>
                     </div>
@@ -72,6 +73,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+   						  <button type="submit" class="btn btn-success btn-block pull-right">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
             </div>
         </div>
     </div>

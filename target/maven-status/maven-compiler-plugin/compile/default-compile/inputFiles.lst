@@ -10,12 +10,12 @@
 /home/farisi/workspace/Blackboard/src/controller/student/ServletStudentCourse.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/CourseDashboardDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/ManagerDaoImp.java
+/home/farisi/workspace/Blackboard/src/helper/Uploader.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/AnnouncementDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaces/AnnouncementDao.java
 /home/farisi/workspace/Blackboard/src/enums/AppRole.java
 /home/farisi/workspace/Blackboard/src/pojos/SimpleCourse.java
 /home/farisi/workspace/Blackboard/src/controller/lecturer/ServletLecturerNewGrade.java
-/home/farisi/workspace/Blackboard/src/helper/FileManager.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/StudentDaoImp.java
 /home/farisi/workspace/Blackboard/src/interfaceImp/UserDaoImpl.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletAdminDashboard.java
@@ -39,6 +39,7 @@
 /home/farisi/workspace/Blackboard/src/pojos/CourseMaterial.java
 /home/farisi/workspace/Blackboard/src/pojos/LectureDetail.java
 /home/farisi/workspace/Blackboard/src/pojos/LecturerCourseGrade.java
+/home/farisi/workspace/Blackboard/src/pojos/SimpleFile.java
 /home/farisi/workspace/Blackboard/src/pojos/Role.java
 /home/farisi/workspace/Blackboard/src/pojos/User.java
 /home/farisi/workspace/Blackboard/src/controller/admin/ServletSearchLecturer.java

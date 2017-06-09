@@ -7,6 +7,7 @@ import interfaces.AssignmentDao;
 import pojos.Assignment;
 import pojos.Course;
 import pojos.CourseAssignment;
+import pojos.SimpleFile;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class AssignmentDaoImp extends Database implements AssignmentDao{
-
+	
     private ArrayList<Assignment> getAssignments(String query,int studentID){
 
         ArrayList<Assignment> assignments = new ArrayList<>();
@@ -33,13 +34,14 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
             ResultSet resultSet = sqlStatement.executeQuery();
             while (resultSet.next()){
                 int assignmentID = resultSet.getInt("AssignmentID");
+                int announcementID = resultSet.getInt("AnnouncementID");
                 int lectureID = resultSet.getInt("LectureID");
                 String filePath = resultSet.getString("filePath");
                 String name = resultSet.getString("Name");
                 String postedAT = resultSet.getString("PostedAT");
                 String dueDate = resultSet.getString("DueDate");
 
-                assignment = new Assignment(assignmentID,lectureID,filePath,name,postedAT,dueDate ,courseDaoImp.getCourseByLectureID(lectureID),this.isSubmitted(assignmentID,studentID));
+                assignment = new Assignment(assignmentID,lectureID,filePath,name,postedAT,dueDate ,courseDaoImp.getCourseByLectureID(lectureID),this.isSubmitted(assignmentID,studentID), announcementID);
                 assignments.add(assignment);
             }
 
@@ -57,7 +59,8 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
         }
         return assignments;
     }
-
+    
+    @Override
     public ArrayList<CourseAssignment> getCourseAssignmentByStudentID(int studentID){
         CourseAssignment courseAssignment = null;
         ArrayList<CourseAssignment> courseAssignments = new ArrayList<>();
@@ -76,7 +79,7 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
 
     @Override
     public ArrayList<Assignment> getAllAssignmentByStudentID(int studentID) {
-        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnouncmentID = f.AnnouncementID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate  "
+        String query = "SELECT assign.AssignmentID,assign.AnnouncementID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnnouncementID = f.AnnouncementID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate  "
                          +   "FROM Assignment assign, CourseOfStudent cos  "
                          +   "WHERE cos.LectureID = assign.LectureID "
                          +   "AND cos.SchoolID = " + studentID;
@@ -86,7 +89,7 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
 
     @Override
     public ArrayList<Assignment> getAllAssignmentByLectureID(int LectureID,int studentID) {
-        String query = "SELECT assign.AssignmentID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnouncmentID = f.AnnouncementID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate  "
+        String query = "SELECT assign.AssignmentID, assign.AnnouncementID, assign.LectureID,(SELECT Path FROM File f WHERE assign.AnnouncementID = f.AnnouncementID) AS filePath, assign.Name, assign.PostedAT ,assign.DueDate  "
                 +   "FROM Assignment assign, CourseOfStudent cos  "
                 +   "WHERE cos.LectureID = assign.LectureID "
                 +   "AND cos.LectureID = " + LectureID + " "
@@ -123,21 +126,30 @@ public class AssignmentDaoImp extends Database implements AssignmentDao{
         return isSubmitted;
     }
 
-    public boolean uploadFile(String filePath, String name, int lectureID ,int assignmentID, int studentID){
-        String queryAssignment = "INSERT INTO AssignmentOwner VALUES(null," +assignmentID+ "," + studentID+",1)";
-        System.out.println(filePath);
-        String queryFile = "INSERT INTO File VALUES(null," + "\""+lectureID+"\"" + "," + "\""+studentID+"\"" +","
-                + "\""+filePath+"\"" +"," + "\""+name+"\"" +"," +
-                "\""+filePath.split("\\.")[1]+"\"" + "," + "\""+TimeZone.getDateTime()+"\"" + "," + null + " ) ";
+    
+    
+    
+    public boolean saveAssignmentofStudent(SimpleFile file, int schoolID, int lectureID ,int assignmentID, int announcementID){
+    	
+    	CourseDaoImp courseDaoImp = new CourseDaoImp();
+    	
+    	courseDaoImp.saveFile(file, schoolID, lectureID, announcementID);
+    	
+    	
+        String query = "INSERT INTO AssignmentOwner(AssignmentID, StudentID, isSubmitted) VALUES(?,?, 1)";
+
+        
 
         Connection connection = null;
 
         try {
             connection = super.getConnection();
-            PreparedStatement sqlStatement = connection.prepareStatement(queryAssignment);
-            sqlStatement.execute();
-            sqlStatement = connection.prepareStatement(queryFile);
-            sqlStatement.execute();
+            PreparedStatement sqlStatement = connection.prepareStatement(query);
+            sqlStatement.setInt(1, assignmentID);
+            sqlStatement.setInt(2, schoolID);
+            sqlStatement.executeUpdate();
+            
+
 
         }catch (Exception e){
             e.printStackTrace();

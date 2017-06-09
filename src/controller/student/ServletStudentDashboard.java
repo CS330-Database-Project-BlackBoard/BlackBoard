@@ -19,20 +19,7 @@ import pojos.*;
 
 @WebServlet(name="ServletStudentDashboard", urlPatterns= {"/student/dashboard"})
 public class ServletStudentDashboard extends HttpServlet{
-	
-	 /* TODO
-	  * student required (already in ScurityController)
-	  * get anouncments according to schoolID -> AnouncmentDaoImp -> write new function for getting by schoolID for student where the anounments are posted 
-	  * for student registered lecture
-	  *	
-	  *get courses according to schoolID -> StudentDaoImp -> getStudentCourse(int schoolID)
-	  * add the courses and anouncments to session
-	  * dispatcher -> /student/index.jsp
-	  * 
-	  * 
-	  * 
-	  * 
-	  * */
+
 	
 	
 	@Override

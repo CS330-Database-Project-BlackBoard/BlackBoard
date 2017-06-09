@@ -16,8 +16,10 @@ public class Assignment {
 	private String dueDate;
 	private Course course;
 	private boolean isSubmitted;
+	private int announcementID;
+	
 
-	public Assignment(int assignmentID, int lectureID, String filePath, String name, String postedAT, String dueDate, Course course, boolean isSubmitted) {
+	public Assignment(int assignmentID, int lectureID, String filePath, String name, String postedAT, String dueDate, Course course, boolean isSubmitted, int announcementID) {
 		this.assignmentID = assignmentID;
 		this.lectureID = lectureID;
 		this.filePath = filePath;
@@ -26,6 +28,7 @@ public class Assignment {
 		this.dueDate = dueDate;
 		this.course = course;
 		this.isSubmitted = isSubmitted;
+		this.announcementID = announcementID;
 	}
 
 	public int getAssignmentID() {
@@ -38,6 +41,10 @@ public class Assignment {
 
 	public String getFilePath() {
 		return filePath;
+	}
+
+	public int getAnnouncementID() {
+		return announcementID;
 	}
 
 	public String getName() {

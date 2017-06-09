@@ -1,10 +1,12 @@
 package interfaces;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.omg.CORBA.INTERNAL;
 
 import pojos.Announcement;
+import pojos.SimpleFile;
 
 public interface AnnouncementDao {
 	
@@ -18,8 +20,10 @@ public interface AnnouncementDao {
 	
 	public ArrayList<Announcement> getAnnouncementsByRole(int level);
 	
-	public boolean sendAnnouncement(String title, String content,  String toWho, int sentBy);
+	public boolean sendAnnouncement(String title, String content,  String toWho, int schoolID);
 	
 	public Announcement getMaterialAnnouncementByID(int announcementID);
+	
+	public boolean saveMaterialAnnouncement(SimpleFile file, int lectureID, String title, String content, int schoolID);
 	
 }

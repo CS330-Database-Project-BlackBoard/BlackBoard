@@ -5,12 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.SecurityController;
 import database.Database;
 import helper.TimeZone;
 import interfaces.UserDao;
 import pojos.User;
-import security.AppSecurity;
 
 public class UserDaoImpl extends Database implements UserDao{
 
@@ -24,7 +22,7 @@ public class UserDaoImpl extends Database implements UserDao{
 	// check user exist and parameters are correct, and assign new User to user object
 	@Override
 	public boolean signIn(String email, String password) {
-		password = AppSecurity.md5(password);
+		//password = AppSecurity.md5(password);
 		System.out.println(TimeZone.getDateTime());
 		if (this.user == null) {
 			String query = "SELECT SchoolID, Name, Surname, Role from User WHERE Email=? AND Password=? AND visible = true;";

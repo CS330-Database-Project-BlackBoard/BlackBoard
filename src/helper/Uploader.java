@@ -28,8 +28,13 @@ public class Uploader {
     	SimpleFile simpleFile = null;
     	
         String fileName = getFileName(filePart);
+
+    	String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
+
+    	String extention = tokens[1];
+    	
         String newName = String.format("%d_%s_%s", schoolID, TimeZone.getDateTime(), fileName) ;
-        String hashedName = String.format("%s.pdf",AppSecurity.md5(newName));
+        String hashedName = String.format("%s.%s",AppSecurity.md5(newName), extention);
         String path = String.format("%s/%s", DATA_DIRECTORY, hashedName);
        
         OutputStream outputStream = null;
@@ -47,7 +52,7 @@ public class Uploader {
 	               
 	           }
 
-	           simpleFile = new SimpleFile(fileName, hashedName, path);
+	           simpleFile = new SimpleFile(fileName, hashedName, path, extention);
        }
        catch (Exception e){
     	   e.printStackTrace();

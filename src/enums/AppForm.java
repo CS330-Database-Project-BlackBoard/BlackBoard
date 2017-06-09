@@ -40,5 +40,13 @@ public class AppForm {
 	
 	public static String COURSE_MATERIAL_FILE = "course-material-file";
 	
+	public static String ASSIGNMENT_ID = "assignment-id";
+	
+	public static String LECTURE_ID  = "lecture-id";
+	
+	public static String ANNOUNCEMENT_ID  = "announcement-id";
+
+
+	
 	
 }

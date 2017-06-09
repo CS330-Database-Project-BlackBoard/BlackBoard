@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.apache.catalina.tribes.util.Arrays;
 
 import controller.SecurityController;
 import enums.AppForm;
 import enums.AppPath;
 import helper.Uploader;
+import interfaceImp.CourseDaoImp;
 import interfaceImp.LecturerDaoImp;
 import pojos.CourseMaterial;
 import pojos.Lecturer;
@@ -105,15 +106,15 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 		
 		if (path != null && path.contains(AppPath.LECTURE) && path.contains(AppPath.NEW)) {
 			String paths[] = path.split("/");
-			int lectureID = Integer.parseInt(paths[1]);
+			int lectureID = Integer.parseInt(paths[2]);
 			
 			
 			
 			User user = (User) session.getAttribute("user");
 			
 			
-			String announcementTitle = req.getParameter(AppForm.ANNOUNCEMENT_TITLE);
-			String announcementContent = req.getParameter(AppForm.ANNOUNCEMENT_CONTENT);
+			String title = req.getParameter(AppForm.ANNOUNCEMENT_TITLE);
+			String content = req.getParameter(AppForm.ANNOUNCEMENT_CONTENT);
 			
 	        Part filePart = req.getPart(AppForm.COURSE_MATERIAL_FILE);
 	        
@@ -121,7 +122,8 @@ public class ServletLecturerCourseMaterial extends HttpServlet{
 	        if (filePart != null) {
 	        	SimpleFile file = Uploader.uploadFile(user.getSchoolID(), filePart); // file is uploaded and returned a simple file object
 	        	if (file != null) {
-					
+					CourseDaoImp courseDaoImp = new CourseDaoImp();
+					courseDaoImp.saveCourseMaterial(file, user.getSchoolID(), lectureID, title, content);
 				}
 	        }
 	        

@@ -26,9 +26,7 @@
 					<li>
 						<a  href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
 					</li>
-					<li>
-						<a  href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
-					</li>
+
 					<li>
 						<a href="${pageContext.request.contextPath}/student/course-materials"><i class="fa fa-book"></i> Course Materials</a>
 					</li>

@@ -26,9 +26,7 @@
                     <li>
                         <a href="${pageContext.request.contextPath}/student/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
                     </li>
-                    <li>
-                        <a  href="${pageContext.request.contextPath}/student/courses"><i class="fa fa-book"></i> Courses</a>
-                    </li>
+
                     <li>
                         <a href="${pageContext.request.contextPath}/student/course-materials"><i class="fa fa-book"></i> Course Materials</a>
                     </li>
@@ -52,7 +50,7 @@
               <div class="row">
                   <div class="col-md-12">
                       <h1 class="page-header">
-                          Assignments <small> Assignments at Spring - 2017</small>
+                          Assignments
                       </h1>
                   </div>
               </div>
@@ -63,7 +61,8 @@
                   int ind = 0;
                   for(Assignment assignment : assignments){ %>
                       <% if(duplicates.contains(String.valueOf(assignment.getCourse().getCourseID()))){ %>
-                      <% continue; } %>
+                     	 <% continue; 
+                      } %>
                       <% duplicates.add(String.valueOf(assignment.getCourse().getCourseID())); %>
                       <% if(ind == 0){ %>
                         <li class="active"><a href="#<%=assignment.getCourse().getCourseID()%>" data-toggle="pill"><strong><%=assignment.getCourse().getCode() %></strong> - <%=assignment.getCourse().getName()%><i class="fa fa-bell-o"></i></a></li>
@@ -99,26 +98,39 @@
                             <% for(Assignment assignment : assignments){ %>
                                 <tr>
                                   <td>
-                                    <label><strong><%=assignment.getCourse().getCourseID()%> </strong> - <%=assignment.getCourse().getName()%></label>
-                                    <br>
-                                    <small class="text-muted"><%=assignment.getName()%></small>
+                                    <h3 class="text-muted"><%=assignment.getName()%></h3>
                                     <br>
                                     <small class="text-muted"><strong>Due Date:</strong></small>
                                     <br>
                                     <small class="text-muted">Submission:</small>
-                                      <br>
-                                      <form  method="POST" action="ServletStudentFile" enctype="multipart/form-data" >
-                                          <input id="uploadFile" type="file" class="upload btn btn-default" placeholder="Choose File"  name="file" id = "file"/>
-                                          <% session.setAttribute("uploadedAssignment",assignment); %>
-                                          <button id="Upload" type="submit" value="Upload" name="Upload" class="upload btn btn-primary">Upload</button>
-                                      </form>
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                    	<input type="hidden" name="assignment-id" value="<%= assignment.getAssignmentID() %>"/>
+                                    	<input type="hidden" name="lecture-id" value="<%= assignment.getLectureID() %>"/>
+                                    	<input type="hidden" name="announcement-id" value="<%= assignment.getAnnouncementID() %>"/>
+                                    	
+                                    	
+                                    	<br>
+                                    	
+                                   		<input type="file" class="file-loading" name="course-material-file">
+                                  
+                                    	<% if(assignment.isSubmitted()){ %>
+                                   		<br>
+                                  			
+                                   		 <button  type="submit" value="Upload" name="Upload" class="upload btn btn-primary">New Upload</button>
+                                    <% }else{ %>
+										<br>										
+                                    	<button  type="submit" value="Upload" name="Upload" class="upload btn btn-primary">Upload</button>
 
+                                    <% } %>
+                                    	
+                                    </form>
+                                   	
                                   </td>
                                   <td class="text-right">
                                     <br>
+                                    <br>
                                     <small class="text-muted"><%= assignment.getDueDate()%></small>
                                     <br>
-                                    <small class="text-muted"><%=assignment.isSubmitted()%></small>
                                     <% if(assignment.isSubmitted()){ %>
                                       <br>
                                         <strong><i class="fa fa-check-circle fa-lg icongreencolor"></i></strong>

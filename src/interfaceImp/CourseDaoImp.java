@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.omg.CORBA.StringHolder;
 
 import database.Database;
+import helper.TimeZone;
 import interfaces.CourseDao;
 import pojos.Announcement;
 import pojos.Course;
@@ -17,6 +18,7 @@ import pojos.File;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
+import pojos.SimpleFile;
 import pojos.SimpleGrade;
 import pojos.StudentGrade;
 import pojos.StudentGradeView;
@@ -525,8 +527,59 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return files;
 	}
-
 	
+	public boolean saveFile(SimpleFile file, int schoolID, int lectureID, int announcementID) {
+		
+		boolean saved = false;
+		
+		Connection connection = null;
+		
+		String query = "INSERT INTO File(lectureID, PostedBy, Path, Name, Type, PostedAt, AnnouncementID ) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
+			sqlStatement.setInt(2, schoolID);
+			sqlStatement.setString(3, file.getPath());
+			sqlStatement.setString(4, file.getFileName());
+			sqlStatement.setString(5, file.getType());
+			sqlStatement.setString(6, TimeZone.getDateTime());
+			sqlStatement.setInt(7, announcementID);
+			sqlStatement.executeUpdate();
+			
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		
+		
+		return saved;
+		
+	}
+	
+	
+	
+	public boolean saveCourseMaterial(SimpleFile file, int schoolID, int lectureID, String title, String content) {
+		
+		AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+		
+		return announcementDaoImp.saveMaterialAnnouncement(file, lectureID, title, content, schoolID);
+	}
+
 	
 	
 	

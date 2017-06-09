@@ -29,9 +29,6 @@
                     <a  href="${pageContext.request.contextPath}/lecturer/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a  href="${pageContext.request.contextPath}/lecturer/courses"><i class="fa fa-user"></i> Courses</a>
-                </li>
-                <li>
                     <a class="active-menu" href="${pageContext.request.contextPath}/lecturer/course-materials"><i class="fa fa-book"></i> Course Materials</a>
                 </li>
                 <li>
@@ -54,7 +51,7 @@
               <div class="row">
                   <div class="col-md-12">
                       <h1 class="page-header">
-                          Grades
+                          Course Materials
                       </h1>
                   </div>
               </div>

@@ -8,6 +8,7 @@ import pojos.File;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
+import pojos.SimpleFile;
 import pojos.SimpleGrade;
 import pojos.StudentGradeView;
 
@@ -47,6 +48,10 @@ public interface CourseDao {
 
 	public ArrayList<File> getFilesByLectureID(int lectureID);
 	
-	
+	public boolean saveFile(SimpleFile file, int schoolID, int lectureID, int announcementID);
 
+	
+	public boolean saveCourseMaterial(SimpleFile file, int schoolID, int lectureID, String title, String content);
+
+	
 }
