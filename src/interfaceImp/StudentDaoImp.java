@@ -9,10 +9,7 @@ import java.util.ArrayList;
 
 import database.Database;
 import interfaces.StudentDao;
-import pojos.Course;
-import pojos.Student;
-import pojos.StudentCourseGrade;
-import pojos.StudentGrade;
+import pojos.*;
 
 public class StudentDaoImp extends Database implements StudentDao {
 
@@ -393,7 +390,49 @@ public class StudentDaoImp extends Database implements StudentDao {
 		return studentCourseGrades;
 	}
 
+	
+	@Override
+	public ArrayList<StudentCourse> getStudentCourseAndClassMates(int schoolID){
 
+		ArrayList<StudentCourse> studentCourses = new ArrayList<>();
+
+		ArrayList<Course> courses = this.getStudentCourse(schoolID);
+
+		StudentCourse studentCourse = null;
+		ArrayList<Student> students = null;
+
+		for(Course course : courses){
+			students = this.getStudentsByLectureID(course.getLectureID());
+			studentCourse = new StudentCourse(course,students);
+			studentCourses.add(studentCourse);
+		}
+
+		return studentCourses;
+	}
+
+	
+	
+	
+	@Override
+	public ArrayList<CourseMaterial> getCourseMaterialsOfStudent(int schoolID) {
+		ArrayList<CourseMaterial> courseMaterials = new ArrayList<>();
+		
+		ArrayList<Course> studentCourses = this.getStudentCourse(schoolID);
+		CourseMaterial courseMaterial = null;
+		
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		
+		for (Course course : studentCourses) {
+			ArrayList<File> files = courseDaoImp.getFilesByLectureID(course.getLectureID());
+			courseMaterial = new CourseMaterial(course, files);
+			courseMaterials.add(courseMaterial);
+		}
+		
+		return courseMaterials;
+	}
+
+	
+	
 
 
 

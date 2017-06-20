@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import database.Database;
+import helper.TimeZone;
 import interfaces.UserDao;
 import pojos.User;
 
@@ -21,6 +22,8 @@ public class UserDaoImpl extends Database implements UserDao{
 	// check user exist and parameters are correct, and assign new User to user object
 	@Override
 	public boolean signIn(String email, String password) {
+		//password = AppSecurity.md5(password);
+		System.out.println(TimeZone.getDateTime());
 		if (this.user == null) {
 			String query = "SELECT SchoolID, Name, Surname, Role from User WHERE Email=? AND Password=? AND visible = true;";
 			Connection connection = null;
@@ -34,8 +37,8 @@ public class UserDaoImpl extends Database implements UserDao{
 				ResultSet resultSet = sqlStatement.executeQuery();
 				if (resultSet.next()) {
 					int schoolID = resultSet.getInt("SchoolID");
-					String name = resultSet.getString("Name");
-					String surname = resultSet.getString("Surname");
+					String name = resultSet.getString("Name").toUpperCase();
+					String surname = resultSet.getString("Surname").toUpperCase();
 					int role = resultSet.getInt("Role");
 					this.user = new User(schoolID, email, name, surname, role);
 					return true;

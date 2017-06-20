@@ -9,12 +9,16 @@ import java.util.ArrayList;
 import org.omg.CORBA.StringHolder;
 
 import database.Database;
+import helper.TimeZone;
 import interfaces.CourseDao;
 import pojos.Announcement;
 import pojos.Course;
+import pojos.CourseMaterial;
+import pojos.File;
 import pojos.LectureDetail;
 import pojos.LectureDashboard;
 import pojos.SimpleCourse;
+import pojos.SimpleFile;
 import pojos.SimpleGrade;
 import pojos.StudentGrade;
 import pojos.StudentGradeView;
@@ -215,31 +219,7 @@ public class CourseDaoImp extends Database implements CourseDao {
 		return this.getCourses(query);
 	}
 
-	@Override
-	public ArrayList<Course> getCourseByDepartmentID(int departmentID) {
-		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cs.LectureID = l.LectureID "
-				 + "AND c.DepartmentID= " + departmentID + " "
-				 + "AND c.Visible = true;";
-		return this.getCourses(query);
-	}
 
-	@Override
-	public ArrayList<Course> getCoursesByCode(String courseCode) {
-		String query = "SELECT DISTINCT c.*, u.schoolID, u.Name AS LecturerName, u.Surname AS LecturerSurname, l.LectureID, l.Name AS LectureName "
-				 + "FROM Course c, User u, CourseOfLecturer cl, Lecture l, CourseOfStudent cs "
-				 + "WHERE cl.LectureID = l.LectureID "
-				 + "AND l.CourseID = c.CourseID "
-				 + "AND cl.SchoolID = u.SchoolID "
-				 + "AND cs.LectureID = l.LectureID "
-				 + "AND c.Code = " + courseCode + " "
-				 + "AND c.Visible = true";
-		return this.getCourses(query);
-	}
 
 	@Override
 	public ArrayList<SimpleCourse> getCoursesByCodeUsingLike(String courseCode) {
@@ -480,8 +460,129 @@ public class CourseDaoImp extends Database implements CourseDao {
 		
 		return this.getCourses(query);
 	}
+
+
+
+	@Override
+	public SimpleGrade getGradeName(int lectureID, int gradeID) {
+		ArrayList<SimpleGrade> grades = getLectureGrades(lectureID);
+		for (SimpleGrade grade : grades){
+			if (grade.getGradeID() == gradeID){
+				return grade;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<File> getFilesByLectureID(int lectureID) {
+		ArrayList<File> files = new ArrayList<>();
+		
+		Announcement announcement = null;
+		AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+		
+		
+		File file = null;
+		
+		Connection connection = null;
+		
+		String query = "SELECT * FROM File WHERE LectureID = ?";
+			
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
+			ResultSet resultSet = sqlStatement.executeQuery();
+				
+			while(resultSet.next()) {
+				int fileID = resultSet.getInt("FileID");
+				int postedBY = resultSet.getInt("PostedBY");
+				String path = resultSet.getString("Path");
+				String name = resultSet.getString("Name");
+				String type = resultSet.getString("Type");
+				String postedAT = resultSet.getString("postedAT");
+				int announcementID = resultSet.getInt("AnnouncementID");
+				
+				announcement = announcementDaoImp.getMaterialAnnouncementByID(announcementID);
+				
+				file = new File(fileID, lectureID, postedBY, path, name, type, postedAT, announcementID, announcement);
+				files.add(file);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return files;
+	}
+	
+	public boolean saveFile(SimpleFile file, int schoolID, int lectureID, int announcementID) {
+		
+		boolean saved = false;
+		
+		Connection connection = null;
+		
+		String query = "INSERT INTO File(lectureID, PostedBy, Path, Name, Type, PostedAt, AnnouncementID ) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		
+		try {
+			connection = super.getConnection();
+			PreparedStatement sqlStatement = connection.prepareStatement(query);
+			sqlStatement.setInt(1, lectureID);
+			sqlStatement.setInt(2, schoolID);
+			sqlStatement.setString(3, file.getPath());
+			sqlStatement.setString(4, file.getFileName());
+			sqlStatement.setString(5, file.getType());
+			sqlStatement.setString(6, TimeZone.getDateTime());
+			sqlStatement.setInt(7, announcementID);
+			sqlStatement.executeUpdate();
+			
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		
+		
+		return saved;
+		
+	}
+	
+	
+	
+	public boolean saveCourseMaterial(SimpleFile file, int schoolID, int lectureID, String title, String content) {
+		
+		AnnouncementDaoImp announcementDaoImp = new AnnouncementDaoImp();
+		
+		return announcementDaoImp.saveMaterialAnnouncement(file, lectureID, title, content, schoolID);
+	}
+
 	
 	
 	
 	
+
 }

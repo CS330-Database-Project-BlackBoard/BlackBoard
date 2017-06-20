@@ -93,7 +93,7 @@
 	                    <div class="panel-body">
 	                      <div class="row">
 	                          <div class="col-md-12 bottom-space">
-	                           <a href="">
+	                           <a href="${pageContext.request.contextPath}/lecturer/new-grade/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>">
 	                           	<button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Grade</button>
 	                           </a>
 	                          </div>
@@ -121,7 +121,7 @@
 	                                                      <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
 	                                                          <i class="fa fa-pencil"></i>
 	                                                      </a>
-	                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= lecturerCourseGrade.getCourse().getLectureID()%>/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
+														  <a href="${pageContext.request.contextPath}/lecturer/grade/<%= grade.getGradeID() %>/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>"><i class="fa fa-eye"></i></a>
 	                                                  </td>
 	                                              </tr>
 		                                          	
@@ -145,7 +145,7 @@
 		                    <div class="panel-body">
 		                      <div class="row">
 		                          <div class="col-md-12 bottom-space">
-		                           <a href="${pageContext.request.contextPath}/lecturer/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>/new-grade">
+	                           <a href="${pageContext.request.contextPath}/lecturer/new-grade/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>">
 		                           	<button type="button" name="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> New Grade</button>
 		                           </a>
 		                          </div>
@@ -174,7 +174,7 @@
 		                                                      <a data-toggle="modal" href="#update-grade-detail" class="table-col-space-right">
 		                                                          <i class="fa fa-pencil"></i>
 		                                                      </a>
-		                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= lecturerCourseGrade.getCourse().getLectureID()%>/grade/<%= grade.getGradeID() %>"><i class="fa fa-eye"></i></a>
+		                                                      <a href="${pageContext.request.contextPath}/lecturer/grade/<%= grade.getGradeID() %>/lecture/<%= lecturerCourseGrade.getCourse().getLectureID()%>"><i class="fa fa-eye"></i></a>
 		                                                  </td>
 		                                              </tr>
 			                                          	

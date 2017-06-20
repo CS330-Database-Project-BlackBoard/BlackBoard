@@ -1,10 +1,12 @@
 package interfaceImp;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.mysql.cj.api.jdbc.Statement;
 
@@ -15,6 +17,7 @@ import interfaces.AnnouncementDao;
 import pojos.Announcement;
 import pojos.Lecturer;
 import pojos.Manager;
+import pojos.SimpleFile;
 import pojos.Student;
 
 public class AnnouncementDaoImp extends Database implements AnnouncementDao {
@@ -99,7 +102,7 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	}
 
 	@Override
-	public boolean sendAnnouncement(String title, String content, String toWho, int sentBy) {
+	public boolean sendAnnouncement(String title, String content, String toWho, int schoolID) {
 		
 		Connection connection = null;
 		
@@ -108,7 +111,7 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 		try {
 			connection = super.getConnection();
 			PreparedStatement sqlStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // RETURN GENERATED KEYS WILL HELP TO GET LAST GENERATED INDEX
-			sqlStatement.setInt(1, sentBy);
+			sqlStatement.setInt(1, schoolID);
 			sqlStatement.setString(2, title);
 			sqlStatement.setString(3, content);
 			sqlStatement.setString(4, TimeZone.getDateTime());
@@ -165,11 +168,81 @@ public class AnnouncementDaoImp extends Database implements AnnouncementDao {
 	}
 
 	@Override
-	public Announcement getAnnouncementByID(int AnnouncementID) {
+	public Announcement getAnnouncementByID(int announcementID) {
 		
-		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + AnnouncementID;
+		String query = "SELECT * FROM Announcement WHERE AnnouncementID = " + announcementID;
 		return this.getAnnouncements(query).get(0); // function will return single anouncment so get first element
 		
+	}
+
+
+	@Override
+	public Announcement getMaterialAnnouncementByID(int announcementID) {
+		String query = "SELECT * FROM MaterialAnnouncement WHERE AnnouncementID = " + announcementID;
+		return this.getAnnouncements(query).get(0); // function will return single anouncment so get first element
+	}
+
+
+	
+	
+	@Override
+	public boolean saveMaterialAnnouncement(SimpleFile file, int lectureID, String title, String content, int schoolID) {
+		
+		boolean saved = false;
+		
+		CourseDaoImp courseDaoImp = new CourseDaoImp();
+		
+		
+		int announcementID = -1;
+		
+		
+		
+		Connection connection = null;
+		
+		String query = "INSERT INTO MaterialAnnouncement ( Title, Content, PostedAT, PostedBY) VALUES (?, ?, ?, ?)";
+		
+		try {
+			connection = super.getConnection();
+			// firt insert the grade into Grade of course table
+			
+			PreparedStatement sqlStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // return generated key will help to return the last genereted index
+			sqlStatement.setString(1, title);
+			sqlStatement.setString(2, content);
+			sqlStatement.setString(3, TimeZone.getDateTime());
+			sqlStatement.setInt(4, schoolID);
+			sqlStatement.executeUpdate(); // insert
+			
+			try(ResultSet resultSet = sqlStatement.getGeneratedKeys()){ // if no error 
+				if (resultSet.next()) { // get next element
+					announcementID = resultSet.getInt(1); // get last index from table
+					
+					if(courseDaoImp.saveFile(file, schoolID, lectureID, announcementID)) {
+						saved = true;
+						
+					}
+
+					
+				}
+			}
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return saved;
 	}
 
 	

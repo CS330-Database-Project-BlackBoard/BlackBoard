@@ -74,3 +74,9 @@ $("#anouncment-send").click(function(e){
 	    e.preventDefault();
 	}
 });
+
+
+
+
+
+

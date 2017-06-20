@@ -14,11 +14,8 @@ public class Course {
 	
 	private int lectureID;
 	private String lectureName;
-	
-	
-	
 
-	
+
 	public Course(int courseID, int departmentID, String code, String name, int semesterID, boolean visible,
 			int lecturerID, String lecturerName, String lecturerSurname, int lectureID, String lectureName) {
 		super();

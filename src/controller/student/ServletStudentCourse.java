@@ -1,6 +1,7 @@
 package controller.student;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.SecurityController;
+import interfaceImp.StudentDaoImp;
+import pojos.StudentCourse;
 import pojos.User;
 
 @WebServlet(name="ServletStudentCourse", urlPatterns= {"/student/courses"})
@@ -26,10 +29,26 @@ public class ServletStudentCourse extends HttpServlet{
 		if (!SecurityController.studentRequired(session, req, resp)) {
 			return;
 		}
-		
-		
-		
+
+		try{
+			user = (User) session.getAttribute("user");
+			StudentDaoImp studentDaoImp = new StudentDaoImp();
+			ArrayList<StudentCourse> studentCourses = studentDaoImp.getStudentCourseAndClassMates(user.getSchoolID());
+
+			session.setAttribute("studentCourses",studentCourses);
+
+		}catch (Exception e){
+			e.printStackTrace();
+			resp.sendRedirect((String)session.getAttribute("lastPath"));
+			return;
+		}
+
+		session.setAttribute("lastPath", req.getRequestURI());
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/student/courses.jsp");
 		dispatcher.forward(req, resp);
 	}
+
+	// this is for notify the git for change
+
 }
+

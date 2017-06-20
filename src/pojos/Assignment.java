@@ -4,39 +4,70 @@ public class Assignment {
 	 
 	//Need new table called Assignment (AssignmentID, lectureID, FileID, Title, Detail, PostedAT, DueDate)
 
-	
+	/**
+	 * In fact we do not need to keep course because of the CourseAssignment class.
+	 * But if we keep the course in here too, jsp implementation is easily than.
+	 */
 	private int assignmentID;
 	private int lectureID;
-	private int fileID;
-	private String title;
-	private String detail;
-	private String posterAT;
+	private String filePath;
+	private String name;
+	private String postedAT;
 	private String dueDate;
+	private Course course;
+	private boolean isSubmitted;
+	private int announcementID;
 	
-	
+
+	public Assignment(int assignmentID, int lectureID, String filePath, String name, String postedAT, String dueDate, Course course, boolean isSubmitted, int announcementID) {
+		this.assignmentID = assignmentID;
+		this.lectureID = lectureID;
+		this.filePath = filePath;
+		this.name = name;
+		this.postedAT = postedAT;
+		this.dueDate = dueDate;
+		this.course = course;
+		this.isSubmitted = isSubmitted;
+		this.announcementID = announcementID;
+	}
+
 	public int getAssignmentID() {
 		return assignmentID;
 	}
+
 	public int getLectureID() {
 		return lectureID;
 	}
-	public int getFileID() {
-		return fileID;
+
+	public String getFilePath() {
+		return filePath;
 	}
-	public String getTitle() {
-		return title;
+
+	public int getAnnouncementID() {
+		return announcementID;
 	}
-	public String getDetail() {
-		return detail;
+
+	public String getName() {
+		return name;
 	}
-	public String getPosterAT() {
-		return posterAT;
+
+	public String getPostedAT() {
+		return postedAT;
 	}
+
 	public String getDueDate() {
 		return dueDate;
 	}
-	
-	
-	
 
+	public Course getCourse() {
+		return course;
+	}
+
+	public boolean isSubmitted() {
+		return isSubmitted;
+	}
+
+	public void setSubmitted(boolean submitted) {
+		isSubmitted = submitted;
+	}
 }
